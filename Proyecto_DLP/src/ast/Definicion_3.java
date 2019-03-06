@@ -9,29 +9,29 @@ import visitor.*;
 
 import org.antlr.v4.runtime.*;
 
-//	definicion_3:sentencia -> nombre:String  entero:entero*  tipo:tipo
+//	definicion_3:sentencia -> nombre:String  tamanio_vector:tamanio_vector*  tipo:tipo
 
 public class Definicion_3 extends AbstractSentencia {
 
-	public Definicion_3(String nombre, List<Entero> entero, Tipo tipo) {
+	public Definicion_3(String nombre, List<Tamanio_vector> tamanio_vector, Tipo tipo) {
 		this.nombre = nombre;
-		this.entero = entero;
+		this.tamanio_vector = tamanio_vector;
 		this.tipo = tipo;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(entero, tipo);
+       setPositions(tamanio_vector, tipo);
 	}
 
 	@SuppressWarnings("unchecked")
-	public Definicion_3(Object nombre, Object entero, Object tipo) {
+	public Definicion_3(Object nombre, Object tamanio_vector, Object tipo) {
 		this.nombre = (nombre instanceof Token) ? ((Token)nombre).getText() : (String) nombre;
-		this.entero = (List<Entero>) entero;
+		this.tamanio_vector = (List<Tamanio_vector>) tamanio_vector;
 		this.tipo = (Tipo) ((tipo instanceof ParserRuleContext) ? getAST(tipo) : tipo);
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(nombre, entero, tipo);
+       setPositions(nombre, tamanio_vector, tipo);
 	}
 
 	public String getNombre() {
@@ -41,11 +41,11 @@ public class Definicion_3 extends AbstractSentencia {
 		this.nombre = nombre;
 	}
 
-	public List<Entero> getEntero() {
-		return entero;
+	public List<Tamanio_vector> getTamanio_vector() {
+		return tamanio_vector;
 	}
-	public void setEntero(List<Entero> entero) {
-		this.entero = entero;
+	public void setTamanio_vector(List<Tamanio_vector> tamanio_vector) {
+		this.tamanio_vector = tamanio_vector;
 	}
 
 	public Tipo getTipo() {
@@ -61,10 +61,10 @@ public class Definicion_3 extends AbstractSentencia {
 	}
 
 	private String nombre;
-	private List<Entero> entero;
+	private List<Tamanio_vector> tamanio_vector;
 	private Tipo tipo;
 
 	public String toString() {
-       return "{nombre:" + getNombre() + ", entero:" + getEntero() + ", tipo:" + getTipo() + "}";
+       return "{nombre:" + getNombre() + ", tamanio_vector:" + getTamanio_vector() + ", tipo:" + getTipo() + "}";
    }
 }

@@ -9,7 +9,7 @@ import ast.*;
 public interface Visitor {
 	public Object visit(Program node, Object param);
 	public Object visit(Definicion_1 node, Object param);
-	public Object visit(Entero node, Object param);
+	public Object visit(Tamanio_vector node, Object param);
 	public Object visit(TipoInt node, Object param);
 	public Object visit(TipoFloat node, Object param);
 	public Object visit(TipoChar node, Object param);

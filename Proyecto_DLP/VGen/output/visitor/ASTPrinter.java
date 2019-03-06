@@ -104,23 +104,23 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Definicion_1 { String nombre;  List<Entero> entero;  Tipo tipo; }
+	//	class Definicion_1 { String nombre;  List<Tamanio_vector> tamanio_vector;  Tipo tipo; }
 	public Object visit(Definicion_1 node, Object param) {
 		int indent = ((Integer)param).intValue();
 
 		printName(indent, "Definicion_1", node, false);
 
 		print(indent + 1, "nombre", "String", node.getNombre());
-		visit(indent + 1, "entero", "List<Entero>",node.getEntero());
+		visit(indent + 1, "tamanio_vector", "List<Tamanio_vector>",node.getTamanio_vector());
 		visit(indent + 1, "tipo", "Tipo",node.getTipo());
 		return null;
 	}
 
-	//	class Entero { int numero; }
-	public Object visit(Entero node, Object param) {
+	//	class Tamanio_vector { int numero; }
+	public Object visit(Tamanio_vector node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "Entero", node, false);
+		printName(indent, "Tamanio_vector", node, false);
 
 		print(indent + 1, "numero", "int", node.getNumero());
 		return null;
@@ -172,14 +172,14 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Definicion_2 { String nombre;  List<Entero> entero;  Tipo tipo; }
+	//	class Definicion_2 { String nombre;  List<Tamanio_vector> tamanio_vector;  Tipo tipo; }
 	public Object visit(Definicion_2 node, Object param) {
 		int indent = ((Integer)param).intValue();
 
 		printName(indent, "Definicion_2", node, false);
 
 		print(indent + 1, "nombre", "String", node.getNombre());
-		visit(indent + 1, "entero", "List<Entero>",node.getEntero());
+		visit(indent + 1, "tamanio_vector", "List<Tamanio_vector>",node.getTamanio_vector());
 		visit(indent + 1, "tipo", "Tipo",node.getTipo());
 		return null;
 	}
@@ -208,14 +208,14 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Definicion_3 { String nombre;  List<Entero> entero;  Tipo tipo; }
+	//	class Definicion_3 { String nombre;  List<Tamanio_vector> tamanio_vector;  Tipo tipo; }
 	public Object visit(Definicion_3 node, Object param) {
 		int indent = ((Integer)param).intValue();
 
 		printName(indent, "Definicion_3", node, false);
 
 		print(indent + 1, "nombre", "String", node.getNombre());
-		visit(indent + 1, "entero", "List<Entero>",node.getEntero());
+		visit(indent + 1, "tamanio_vector", "List<Tamanio_vector>",node.getTamanio_vector());
 		visit(indent + 1, "tipo", "Tipo",node.getTipo());
 		return null;
 	}

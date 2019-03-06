@@ -16,7 +16,7 @@ bloques	returns[List<Bloque> ast = new ArrayList<Bloque>()]
 
 	
 bloque 	returns[Bloque ast]
-	: definicion_1 	{ $ast = new Definicion_1($definicion_1.ast.getNombre(), $definicion_1.ast.getEntero(), $definicion_1.ast.getTipo()); }
+	: definicion_1 	{ $ast = new Definicion_1($definicion_1.ast.getNombre(), $definicion_1.ast.getTamanio_vector(), $definicion_1.ast.getTipo()); }
 	| struct 	{ $ast = new Struct($struct.ast.getNombre(), $struct.ast.getDefinicion_2()); }
 	| funcion 	{ $ast = new Funcion($funcion.ast.getNombre(), $funcion.ast.getParametros(), $funcion.ast.getRetorno(), $funcion.ast.getSentencia()); }
 	;
@@ -38,8 +38,8 @@ retorno	returns[List<Tipo> ast = new ArrayList<Tipo>()]
 	: (':' tipo 	{ $ast.add($tipo.ast); })?
 	;
 	
-lista 	returns[List<Entero> ast = new ArrayList<Entero>()]
-	: ('[' INT_CONSTANT ']' 	{ $ast.add(new Entero($INT_CONSTANT)); })* 
+lista 	returns[List<Tamanio_vector> ast = new ArrayList<Tamanio_vector>()]
+	: ('[' INT_CONSTANT ']' 	{ $ast.add(new Tamanio_vector($INT_CONSTANT)); })* 
 	;
 	
 tipo 	returns[Tipo ast]
@@ -108,6 +108,12 @@ sentencia_read	returns[Sentencia_read ast]
 	: 'read' expr ';'	{ $ast = new Sentencia_read($expr.ast); }
 	;
 	
+	
+	
+	
+	
+	
+	
 sentencia_if	returns[Sentencia_if ast]
 	: 'if' '(' expr ')' '{' sentencias '}'	{ $ast = new Sentencia_if($expr.ast, $sentencias.ast); }
 	;
@@ -115,6 +121,11 @@ sentencia_if	returns[Sentencia_if ast]
 sentencia_ifelse returns[Sentencia_ifelse ast]
 	: 'if' '(' expr ')' '{' sentencias '}' 'else' '{' sentencias '}' { $ast = new Sentencia_ifelse($expr.ast, $ctx.sentencias(0).ast, $ctx.sentencias(1).ast); }
 	;	
+	
+	
+	
+	
+	
 	
 
 

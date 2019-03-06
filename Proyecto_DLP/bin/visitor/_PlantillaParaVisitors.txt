@@ -50,13 +50,13 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Definicion_1 { String nombre;  List<Entero> entero;  Tipo tipo; }
+	//	class Definicion_1 { String nombre;  List<Tamanio_vector> tamanio_vector;  Tipo tipo; }
 	public Object visit(Definicion_1 node, Object param) {
 
 		// super.visit(node, param);
 
-		if (node.getEntero() != null)
-			for (Entero child : node.getEntero())
+		if (node.getTamanio_vector() != null)
+			for (Tamanio_vector child : node.getTamanio_vector())
 				child.accept(this, param);
 
 		if (node.getTipo() != null)
@@ -65,8 +65,8 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Entero { int numero; }
-	public Object visit(Entero node, Object param) {
+	//	class Tamanio_vector { int numero; }
+	public Object visit(Tamanio_vector node, Object param) {
 		return null;
 	}
 
@@ -102,13 +102,13 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Definicion_2 { String nombre;  List<Entero> entero;  Tipo tipo; }
+	//	class Definicion_2 { String nombre;  List<Tamanio_vector> tamanio_vector;  Tipo tipo; }
 	public Object visit(Definicion_2 node, Object param) {
 
 		// super.visit(node, param);
 
-		if (node.getEntero() != null)
-			for (Entero child : node.getEntero())
+		if (node.getTamanio_vector() != null)
+			for (Tamanio_vector child : node.getTamanio_vector())
 				child.accept(this, param);
 
 		if (node.getTipo() != null)
@@ -148,13 +148,13 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Definicion_3 { String nombre;  List<Entero> entero;  Tipo tipo; }
+	//	class Definicion_3 { String nombre;  List<Tamanio_vector> tamanio_vector;  Tipo tipo; }
 	public Object visit(Definicion_3 node, Object param) {
 
 		// super.visit(node, param);
 
-		if (node.getEntero() != null)
-			for (Entero child : node.getEntero())
+		if (node.getTamanio_vector() != null)
+			for (Tamanio_vector child : node.getTamanio_vector())
 				child.accept(this, param);
 
 		if (node.getTipo() != null)

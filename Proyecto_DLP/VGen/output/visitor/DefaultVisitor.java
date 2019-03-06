@@ -20,16 +20,16 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Definicion_1 { String nombre;  List<Entero> entero;  Tipo tipo; }
+	//	class Definicion_1 { String nombre;  List<Tamanio_vector> tamanio_vector;  Tipo tipo; }
 	public Object visit(Definicion_1 node, Object param) {
-		visitChildren(node.getEntero(), param);
+		visitChildren(node.getTamanio_vector(), param);
 		if (node.getTipo() != null)
 			node.getTipo().accept(this, param);
 		return null;
 	}
 
-	//	class Entero { int numero; }
-	public Object visit(Entero node, Object param) {
+	//	class Tamanio_vector { int numero; }
+	public Object visit(Tamanio_vector node, Object param) {
 		return null;
 	}
 
@@ -59,9 +59,9 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Definicion_2 { String nombre;  List<Entero> entero;  Tipo tipo; }
+	//	class Definicion_2 { String nombre;  List<Tamanio_vector> tamanio_vector;  Tipo tipo; }
 	public Object visit(Definicion_2 node, Object param) {
-		visitChildren(node.getEntero(), param);
+		visitChildren(node.getTamanio_vector(), param);
 		if (node.getTipo() != null)
 			node.getTipo().accept(this, param);
 		return null;
@@ -82,9 +82,9 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Definicion_3 { String nombre;  List<Entero> entero;  Tipo tipo; }
+	//	class Definicion_3 { String nombre;  List<Tamanio_vector> tamanio_vector;  Tipo tipo; }
 	public Object visit(Definicion_3 node, Object param) {
-		visitChildren(node.getEntero(), param);
+		visitChildren(node.getTamanio_vector(), param);
 		if (node.getTipo() != null)
 			node.getTipo().accept(this, param);
 		return null;

@@ -8,15 +8,15 @@ import visitor.*;
 
 import org.antlr.v4.runtime.*;
 
-//	entero -> numero:int
+//	tamanio_vector -> numero:int
 
-public class Entero extends AbstractAST  {
+public class Tamanio_vector extends AbstractAST  {
 
-	public Entero(int numero) {
+	public Tamanio_vector(int numero) {
 		this.numero = numero;
 	}
 
-	public Entero(Object numero) {
+	public Tamanio_vector(Object numero) {
 		this.numero = (numero instanceof Token) ? Integer.parseInt(((Token)numero).getText()) : (Integer) numero;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.

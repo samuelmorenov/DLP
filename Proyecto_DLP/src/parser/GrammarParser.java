@@ -237,7 +237,7 @@ public class GrammarParser extends Parser {
 				{
 				setState(71);
 				((BloqueContext)_localctx).definicion_1 = definicion_1();
-				 ((BloqueContext)_localctx).ast =  new Definicion_1(((BloqueContext)_localctx).definicion_1.ast.getNombre(), ((BloqueContext)_localctx).definicion_1.ast.getEntero(), ((BloqueContext)_localctx).definicion_1.ast.getTipo()); 
+				 ((BloqueContext)_localctx).ast =  new Definicion_1(((BloqueContext)_localctx).definicion_1.ast.getNombre(), ((BloqueContext)_localctx).definicion_1.ast.getTamanio_vector(), ((BloqueContext)_localctx).definicion_1.ast.getTipo()); 
 				}
 				break;
 			case T__3:
@@ -471,7 +471,7 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class ListaContext extends ParserRuleContext {
-		public List<Entero> ast = new ArrayList<Entero>();
+		public List<Tamanio_vector> ast = new ArrayList<Tamanio_vector>();
 		public Token INT_CONSTANT;
 		public List<TerminalNode> INT_CONSTANT() { return getTokens(GrammarParser.INT_CONSTANT); }
 		public TerminalNode INT_CONSTANT(int i) {
@@ -502,7 +502,7 @@ public class GrammarParser extends Parser {
 				((ListaContext)_localctx).INT_CONSTANT = match(INT_CONSTANT);
 				setState(116);
 				match(T__9);
-				 _localctx.ast.add(new Entero(((ListaContext)_localctx).INT_CONSTANT)); 
+				 _localctx.ast.add(new Tamanio_vector(((ListaContext)_localctx).INT_CONSTANT)); 
 				}
 				}
 				setState(122);
