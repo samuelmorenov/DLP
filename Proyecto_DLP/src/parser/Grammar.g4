@@ -1,49 +1,53 @@
 grammar Grammar;
 import Lexicon;
 
-start
-	: bloque* EOF
+@parser::header {
+    import ast.*;
+}
+
+start returns[List<Bloque> list = new ArrayList<Bloque>()]
+	: (bloque { $list.add($bloque.ast); })* EOF
 	;
 	
-bloque
-	: 'var' definicion
-	| struct
-	| funcion
+bloque returns[Bloque ast]
+	: 'var' definicion { $ast = new Definicion($definicion.ast); }
+	| struct { $ast = new Struct($struct.ast); }
+	| funcion { $ast = new Funcion($funcion.ast); }
 	;
 	
-definicion
-	: IDENT ':' ('[' INT_CONSTANT ']')* tipo ';'
+definicion returns[Definicion ast]
+	: IDENT ':' vector tipo ';' { $ast = new definicion($IDENT, $vector.list, $tipo.ast); }
 	;
 	
-tipo
-	: 'int'
-	| 'float'
-	| 'char'
-	|IDENT
+vector returns[List<$IDENT> list = new ArrayList<$IDENT>()]
+	: ('[' INT_CONSTANT ']' { $list.add($IDENT); })* 
+	;
+	
+tipo returns[Tipo ast]
+	: 'int' {  $ast = new TipoInt(); }
+	| 'float' {  $ast = new TipoFloat(); }
+	| 'char' {  $ast = new TipoChar(); }
+	| IDENT
 	;
 
 struct
-	: 'struct' IDENT '{' definicion* '}' ';'
+	: 'struct' IDENT '{' definiciones '}' ';'
+	;
+
+definiciones
+	: definicion*
 	;
 	
 funcion
-	: IDENT '(' parametros ')' retorno '{' sentencia* '}'
+	: IDENT '(' parametros ')' (':' tipo)? '{' sentencias '}'
 	;
-	
-llamada_funcion
-	: IDENT '(' parametros ')'
-	;
-	
 
 parametros
-	: (parametro (',' parametro)*)?
+	: (IDENT ':' tipo;  (',' IDENT ':' tipo; )*)?
 	;
 	
-parametro
-	: IDENT ':' tipo; 
-	
-retorno
-	: (':' tipo)?
+sentencias
+	: sentencia*
 	;
 	
 sentencia
@@ -58,7 +62,7 @@ sentencia
 	;
 	
 sentencia_asignacion
-	: expr '=' expr ';'//IDENT('.' IDENT)* '=' expr ';'
+	: expr '=' expr ';'
 	;
 	
 sentencia_print
@@ -72,12 +76,12 @@ sentencia_read
 	;
 	
 sentencia_if
-	: 'if' '(' expr ')' '{' sentencia+ '}' 
-	| 'if' '(' expr ')' '{' sentencia+ '}' 'else' '{' sentencia+ '}'
+	: 'if' '(' expr ')' '{' sentencias '}' 
+	| 'if' '(' expr ')' '{' sentencias '}' 'else' '{' sentencias '}'
 	;
 
 sentencia_while
-	: 'while' '(' expr ')' '{' sentencia+ '}'
+	: 'while' '(' expr ')' '{' sentencias '}'
 	;
 	
 	
@@ -86,16 +90,16 @@ sentencia_return
 	;
 	
 expr
-	: token
+	: constante
 	| expr operador expr
-	| expr ('['expr']')+
+	| expr ('['expr']')
 	| expr '.' expr
 	| '(' expr ')'
 	| 'cast' '<' tipo '>' '(' expr ')'
 	| IDENT '(' (expr (',' expr)*)? ')'
 	;
 
-token
+constante
 	: INT_CONSTANT
 	| REAL_CONSTANT
 	| IDENT

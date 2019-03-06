@@ -5,9 +5,9 @@ import java.io.*;
 import ast.*;
 
 /**
- * Esta clase coordina las dos fases principales de la Generación de Código:
- *  1. Gestión de Memoria (asignación de direcciones).
- *  2. Selección de Código.
+ * Esta clase coordina las dos fases principales de la Generacion de Codigo:
+ *  1. Gestion de Memoria (asignacion de direcciones).
+ *  2. Seleccion de Codigo.
  *
  * No es necesario modificar esta clase. En su lugar hay que modificar las clases
  * que son llamadas desde aquí: "MemoryAllocation.java" y "CodeSelection.java".

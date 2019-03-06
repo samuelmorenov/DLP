@@ -3,7 +3,7 @@ package ast;
 import visitor.*;
 
 /*
- *  Esta clase se completará en la fase de Análisis Sintáctico
+ *  Esta clase se completara en la fase de Analisis Sintactico
  */
 public interface AST {
     Position getStart();

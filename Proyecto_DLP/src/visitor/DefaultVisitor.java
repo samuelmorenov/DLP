@@ -1,9 +1,9 @@
 package visitor;
 
 /**
- * DefaultVisitor. Implementación base del visitor para ser derivada por nuevos visitor.
+ * DefaultVisitor. Implementacion base del visitor para ser derivada por nuevos visitor.
  *
- *  Esta clase se completará en la fase de Análisis Sintáctico.
+ *  Esta clase se completara en la fase de Analisis Sintactico.
  */
 public class DefaultVisitor implements Visitor {
 

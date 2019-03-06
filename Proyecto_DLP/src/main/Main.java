@@ -17,10 +17,10 @@ import codegeneration.*;
  *
  * Normalmente, no es necesario modificar este fichero. En su lugar, modificar
  * los ficheros de cada fase (que son llamados desde aquí):
- * - Para Análisis Léxico: 'Lexico.g4'.
- * - Para Análisis Sintáctico: 'Grammar.g4'.
- * - Para Análisis Semántico: 'Identification.java' y 'TypeChecking.java'.
- * - Para Generación de Código: 'MemoryAllocation.java' y 'CodeSelection.java'.
+ * - Para Analisis Léxico: 'Lexico.g4'.
+ * - Para Analisis Sintactico: 'Grammar.g4'.
+ * - Para Analisis Semantico: 'Identification.java' y 'TypeChecking.java'.
+ * - Para Generacion de Codigo: 'MemoryAllocation.java' y 'CodeSelection.java'.
  *
  * @author Raúl Izquierdo
  *
@@ -31,7 +31,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         ErrorManager errorManager = new ErrorManager();
 
-        AST ast = compile(program, errorManager); // Poner args[0] en vez de "programa" en la versión final
+        AST ast = compile(program, errorManager); // Poner args[0] en vez de "programa" en la version final
         if (errorManager.errorsCount() == 0)
             System.out.println("El programa se ha compilado correctamente.");
 
@@ -43,7 +43,7 @@ public class Main {
      */
     public static AST compile(String sourceName, ErrorManager errorManager) throws Exception {
 
-        // 1. Fases de Análisis Léxico y Sintáctico
+        // 1. Fases de Analisis Léxico y Sintactico
         GrammarLexer lexer = new GrammarLexer(CharStreams.fromFileName(sourceName));
 
         GrammarParser parser = new GrammarParser(new CommonTokenStream(lexer));
@@ -59,13 +59,13 @@ public class Main {
         if (ast == null) // Hay errores o el AST no se ha implementado aún
             return null;
 
-        // 2. Fase de Análisis Semántico
+        // 2. Fase de Analisis Semantico
         SemanticAnalisys analyzer = new SemanticAnalisys(errorManager);
         analyzer.analize(ast);
         if (errorManager.errorsCount() > 0)
             return ast;
 
-        // 3. Fase de Generación de Código
+        // 3. Fase de Generacion de Codigo
         File sourceFile = new File(sourceName);
         Writer out = new FileWriter(new File(sourceFile.getParent(), "output.txt"));
 

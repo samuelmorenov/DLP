@@ -1,0 +1,2 @@
+separar tipos de operadores
+separar listas del resto
