@@ -5,46 +5,63 @@ import Lexicon;
     import ast.*;
 }
 
-start returns[List<Bloque> list = new ArrayList<Bloque>()]
-	: (bloque { $list.add($bloque.ast); })* EOF
+start 															returns[List<Bloque> ast = new ArrayList<Bloque>()]
+	: (bloque 													{ $ast.add($bloque.ast); })* EOF
 	;
 	
-bloque returns[Bloque ast]
-	: 'var' definicion { $ast = new Definicion($definicion.ast); }
-	| struct { $ast = new Struct($struct.ast); }
-	| funcion { $ast = new Funcion($funcion.ast); }
+bloque 															returns[Bloque ast]
+	: definicion_var 											{ $ast = new Definicion($definicion_var.ast); }
+	| struct 													{ $ast = new Struct($struct.ast); }
+	| funcion 													{ $ast = new Funcion($funcion.ast); }
 	;
 	
-definicion returns[Definicion ast]
-	: IDENT ':' vector tipo ';' { $ast = new definicion($IDENT, $vector.list, $tipo.ast); }
+definicion_var 													returns[Definicion_var ast]
+	:'var' definicion 											{ $ast = new Definicion_var($definicion.ast); }
 	;
 	
-vector returns[List<$IDENT> list = new ArrayList<$IDENT>()]
-	: ('[' INT_CONSTANT ']' { $list.add($IDENT); })* 
+definicion 														returns[Definicion ast]
+	: IDENT ':' vector tipo ';' 								{ $ast = new definicion($IDENT, $vector.ast, $tipo.ast); }
 	;
 	
-tipo returns[Tipo ast]
-	: 'int' {  $ast = new TipoInt(); }
-	| 'float' {  $ast = new TipoFloat(); }
-	| 'char' {  $ast = new TipoChar(); }
-	| IDENT
+vector 															returns[List<$INT_CONSTANT> ast = new ArrayList<$INT_CONSTANT>()]
+	: ('[' INT_CONSTANT ']' 									{ $ast.add($INT_CONSTANT); })* 
+	;
+	
+tipo 															returns[Tipo ast]
+	: 'int'														{ $ast = new TipoInt(); }
+	| 'float' 													{ $ast = new TipoFloat(); }
+	| 'char' 													{ $ast = new TipoChar(); }
+	| IDENT 													{ $ast = $IDENT; }
 	;
 
-struct
-	: 'struct' IDENT '{' definiciones '}' ';'
+struct 															returns[Struct ast]
+	: 'struct' IDENT '{' definiciones '}' ';'					{ $ast = new Struct($IDENT, $definiciones.ast); }
 	;
 
-definiciones
-	: definicion*
+definiciones 													returns[List<Definicion> ast = new ArrayList<Definicion>()]
+	: (definicion 												{ $ast.add($definicion.ast); })* 
 	;
 	
-funcion
-	: IDENT '(' parametros ')' (':' tipo)? '{' sentencias '}'
+funcion 														returns[Funcion ast]
+	: IDENT '(' parametros ')' (':' tipo) '{' sentencias '}' 	{ $ast = new Definicion($IDENT, $parametros.ast, $tipo.ast, $sentencias.ast); }
+	| IDENT '(' parametros ')' '{' sentencias '}' 				{ $ast = new Definicion($IDENT, $parametros.ast, $sentencias.ast); }
 	;
 
-parametros
-	: (IDENT ':' tipo;  (',' IDENT ':' tipo; )*)?
+parametros 														returns[List<Parametro> ast = new ArrayList<Bloque>()]
+	: (parametro { $ast.add($parametro.ast); } (',' parametro 	{ $ast.add($parametro.ast); })*)?
 	;
+	
+parametro 														returns[Parametro ast]
+	: IDENT ':' tipo 											{ $ast = new Parametro($IDENT, $tipo.ast); }
+	;
+	
+	
+sentencias 														returns[Sentencias ast]
+	: 'cuerpo'													{ $ast = new Cuerpo(); }
+	;
+	
+	
+/*
 	
 sentencias
 	: sentencia*
@@ -114,3 +131,5 @@ operador
 	| '&&'
 	| '||'
 	;
+	
+*/
