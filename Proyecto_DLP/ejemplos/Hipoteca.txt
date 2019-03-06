@@ -26,29 +26,29 @@ potencia(base:float, exponente:int):float {
 }
 
 	
-letraHipoteca(capital:float, años:int, interes:float):float {
+letraHipoteca(capital:float, anyos:int, interes:float):float {
 	var mensual:float;
 
 	mensual = interes / 12.0;
-	return capital * mensual / (100.0 * (1.0 - potencia(1.0 + mensual/100.0, 0 - años * 12)));
+	return capital * mensual / (100.0 * (1.0 - potencia(1.0 + mensual/100.0, 0 - anyos * 12)));
 }
 
 
 main() {
 	var precioVivienda:float;
-	var añosHipoteca:int;
+	var anyosHipoteca:int;
 	var interes:float;
 
 /*
 	read precioVivienda;
-	read añosHipoteca;
+	read anyosHipoteca;
 	read interes;
 */
 	precioVivienda = 200000.0;
-	añosHipoteca = 30;
+	anyosHipoteca = 30;
 	interes = 2.04;	
 
-	print letraHipoteca(precioVivienda, añosHipoteca, interes);
+	print letraHipoteca(precioVivienda, anyosHipoteca, interes);
 
 //	Con los datos anteriores deberían salir 743 euros de letra al mes
 

@@ -104,11 +104,11 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Variable { String nombre;  List<Entero> entero;  Tipo tipo; }
-	public Object visit(Variable node, Object param) {
+	//	class Definicion_1 { String nombre;  List<Entero> entero;  Tipo tipo; }
+	public Object visit(Definicion_1 node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "Variable", node, false);
+		printName(indent, "Definicion_1", node, false);
 
 		print(indent + 1, "nombre", "String", node.getNombre());
 		visit(indent + 1, "entero", "List<Entero>",node.getEntero());
@@ -161,22 +161,22 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Struct { String nombre;  List<Definicion> definicion; }
+	//	class Struct { String nombre;  List<Definicion_2> definicion_2; }
 	public Object visit(Struct node, Object param) {
 		int indent = ((Integer)param).intValue();
 
 		printName(indent, "Struct", node, false);
 
 		print(indent + 1, "nombre", "String", node.getNombre());
-		visit(indent + 1, "definicion", "List<Definicion>",node.getDefinicion());
+		visit(indent + 1, "definicion_2", "List<Definicion_2>",node.getDefinicion_2());
 		return null;
 	}
 
-	//	class Definicion { String nombre;  List<Entero> entero;  Tipo tipo; }
-	public Object visit(Definicion node, Object param) {
+	//	class Definicion_2 { String nombre;  List<Entero> entero;  Tipo tipo; }
+	public Object visit(Definicion_2 node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "Definicion", node, false);
+		printName(indent, "Definicion_2", node, false);
 
 		print(indent + 1, "nombre", "String", node.getNombre());
 		visit(indent + 1, "entero", "List<Entero>",node.getEntero());
@@ -208,11 +208,224 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Sentencia { String cuerpo; }
-	public Object visit(Sentencia node, Object param) {
+	//	class Definicion_3 { String nombre;  List<Entero> entero;  Tipo tipo; }
+	public Object visit(Definicion_3 node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printCompact(indent, "Sentencia", node, "cuerpo", node.getCuerpo());
+		printName(indent, "Definicion_3", node, false);
+
+		print(indent + 1, "nombre", "String", node.getNombre());
+		visit(indent + 1, "entero", "List<Entero>",node.getEntero());
+		visit(indent + 1, "tipo", "Tipo",node.getTipo());
+		return null;
+	}
+
+	//	class Sentencia_asignacion { Expr izquierda;  Expr derecha; }
+	public Object visit(Sentencia_asignacion node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "Sentencia_asignacion", node, false);
+
+		visit(indent + 1, "izquierda", "Expr",node.getIzquierda());
+		visit(indent + 1, "derecha", "Expr",node.getDerecha());
+		return null;
+	}
+
+	//	class Sentencia_print { Expr expresiones; }
+	public Object visit(Sentencia_print node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "Sentencia_print", node, false);
+
+		visit(indent + 1, "expresiones", "Expr",node.getExpresiones());
+		return null;
+	}
+
+	//	class Sentencia_printlnVacia {  }
+	public Object visit(Sentencia_printlnVacia node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "Sentencia_printlnVacia", node, true);
+
+		return null;
+	}
+
+	//	class Sentencia_read { Expr expresiones; }
+	public Object visit(Sentencia_read node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "Sentencia_read", node, false);
+
+		visit(indent + 1, "expresiones", "Expr",node.getExpresiones());
+		return null;
+	}
+
+	//	class Sentencia_if { Expr condicion;  List<Sentencia> sentencias; }
+	public Object visit(Sentencia_if node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "Sentencia_if", node, false);
+
+		visit(indent + 1, "condicion", "Expr",node.getCondicion());
+		visit(indent + 1, "sentencias", "List<Sentencia>",node.getSentencias());
+		return null;
+	}
+
+	//	class Sentencia_ifelse { Expr condicion;  List<Sentencia> sentencias;  List<Sentencia> sino; }
+	public Object visit(Sentencia_ifelse node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "Sentencia_ifelse", node, false);
+
+		visit(indent + 1, "condicion", "Expr",node.getCondicion());
+		visit(indent + 1, "sentencias", "List<Sentencia>",node.getSentencias());
+		visit(indent + 1, "sino", "List<Sentencia>",node.getSino());
+		return null;
+	}
+
+	//	class Sentencia_while { Expr condicion;  List<Sentencia> sentencias; }
+	public Object visit(Sentencia_while node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "Sentencia_while", node, false);
+
+		visit(indent + 1, "condicion", "Expr",node.getCondicion());
+		visit(indent + 1, "sentencias", "List<Sentencia>",node.getSentencias());
+		return null;
+	}
+
+	//	class Sentencia_return { Expr expresion; }
+	public Object visit(Sentencia_return node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "Sentencia_return", node, false);
+
+		visit(indent + 1, "expresion", "Expr",node.getExpresion());
+		return null;
+	}
+
+	//	class Sentencia_returnVacia {  }
+	public Object visit(Sentencia_returnVacia node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "Sentencia_returnVacia", node, true);
+
+		return null;
+	}
+
+	//	class Sentencia_expresion { Expr expresion; }
+	public Object visit(Sentencia_expresion node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "Sentencia_expresion", node, false);
+
+		visit(indent + 1, "expresion", "Expr",node.getExpresion());
+		return null;
+	}
+
+	//	class Expr_int { String string; }
+	public Object visit(Expr_int node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printCompact(indent, "Expr_int", node, "string", node.getString());
+		return null;
+	}
+
+	//	class Expr_real { String string; }
+	public Object visit(Expr_real node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printCompact(indent, "Expr_real", node, "string", node.getString());
+		return null;
+	}
+
+	//	class Expr_char { String string; }
+	public Object visit(Expr_char node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printCompact(indent, "Expr_char", node, "string", node.getString());
+		return null;
+	}
+
+	//	class Expr_ident { String string; }
+	public Object visit(Expr_ident node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printCompact(indent, "Expr_ident", node, "string", node.getString());
+		return null;
+	}
+
+	//	class Expr_binaria { Expr izquierda;  Operador operador;  Expr derecha; }
+	public Object visit(Expr_binaria node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "Expr_binaria", node, false);
+
+		visit(indent + 1, "izquierda", "Expr",node.getIzquierda());
+		visit(indent + 1, "operador", "Operador",node.getOperador());
+		visit(indent + 1, "derecha", "Expr",node.getDerecha());
+		return null;
+	}
+
+	//	class Expr_vector { Expr fuera;  Expr dentro; }
+	public Object visit(Expr_vector node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "Expr_vector", node, false);
+
+		visit(indent + 1, "fuera", "Expr",node.getFuera());
+		visit(indent + 1, "dentro", "Expr",node.getDentro());
+		return null;
+	}
+
+	//	class Expr_punto { Expr izquierda;  Expr derecha; }
+	public Object visit(Expr_punto node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "Expr_punto", node, false);
+
+		visit(indent + 1, "izquierda", "Expr",node.getIzquierda());
+		visit(indent + 1, "derecha", "Expr",node.getDerecha());
+		return null;
+	}
+
+	//	class Expr_parentesis { Expr expr; }
+	public Object visit(Expr_parentesis node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "Expr_parentesis", node, false);
+
+		visit(indent + 1, "expr", "Expr",node.getExpr());
+		return null;
+	}
+
+	//	class Expr_cast { Tipo tipo;  Expr expr; }
+	public Object visit(Expr_cast node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "Expr_cast", node, false);
+
+		visit(indent + 1, "tipo", "Tipo",node.getTipo());
+		visit(indent + 1, "expr", "Expr",node.getExpr());
+		return null;
+	}
+
+	//	class Expr_llamada { String nombre;  List<Expr> parametros; }
+	public Object visit(Expr_llamada node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "Expr_llamada", node, false);
+
+		print(indent + 1, "nombre", "String", node.getNombre());
+		visit(indent + 1, "parametros", "List<Expr>",node.getParametros());
+		return null;
+	}
+
+	//	class Operador { String operador; }
+	public Object visit(Operador node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printCompact(indent, "Operador", node, "operador", node.getOperador());
 		return null;
 	}
 

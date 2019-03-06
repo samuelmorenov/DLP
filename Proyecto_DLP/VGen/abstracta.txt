@@ -1,10 +1,10 @@
 CATEGORIES
-bloque, tipo
+bloque, tipo, sentencia, expr
 
 NODES
 program -> bloque*;
 
-variable:bloque -> nombre:string entero* tipo;
+definicion_1:bloque -> nombre:string entero* tipo;
 
 entero -> numero:int;
 
@@ -14,14 +14,35 @@ tipoChar:tipo -> ;
 tipoVar:tipo -> string;
 
 
-struct:bloque -> nombre:string definicion*;
-definicion -> nombre:string entero* tipo;
+struct:bloque -> nombre:string definicion_2*;
+definicion_2 -> nombre:string entero* tipo;
 
 funcion:bloque -> nombre:string parametros:parametro* retorno:tipo* sentencia*;
 
 parametro -> nombre:string tipo;
 
-sentencia -> cuerpo:string;
+definicion_3:sentencia -> nombre:string entero* tipo;
+sentencia_asignacion:sentencia -> izquierda:expr derecha:expr;
+sentencia_print:sentencia -> expresiones:expr;
+sentencia_printlnVacia:sentencia -> ;
+sentencia_read:sentencia -> expresiones:expr;
+sentencia_if:sentencia -> condicion:expr sentencias:sentencia*;
+sentencia_ifelse:sentencia -> condicion:expr sentencias:sentencia* sino:sentencia*;
+sentencia_while:sentencia -> condicion:expr sentencias:sentencia*;
+sentencia_return:sentencia -> expresion:expr;
+sentencia_returnVacia:sentencia -> ;
+sentencia_expresion:sentencia -> expresion:expr;
 
+expr_int:expr -> string;
+expr_real:expr -> string;
+expr_char:expr -> string;
+expr_ident:expr -> string;
 
+expr_binaria:expr -> izquierda:expr operador:operador derecha:expr;
+expr_vector:expr -> fuera:expr dentro:expr;
+expr_punto:expr -> izquierda:expr derecha:expr;
+expr_parentesis:expr -> expr;
+expr_cast:expr -> tipo:tipo expr:expr;
+expr_llamada:expr -> nombre:string parametros:expr*;
 
+operador -> operador:string;
