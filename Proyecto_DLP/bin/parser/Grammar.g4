@@ -2,54 +2,111 @@ grammar Grammar;
 import Lexicon;
 
 start
-	: (variable | struct | funcion)* EOF;
+	: bloque* EOF
+	;
 	
-variable
-	: 'var' definicion;
-
+bloque
+	: 'var' definicion
+	| struct
+	| funcion
+	;
+	
 definicion
-	: IDENT ':' ('[' INT_CONSTANT ']')* (tipo|IDENT) ';';
+	: IDENT ':' ('[' INT_CONSTANT ']')* tipo ';'
+	;
 	
-
 tipo
 	: 'int'
 	| 'float'
-	| 'char';
+	| 'char'
+	|IDENT
+	;
 
 struct
-	: 'struct' IDENT '{' definicion* '}' ';';
+	: 'struct' IDENT '{' definicion* '}' ';'
+	;
 	
 funcion
-	: IDENT '(' parametros ')' salida '{' cuerpo '}';
+	: IDENT '(' parametros ')' retorno '{' sentencia* '}'
+	;
+	
+llamada_funcion
+	: IDENT '(' parametros ')'
+	;
+	
 
 parametros
-	: (parametro (',' parametro)*)?;
+	: (parametro (',' parametro)*)?
+	;
 	
 parametro
 	: IDENT ':' tipo; 
 	
-salida
-	: (':' tipo)?;
-	
-cuerpo
-	: variable* sentencia*;
+retorno
+	: (':' tipo)?
+	;
 	
 sentencia
-	: ('print'|'printsp') expr ';'
+	: 'var' definicion
+	| sentencia_asignacion
+	| sentencia_print
+	| sentencia_read
+	| sentencia_if
+	| sentencia_while
+	| sentencia_return
+	| expr ';'
+	;
+	
+sentencia_asignacion
+	: expr '=' expr ';'//IDENT('.' IDENT)* '=' expr ';'
+	;
+	
+sentencia_print
+	: 'print' expr ';'
+	| 'printsp' expr ';'
 	| 'println' expr? ';'
-	| ident_compuesto '=' expr ';'
-	| 'if' '(' expr ')' '{' sentencia+ '}'
+	;
+	
+sentencia_read
+	: 'read' expr ';'
+	;
+	
+sentencia_if
+	: 'if' '(' expr ')' '{' sentencia+ '}' 
 	| 'if' '(' expr ')' '{' sentencia+ '}' 'else' '{' sentencia+ '}'
-	| 'while' '(' expr ')' '{' sentencia+ '}';
+	;
+
+sentencia_while
+	: 'while' '(' expr ')' '{' sentencia+ '}'
+	;
+	
+	
+sentencia_return
+	: 'return' expr? ';'
+	;
 	
 expr
+	: token
+	| expr operador expr
+	| expr ('['expr']')+
+	| expr '.' expr
+	| '(' expr ')'
+	| 'cast' '<' tipo '>' '(' expr ')'
+	| IDENT '(' (expr (',' expr)*)? ')'
+	;
+
+token
 	: INT_CONSTANT
 	| REAL_CONSTANT
-	| ident_compuesto
-	| expr '+' expr
-	| expr '!=' expr
-	| '(' expr ')'
-	| '<' tipo '>' '(' expr ')';
+	| IDENT
+	| CHAR_CONSTANT
+	;
 	
-ident_compuesto
-	: IDENT('.' IDENT)*;
+operador
+	: ('*'|'/')
+	| ('+'|'-')
+	| ('=='|'!=')
+	| ('<'|'>'|'>='|'<=')
+	| '&&'
+	| '||'
+	;

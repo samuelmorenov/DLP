@@ -52,6 +52,8 @@ var microsoft: Empresa;
 dobleSuma(a:int, b:int): int {
 	var local:int;
 
+	local = (a + b) * 2;
+	return local * 2;
 }
 
 escribeEdad(num:int) {
