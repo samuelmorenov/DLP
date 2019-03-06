@@ -1,0 +1,155 @@
+/**
+ * @generated VGen (for ANTLR) 1.4.0
+ */
+
+
+// package <nombre paquete>;
+
+import ast.*;
+
+/*
+Plantilla para Visitors.
+Para crear un nuevo Visitor cortar y pegar este código y ya se tendría un visitor que compila y
+que al ejecutarlo recorrería todo el árbol (sin hacer nada aún en él).
+Solo quedaría añadir a cada método visit aquello adicional que se quiera realizar sobre su nodo del AST.
+*/
+
+public class <nombre clase> extends DefaultVisitor {
+
+	// ---------------------------------------------------------
+	// Tareas a realizar en cada método visit:
+	//
+	// Si en algún método visit NO SE QUIERE HACER NADA más que recorrer los hijos entonces se puede
+	// borrar (dicho método se heredaría de DefaultVisitor con el código de recorrido).
+	//
+	// Lo siguiente es para cuando se quiera AÑADIR alguna funcionalidad adicional a un visit:
+	//
+	// - El código que aparece en cada método visit es aquel que recorre los hijos. Es el mismo código
+	//		que está implementado en el padre (DefaultVisitor). Por tanto la llamada a 'super.visit' y el
+	//		resto del código del método hacen lo mismo (por ello 'super.visit' está comentado).
+	//
+	// - Lo HABITUAL será borrar todo el código de recorrido dejando solo la llamada a 'super.visit'. De esta
+	//		manera, cada método visit se puede centrar en la tarea que tiene que realizar sobre su nodo del AST
+    //      (dejando que el padre se encargue del recorrido de los hijos).
+	//
+	// - La razón de que aparezca el código de recorrido de los hijos es por si se necesita realizar alguna
+	//		tarea DURANTE el mismo (por ejemplo ir comprobando su tipo). En este caso, ya se tiene implementado
+	//		dicho recorrido y solo habría que incrustar las acciones adicionales en el mismo. En este caso,
+	//		es la llamada a 'super.visit' la que debería ser borrada.
+	// ---------------------------------------------------------
+
+	//	class Program { List<Bloque> bloque; }
+	public Object visit(Program node, Object param) {
+
+		// super.visit(node, param);
+
+		if (node.getBloque() != null)
+			for (Bloque child : node.getBloque())
+				child.accept(this, param);
+
+		return null;
+	}
+
+	//	class Variable { String nombre;  List<Entero> entero;  Tipo tipo; }
+	public Object visit(Variable node, Object param) {
+
+		// super.visit(node, param);
+
+		if (node.getEntero() != null)
+			for (Entero child : node.getEntero())
+				child.accept(this, param);
+
+		if (node.getTipo() != null)
+			node.getTipo().accept(this, param);
+
+		return null;
+	}
+
+	//	class Entero { int numero; }
+	public Object visit(Entero node, Object param) {
+		return null;
+	}
+
+	//	class TipoInt {  }
+	public Object visit(TipoInt node, Object param) {
+		return null;
+	}
+
+	//	class TipoFloat {  }
+	public Object visit(TipoFloat node, Object param) {
+		return null;
+	}
+
+	//	class TipoChar {  }
+	public Object visit(TipoChar node, Object param) {
+		return null;
+	}
+
+	//	class TipoVar { String string; }
+	public Object visit(TipoVar node, Object param) {
+		return null;
+	}
+
+	//	class Struct { String nombre;  List<Definicion> definicion; }
+	public Object visit(Struct node, Object param) {
+
+		// super.visit(node, param);
+
+		if (node.getDefinicion() != null)
+			for (Definicion child : node.getDefinicion())
+				child.accept(this, param);
+
+		return null;
+	}
+
+	//	class Definicion { String nombre;  List<Entero> entero;  Tipo tipo; }
+	public Object visit(Definicion node, Object param) {
+
+		// super.visit(node, param);
+
+		if (node.getEntero() != null)
+			for (Entero child : node.getEntero())
+				child.accept(this, param);
+
+		if (node.getTipo() != null)
+			node.getTipo().accept(this, param);
+
+		return null;
+	}
+
+	//	class Funcion { String nombre;  List<Parametro> parametros;  List<Tipo> retorno;  List<Sentencia> sentencia; }
+	public Object visit(Funcion node, Object param) {
+
+		// super.visit(node, param);
+
+		if (node.getParametros() != null)
+			for (Parametro child : node.getParametros())
+				child.accept(this, param);
+
+		if (node.getRetorno() != null)
+			for (Tipo child : node.getRetorno())
+				child.accept(this, param);
+
+		if (node.getSentencia() != null)
+			for (Sentencia child : node.getSentencia())
+				child.accept(this, param);
+
+		return null;
+	}
+
+	//	class Parametro { String nombre;  Tipo tipo; }
+	public Object visit(Parametro node, Object param) {
+
+		// super.visit(node, param);
+
+		if (node.getTipo() != null)
+			node.getTipo().accept(this, param);
+
+		return null;
+	}
+
+	//	class Sentencia { String cuerpo; }
+	public Object visit(Sentencia node, Object param) {
+		return null;
+	}
+}

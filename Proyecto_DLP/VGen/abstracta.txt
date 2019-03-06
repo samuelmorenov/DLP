@@ -1,18 +1,27 @@
 CATEGORIES
-expression, sentence, type
+bloque, tipo
 
 NODES
-program -> definitions:varDefinition* sentences:sentence*;
+program -> bloque*;
 
-varDefinition -> type name:string;
+variable:bloque -> nombre:string entero* tipo;
 
-intType:type -> ;
-realType:type -> ;
+entero -> numero:int;
 
-print:sentence -> expression;
-assignment:sentence -> left:expression right:expression;
+tipoInt:tipo -> ;
+tipoFloat:tipo -> ;
+tipoChar:tipo -> ;
+tipoVar:tipo -> string;
 
-arithmeticExpression:expression -> left:expression operator:string right:expression;
-variable:expression -> name:string;
-intConstant:expression -> value:string;
-realConstant:expression -> value:string;
+
+struct:bloque -> nombre:string definicion*;
+definicion -> nombre:string entero* tipo;
+
+funcion:bloque -> nombre:string parametros:parametro* retorno:tipo* sentencia*;
+
+parametro -> nombre:string tipo;
+
+sentencia -> cuerpo:string;
+
+
+

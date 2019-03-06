@@ -53,8 +53,8 @@ public class Main {
         AST ast = null;
 
         // IMPORTANTE: Cuando se genere el AST, INTERCAMBIAR las dos líneas siguientes:
-        parser.start();
-        // ast = parser.start().ast;
+        //parser.start();
+        ast = parser.start().ast;
 
         if (ast == null) // Hay errores o el AST no se ha implementado aún
             return null;

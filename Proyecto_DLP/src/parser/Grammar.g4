@@ -5,60 +5,82 @@ import Lexicon;
     import ast.*;
 }
 
-start 															returns[List<Bloque> ast = new ArrayList<Bloque>()]
+start returns[Program ast]
+	: bloques { $ast = new Program($bloques.ast); }
+	;
+
+
+bloques															returns[List<Bloque> ast = new ArrayList<Bloque>()]
 	: (bloque 													{ $ast.add($bloque.ast); })* EOF
 	;
+
 	
 bloque 															returns[Bloque ast]
-	: definicion_var 											{ $ast = new Definicion($definicion_var.ast); }
-	| struct 													{ $ast = new Struct($struct.ast); }
-	| funcion 													{ $ast = new Funcion($funcion.ast); }
+	: variable 													{ $ast = new Variable($variable.ast.getNombre(), $variable.ast.getEntero(), $variable.ast.getTipo()); }
+	| struct 													{ $ast = new Struct($struct.ast.getNombre(), $struct.ast.getDefinicion()); }
+	| funcion 													{ $ast = new Funcion($funcion.ast.getNombre(), $funcion.ast.getParametros(), $funcion.ast.getRetorno(), $funcion.ast.getSentencia()); }
 	;
 	
-definicion_var 													returns[Definicion_var ast]
-	:'var' definicion 											{ $ast = new Definicion_var($definicion.ast); }
+variable 														returns[Variable ast]
+	:'var' IDENT ':' lista tipo ';'								{ $ast = new Variable($IDENT, $lista.ast, $tipo.ast); }
 	;
 	
 definicion 														returns[Definicion ast]
-	: IDENT ':' vector tipo ';' 								{ $ast = new definicion($IDENT, $vector.ast, $tipo.ast); }
+	: IDENT ':' lista tipo ';' 									{ $ast = new Definicion($IDENT, $lista.ast, $tipo.ast); }
+	;
+		
+struct 															returns[Struct ast]
+	: 'struct' IDENT '{' definiciones '}' ';'					{ $ast = new Struct($IDENT, $definiciones.ast); }
 	;
 	
-vector 															returns[List<$INT_CONSTANT> ast = new ArrayList<$INT_CONSTANT>()]
-	: ('[' INT_CONSTANT ']' 									{ $ast.add($INT_CONSTANT); })* 
+funcion 														returns[Funcion ast]
+	: IDENT '(' parametros ')' retorno '{' sentencias '}' 	{ $ast = new Funcion($IDENT, $parametros.ast, $retorno.ast, $sentencias.ast); }
+	;
+	
+retorno															returns[List<Tipo> ast = new ArrayList<Tipo>()]
+	: (':' tipo 												{ $ast.add($tipo.ast); })?
+	;
+	
+lista 															returns[List<Entero> ast = new ArrayList<Entero>()]
+	: ('[' INT_CONSTANT ']' 									{ $ast.add(new Entero($INT_CONSTANT)); })* 
 	;
 	
 tipo 															returns[Tipo ast]
 	: 'int'														{ $ast = new TipoInt(); }
 	| 'float' 													{ $ast = new TipoFloat(); }
 	| 'char' 													{ $ast = new TipoChar(); }
-	| IDENT 													{ $ast = $IDENT; }
+	| IDENT 													{ $ast = new TipoVar($IDENT); }
 	;
 
-struct 															returns[Struct ast]
-	: 'struct' IDENT '{' definiciones '}' ';'					{ $ast = new Struct($IDENT, $definiciones.ast); }
-	;
 
 definiciones 													returns[List<Definicion> ast = new ArrayList<Definicion>()]
 	: (definicion 												{ $ast.add($definicion.ast); })* 
 	;
 	
-funcion 														returns[Funcion ast]
-	: IDENT '(' parametros ')' (':' tipo) '{' sentencias '}' 	{ $ast = new Definicion($IDENT, $parametros.ast, $tipo.ast, $sentencias.ast); }
-	| IDENT '(' parametros ')' '{' sentencias '}' 				{ $ast = new Definicion($IDENT, $parametros.ast, $sentencias.ast); }
-	;
 
-parametros 														returns[List<Parametro> ast = new ArrayList<Bloque>()]
+parametros 														returns[List<Parametro> ast = new ArrayList<Parametro>()]
 	: (parametro { $ast.add($parametro.ast); } (',' parametro 	{ $ast.add($parametro.ast); })*)?
+	//:(parametro (',' parametro)*)?
 	;
 	
 parametro 														returns[Parametro ast]
 	: IDENT ':' tipo 											{ $ast = new Parametro($IDENT, $tipo.ast); }
 	;
+
+sentencias														returns[List<Sentencia> ast = new ArrayList<Sentencia>()]
+	: (sentencia												{ $ast.add($sentencia.ast); }	)*
+	;	
+
+sentencia 														returns[Sentencia ast]
+	: 'cuerpo;'													{ $ast = new Sentencia("cuerpo"); }
+	;	
 	
 	
-sentencias 														returns[Sentencias ast]
-	: 'cuerpo'													{ $ast = new Cuerpo(); }
-	;
+	
+	
+	
+	
+	
 	
 	
 /*
@@ -131,5 +153,4 @@ operador
 	| '&&'
 	| '||'
 	;
-	
 */
