@@ -4,7 +4,9 @@ bloque, tipo, sentencia, expr
 NODES
 program -> bloque*;
 
-definicion_1:bloque -> nombre:string tamanio_vector* tipo;
+definicion_variables:bloque -> nombre:string tipo;
+definicion_struct -> nombre:string tipo;
+definicion_funcion:sentencia -> nombre:string tipo;
 
 tamanio_vector -> numero:int;
 
@@ -12,25 +14,20 @@ tipoInt:tipo -> ;
 tipoFloat:tipo -> ;
 tipoChar:tipo -> ;
 tipoVar:tipo -> string;
+tipoArray:tipo -> tamanio:string tipo;
 
-
-struct:bloque -> nombre:string definicion_2*;
-definicion_2 -> nombre:string tamanio_vector* tipo;
+struct:bloque -> nombre:string definicion_struct*;
 
 funcion:bloque -> nombre:string parametros:parametro* retorno:tipo* sentencia*;
 
 parametro -> nombre:string tipo;
 
-definicion_3:sentencia -> nombre:string tamanio_vector* tipo;
 sentencia_asignacion:sentencia -> izquierda:expr derecha:expr;
 sentencia_print:sentencia -> expresiones:expr;
-sentencia_printlnVacia:sentencia -> ;
 sentencia_read:sentencia -> expresiones:expr;
-sentencia_if:sentencia -> condicion:expr sentencias:sentencia*;
-sentencia_ifelse:sentencia -> condicion:expr sentencias:sentencia* sino:sentencia*;
+sentencia_if:sentencia -> condicion:expr sentencias:sentencia* sino:sentencia*;
 sentencia_while:sentencia -> condicion:expr sentencias:sentencia*;
 sentencia_return:sentencia -> expresion:expr;
-sentencia_returnVacia:sentencia -> ;
 sentencia_expresion:sentencia -> expresion:expr;
 
 expr_int:expr -> string;

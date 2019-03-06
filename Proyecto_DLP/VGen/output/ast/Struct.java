@@ -9,27 +9,27 @@ import visitor.*;
 
 import org.antlr.v4.runtime.*;
 
-//	struct:bloque -> nombre:String  definicion_2:definicion_2*
+//	struct:bloque -> nombre:String  definicion_struct:definicion_struct*
 
 public class Struct extends AbstractBloque {
 
-	public Struct(String nombre, List<Definicion_2> definicion_2) {
+	public Struct(String nombre, List<Definicion_struct> definicion_struct) {
 		this.nombre = nombre;
-		this.definicion_2 = definicion_2;
+		this.definicion_struct = definicion_struct;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(definicion_2);
+       setPositions(definicion_struct);
 	}
 
 	@SuppressWarnings("unchecked")
-	public Struct(Object nombre, Object definicion_2) {
+	public Struct(Object nombre, Object definicion_struct) {
 		this.nombre = (nombre instanceof Token) ? ((Token)nombre).getText() : (String) nombre;
-		this.definicion_2 = (List<Definicion_2>) definicion_2;
+		this.definicion_struct = (List<Definicion_struct>) definicion_struct;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(nombre, definicion_2);
+       setPositions(nombre, definicion_struct);
 	}
 
 	public String getNombre() {
@@ -39,11 +39,11 @@ public class Struct extends AbstractBloque {
 		this.nombre = nombre;
 	}
 
-	public List<Definicion_2> getDefinicion_2() {
-		return definicion_2;
+	public List<Definicion_struct> getDefinicion_struct() {
+		return definicion_struct;
 	}
-	public void setDefinicion_2(List<Definicion_2> definicion_2) {
-		this.definicion_2 = definicion_2;
+	public void setDefinicion_struct(List<Definicion_struct> definicion_struct) {
+		this.definicion_struct = definicion_struct;
 	}
 
 	@Override
@@ -52,9 +52,9 @@ public class Struct extends AbstractBloque {
 	}
 
 	private String nombre;
-	private List<Definicion_2> definicion_2;
+	private List<Definicion_struct> definicion_struct;
 
 	public String toString() {
-       return "{nombre:" + getNombre() + ", definicion_2:" + getDefinicion_2() + "}";
+       return "{nombre:" + getNombre() + ", definicion_struct:" + getDefinicion_struct() + "}";
    }
 }

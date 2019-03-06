@@ -9,27 +9,29 @@ import visitor.*;
 
 import org.antlr.v4.runtime.*;
 
-//	sentencia_if:sentencia -> condicion:expr  sentencias:sentencia*
+//	sentencia_if:sentencia -> condicion:expr  sentencias:sentencia*  sino:sentencia*
 
 public class Sentencia_if extends AbstractSentencia {
 
-	public Sentencia_if(Expr condicion, List<Sentencia> sentencias) {
+	public Sentencia_if(Expr condicion, List<Sentencia> sentencias, List<Sentencia> sino) {
 		this.condicion = condicion;
 		this.sentencias = sentencias;
+		this.sino = sino;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(condicion, sentencias);
+       setPositions(condicion, sentencias, sino);
 	}
 
 	@SuppressWarnings("unchecked")
-	public Sentencia_if(Object condicion, Object sentencias) {
+	public Sentencia_if(Object condicion, Object sentencias, Object sino) {
 		this.condicion = (Expr) ((condicion instanceof ParserRuleContext) ? getAST(condicion) : condicion);
 		this.sentencias = (List<Sentencia>) sentencias;
+		this.sino = (List<Sentencia>) sino;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(condicion, sentencias);
+       setPositions(condicion, sentencias, sino);
 	}
 
 	public Expr getCondicion() {
@@ -46,6 +48,13 @@ public class Sentencia_if extends AbstractSentencia {
 		this.sentencias = sentencias;
 	}
 
+	public List<Sentencia> getSino() {
+		return sino;
+	}
+	public void setSino(List<Sentencia> sino) {
+		this.sino = sino;
+	}
+
 	@Override
 	public Object accept(Visitor v, Object param) { 
 		return v.visit(this, param);
@@ -53,8 +62,9 @@ public class Sentencia_if extends AbstractSentencia {
 
 	private Expr condicion;
 	private List<Sentencia> sentencias;
+	private List<Sentencia> sino;
 
 	public String toString() {
-       return "{condicion:" + getCondicion() + ", sentencias:" + getSentencias() + "}";
+       return "{condicion:" + getCondicion() + ", sentencias:" + getSentencias() + ", sino:" + getSino() + "}";
    }
 }

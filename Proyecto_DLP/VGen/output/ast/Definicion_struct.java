@@ -4,34 +4,30 @@
 
 package ast;
 
-import java.util.*;
 import visitor.*;
 
 import org.antlr.v4.runtime.*;
 
-//	definicion_3:sentencia -> nombre:String  tamanio_vector:tamanio_vector*  tipo:tipo
+//	definicion_struct -> nombre:String  tipo:tipo
 
-public class Definicion_3 extends AbstractSentencia {
+public class Definicion_struct extends AbstractAST  {
 
-	public Definicion_3(String nombre, List<Tamanio_vector> tamanio_vector, Tipo tipo) {
+	public Definicion_struct(String nombre, Tipo tipo) {
 		this.nombre = nombre;
-		this.tamanio_vector = tamanio_vector;
 		this.tipo = tipo;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(tamanio_vector, tipo);
+       setPositions(tipo);
 	}
 
-	@SuppressWarnings("unchecked")
-	public Definicion_3(Object nombre, Object tamanio_vector, Object tipo) {
+	public Definicion_struct(Object nombre, Object tipo) {
 		this.nombre = (nombre instanceof Token) ? ((Token)nombre).getText() : (String) nombre;
-		this.tamanio_vector = (List<Tamanio_vector>) tamanio_vector;
 		this.tipo = (Tipo) ((tipo instanceof ParserRuleContext) ? getAST(tipo) : tipo);
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(nombre, tamanio_vector, tipo);
+       setPositions(nombre, tipo);
 	}
 
 	public String getNombre() {
@@ -39,13 +35,6 @@ public class Definicion_3 extends AbstractSentencia {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public List<Tamanio_vector> getTamanio_vector() {
-		return tamanio_vector;
-	}
-	public void setTamanio_vector(List<Tamanio_vector> tamanio_vector) {
-		this.tamanio_vector = tamanio_vector;
 	}
 
 	public Tipo getTipo() {
@@ -61,10 +50,9 @@ public class Definicion_3 extends AbstractSentencia {
 	}
 
 	private String nombre;
-	private List<Tamanio_vector> tamanio_vector;
 	private Tipo tipo;
 
 	public String toString() {
-       return "{nombre:" + getNombre() + ", tamanio_vector:" + getTamanio_vector() + ", tipo:" + getTipo() + "}";
+       return "{nombre:" + getNombre() + ", tipo:" + getTipo() + "}";
    }
 }

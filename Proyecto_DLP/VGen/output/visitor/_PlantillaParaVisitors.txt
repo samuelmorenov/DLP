@@ -50,14 +50,32 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Definicion_1 { String nombre;  List<Tamanio_vector> tamanio_vector;  Tipo tipo; }
-	public Object visit(Definicion_1 node, Object param) {
+	//	class Definicion_variables { String nombre;  Tipo tipo; }
+	public Object visit(Definicion_variables node, Object param) {
 
 		// super.visit(node, param);
 
-		if (node.getTamanio_vector() != null)
-			for (Tamanio_vector child : node.getTamanio_vector())
-				child.accept(this, param);
+		if (node.getTipo() != null)
+			node.getTipo().accept(this, param);
+
+		return null;
+	}
+
+	//	class Definicion_struct { String nombre;  Tipo tipo; }
+	public Object visit(Definicion_struct node, Object param) {
+
+		// super.visit(node, param);
+
+		if (node.getTipo() != null)
+			node.getTipo().accept(this, param);
+
+		return null;
+	}
+
+	//	class Definicion_funcion { String nombre;  Tipo tipo; }
+	public Object visit(Definicion_funcion node, Object param) {
+
+		// super.visit(node, param);
 
 		if (node.getTipo() != null)
 			node.getTipo().accept(this, param);
@@ -90,29 +108,25 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Struct { String nombre;  List<Definicion_2> definicion_2; }
-	public Object visit(Struct node, Object param) {
+	//	class TipoArray { String tamanio;  Tipo tipo; }
+	public Object visit(TipoArray node, Object param) {
 
 		// super.visit(node, param);
 
-		if (node.getDefinicion_2() != null)
-			for (Definicion_2 child : node.getDefinicion_2())
-				child.accept(this, param);
+		if (node.getTipo() != null)
+			node.getTipo().accept(this, param);
 
 		return null;
 	}
 
-	//	class Definicion_2 { String nombre;  List<Tamanio_vector> tamanio_vector;  Tipo tipo; }
-	public Object visit(Definicion_2 node, Object param) {
+	//	class Struct { String nombre;  List<Definicion_struct> definicion_struct; }
+	public Object visit(Struct node, Object param) {
 
 		// super.visit(node, param);
 
-		if (node.getTamanio_vector() != null)
-			for (Tamanio_vector child : node.getTamanio_vector())
+		if (node.getDefinicion_struct() != null)
+			for (Definicion_struct child : node.getDefinicion_struct())
 				child.accept(this, param);
-
-		if (node.getTipo() != null)
-			node.getTipo().accept(this, param);
 
 		return null;
 	}
@@ -148,21 +162,6 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Definicion_3 { String nombre;  List<Tamanio_vector> tamanio_vector;  Tipo tipo; }
-	public Object visit(Definicion_3 node, Object param) {
-
-		// super.visit(node, param);
-
-		if (node.getTamanio_vector() != null)
-			for (Tamanio_vector child : node.getTamanio_vector())
-				child.accept(this, param);
-
-		if (node.getTipo() != null)
-			node.getTipo().accept(this, param);
-
-		return null;
-	}
-
 	//	class Sentencia_asignacion { Expr izquierda;  Expr derecha; }
 	public Object visit(Sentencia_asignacion node, Object param) {
 
@@ -188,11 +187,6 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Sentencia_printlnVacia {  }
-	public Object visit(Sentencia_printlnVacia node, Object param) {
-		return null;
-	}
-
 	//	class Sentencia_read { Expr expresiones; }
 	public Object visit(Sentencia_read node, Object param) {
 
@@ -204,23 +198,8 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Sentencia_if { Expr condicion;  List<Sentencia> sentencias; }
+	//	class Sentencia_if { Expr condicion;  List<Sentencia> sentencias;  List<Sentencia> sino; }
 	public Object visit(Sentencia_if node, Object param) {
-
-		// super.visit(node, param);
-
-		if (node.getCondicion() != null)
-			node.getCondicion().accept(this, param);
-
-		if (node.getSentencias() != null)
-			for (Sentencia child : node.getSentencias())
-				child.accept(this, param);
-
-		return null;
-	}
-
-	//	class Sentencia_ifelse { Expr condicion;  List<Sentencia> sentencias;  List<Sentencia> sino; }
-	public Object visit(Sentencia_ifelse node, Object param) {
 
 		// super.visit(node, param);
 
@@ -261,11 +240,6 @@ public class <nombre clase> extends DefaultVisitor {
 		if (node.getExpresion() != null)
 			node.getExpresion().accept(this, param);
 
-		return null;
-	}
-
-	//	class Sentencia_returnVacia {  }
-	public Object visit(Sentencia_returnVacia node, Object param) {
 		return null;
 	}
 
