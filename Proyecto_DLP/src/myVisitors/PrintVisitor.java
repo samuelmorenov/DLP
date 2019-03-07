@@ -130,9 +130,11 @@ public class PrintVisitor extends DefaultVisitor {
 		}
 		System.out.print(")");
 		if (node.getRetorno() != null) {
-			System.out.print(": ");
-			for (Tipo child : node.getRetorno())
+			
+			for (Tipo child : node.getRetorno()) {
+				System.out.print(": ");
 				child.accept(this, param);
+			}
 
 		}
 		System.out.println(" {");

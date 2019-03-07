@@ -39,8 +39,8 @@ public class Main {
         ASTPrinter.toHtml(program, ast, "AST"); // Utilidad generada por VGen (opcional)
         
         //Visitor:
-        PrintVisitor pv = new PrintVisitor();
-        ast.accept(pv, null);
+        //PrintVisitor pv = new PrintVisitor();
+        //ast.accept(pv, null);
         
         
     }
