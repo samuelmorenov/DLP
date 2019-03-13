@@ -104,33 +104,33 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Definicion_variables { String nombre;  Tipo tipo; }
-	public Object visit(Definicion_variables node, Object param) {
+	//	class Definicion_variable { String nombre;  Tipo tipo; }
+	public Object visit(Definicion_variable node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "Definicion_variables", node, false);
+		printName(indent, "Definicion_variable", node, false);
 
 		print(indent + 1, "nombre", "String", node.getNombre());
 		visit(indent + 1, "tipo", "Tipo",node.getTipo());
 		return null;
 	}
 
-	//	class Definicion_struct { String nombre;  Tipo tipo; }
-	public Object visit(Definicion_struct node, Object param) {
+	//	class Definicion_variable_struct { String nombre;  Tipo tipo; }
+	public Object visit(Definicion_variable_struct node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "Definicion_struct", node, false);
+		printName(indent, "Definicion_variable_struct", node, false);
 
 		print(indent + 1, "nombre", "String", node.getNombre());
 		visit(indent + 1, "tipo", "Tipo",node.getTipo());
 		return null;
 	}
 
-	//	class Definicion_funcion { String nombre;  Tipo tipo; }
-	public Object visit(Definicion_funcion node, Object param) {
+	//	class Definicion_variable_funcion { String nombre;  Tipo tipo; }
+	public Object visit(Definicion_variable_funcion node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "Definicion_funcion", node, false);
+		printName(indent, "Definicion_variable_funcion", node, false);
 
 		print(indent + 1, "nombre", "String", node.getNombre());
 		visit(indent + 1, "tipo", "Tipo",node.getTipo());
@@ -193,14 +193,14 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Struct { String nombre;  List<Definicion_struct> definicion_struct; }
+	//	class Struct { String nombre;  List<Definicion_variable_struct> definicion_variable_struct; }
 	public Object visit(Struct node, Object param) {
 		int indent = ((Integer)param).intValue();
 
 		printName(indent, "Struct", node, false);
 
 		print(indent + 1, "nombre", "String", node.getNombre());
-		visit(indent + 1, "definicion_struct", "List<Definicion_struct>",node.getDefinicion_struct());
+		visit(indent + 1, "definicion_variable_struct", "List<Definicion_variable_struct>",node.getDefinicion_variable_struct());
 		return null;
 	}
 
@@ -389,22 +389,44 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Expr_llamada { String nombre;  List<Expr> parametros; }
-	public Object visit(Expr_llamada node, Object param) {
+	//	class Expr_llamada_funcion { String nombre;  List<Expr> parametros; }
+	public Object visit(Expr_llamada_funcion node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "Expr_llamada", node, false);
+		printName(indent, "Expr_llamada_funcion", node, false);
 
 		print(indent + 1, "nombre", "String", node.getNombre());
 		visit(indent + 1, "parametros", "List<Expr>",node.getParametros());
 		return null;
 	}
 
-	//	class Operador { String operador; }
-	public Object visit(Operador node, Object param) {
+	//	class Operador_aritmetico { Operador operador_aritmetico; }
+	public Object visit(Operador_aritmetico node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printCompact(indent, "Operador", node, "operador", node.getOperador());
+		printName(indent, "Operador_aritmetico", node, false);
+
+		visit(indent + 1, "operador_aritmetico", "Operador",node.getOperador_aritmetico());
+		return null;
+	}
+
+	//	class Operador_logico { Operador operador_logico; }
+	public Object visit(Operador_logico node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "Operador_logico", node, false);
+
+		visit(indent + 1, "operador_logico", "Operador",node.getOperador_logico());
+		return null;
+	}
+
+	//	class Operador_booleano { Operador operador_booleano; }
+	public Object visit(Operador_booleano node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "Operador_booleano", node, false);
+
+		visit(indent + 1, "operador_booleano", "Operador",node.getOperador_booleano());
 		return null;
 	}
 

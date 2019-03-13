@@ -9,27 +9,27 @@ import visitor.*;
 
 import org.antlr.v4.runtime.*;
 
-//	struct:bloque -> nombre:String  definicion_struct:definicion_struct*
+//	struct:bloque -> nombre:String  definicion_variable_struct:definicion_variable_struct*
 
 public class Struct extends AbstractBloque {
 
-	public Struct(String nombre, List<Definicion_struct> definicion_struct) {
+	public Struct(String nombre, List<Definicion_variable_struct> definicion_variable_struct) {
 		this.nombre = nombre;
-		this.definicion_struct = definicion_struct;
+		this.definicion_variable_struct = definicion_variable_struct;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(definicion_struct);
+       setPositions(definicion_variable_struct);
 	}
 
 	@SuppressWarnings("unchecked")
-	public Struct(Object nombre, Object definicion_struct) {
+	public Struct(Object nombre, Object definicion_variable_struct) {
 		this.nombre = (nombre instanceof Token) ? ((Token)nombre).getText() : (String) nombre;
-		this.definicion_struct = (List<Definicion_struct>) definicion_struct;
+		this.definicion_variable_struct = (List<Definicion_variable_struct>) definicion_variable_struct;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(nombre, definicion_struct);
+       setPositions(nombre, definicion_variable_struct);
 	}
 
 	public String getNombre() {
@@ -39,11 +39,11 @@ public class Struct extends AbstractBloque {
 		this.nombre = nombre;
 	}
 
-	public List<Definicion_struct> getDefinicion_struct() {
-		return definicion_struct;
+	public List<Definicion_variable_struct> getDefinicion_variable_struct() {
+		return definicion_variable_struct;
 	}
-	public void setDefinicion_struct(List<Definicion_struct> definicion_struct) {
-		this.definicion_struct = definicion_struct;
+	public void setDefinicion_variable_struct(List<Definicion_variable_struct> definicion_variable_struct) {
+		this.definicion_variable_struct = definicion_variable_struct;
 	}
 
 	@Override
@@ -52,9 +52,9 @@ public class Struct extends AbstractBloque {
 	}
 
 	private String nombre;
-	private List<Definicion_struct> definicion_struct;
+	private List<Definicion_variable_struct> definicion_variable_struct;
 
 	public String toString() {
-       return "{nombre:" + getNombre() + ", definicion_struct:" + getDefinicion_struct() + "}";
+       return "{nombre:" + getNombre() + ", definicion_variable_struct:" + getDefinicion_variable_struct() + "}";
    }
 }

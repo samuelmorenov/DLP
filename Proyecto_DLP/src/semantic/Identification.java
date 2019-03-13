@@ -28,7 +28,7 @@ public class Identification extends DefaultVisitor {
 	}
 
 	// class Expr_llamada { String nombre; List<Expr> parametros; }
-	public Object visit(Expr_llamada node, Object param) {
+	public Object visit(Expr_llamada_funcion node, Object param) {
 		Funcion definicion = funciones.get(node.getNombre());
 		predicado(definicion != null, "Funcion no definida: " + node.getNombre(), node);
 		node.setDefinicion(definicion); // Enlazar referencia con definicion

@@ -20,22 +20,22 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Definicion_variables { String nombre;  Tipo tipo; }
-	public Object visit(Definicion_variables node, Object param) {
+	//	class Definicion_variable { String nombre;  Tipo tipo; }
+	public Object visit(Definicion_variable node, Object param) {
 		if (node.getTipo() != null)
 			node.getTipo().accept(this, param);
 		return null;
 	}
 
-	//	class Definicion_struct { String nombre;  Tipo tipo; }
-	public Object visit(Definicion_struct node, Object param) {
+	//	class Definicion_variable_struct { String nombre;  Tipo tipo; }
+	public Object visit(Definicion_variable_struct node, Object param) {
 		if (node.getTipo() != null)
 			node.getTipo().accept(this, param);
 		return null;
 	}
 
-	//	class Definicion_funcion { String nombre;  Tipo tipo; }
-	public Object visit(Definicion_funcion node, Object param) {
+	//	class Definicion_variable_funcion { String nombre;  Tipo tipo; }
+	public Object visit(Definicion_variable_funcion node, Object param) {
 		if (node.getTipo() != null)
 			node.getTipo().accept(this, param);
 		return null;
@@ -73,9 +73,9 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Struct { String nombre;  List<Definicion_struct> definicion_struct; }
+	//	class Struct { String nombre;  List<Definicion_variable_struct> definicion_variable_struct; }
 	public Object visit(Struct node, Object param) {
-		visitChildren(node.getDefinicion_struct(), param);
+		visitChildren(node.getDefinicion_variable_struct(), param);
 		return null;
 	}
 
@@ -213,14 +213,30 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Expr_llamada { String nombre;  List<Expr> parametros; }
-	public Object visit(Expr_llamada node, Object param) {
+	//	class Expr_llamada_funcion { String nombre;  List<Expr> parametros; }
+	public Object visit(Expr_llamada_funcion node, Object param) {
 		visitChildren(node.getParametros(), param);
 		return null;
 	}
 
-	//	class Operador { String operador; }
-	public Object visit(Operador node, Object param) {
+	//	class Operador_aritmetico { Operador operador_aritmetico; }
+	public Object visit(Operador_aritmetico node, Object param) {
+		if (node.getOperador_aritmetico() != null)
+			node.getOperador_aritmetico().accept(this, param);
+		return null;
+	}
+
+	//	class Operador_logico { Operador operador_logico; }
+	public Object visit(Operador_logico node, Object param) {
+		if (node.getOperador_logico() != null)
+			node.getOperador_logico().accept(this, param);
+		return null;
+	}
+
+	//	class Operador_booleano { Operador operador_booleano; }
+	public Object visit(Operador_booleano node, Object param) {
+		if (node.getOperador_booleano() != null)
+			node.getOperador_booleano().accept(this, param);
 		return null;
 	}
 

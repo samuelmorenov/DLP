@@ -18,7 +18,7 @@ public class PrintVisitor extends DefaultVisitor {
 	}
 
 	// class Definicion_variables { String nombre; Tipo tipo; }
-	public Object visit(Definicion_variables node, Object param) {
+	public Object visit(Definicion_variable node, Object param) {
 		// super.visit(node, param);
 		System.out.print("var " + node.getNombre() + ":");
 
@@ -31,7 +31,7 @@ public class PrintVisitor extends DefaultVisitor {
 	}
 
 	// class Definicion_struct { String nombre; Tipo tipo; }
-	public Object visit(Definicion_struct node, Object param) {
+	public Object visit(Definicion_variable_struct node, Object param) {
 		// super.visit(node, param);
 		System.out.print(node.getNombre() + ":");
 
@@ -44,7 +44,7 @@ public class PrintVisitor extends DefaultVisitor {
 	}
 
 	// class Definicion_funcion { String nombre; Tipo tipo; }
-	public Object visit(Definicion_funcion node, Object param) {
+	public Object visit(Definicion_variable_funcion node, Object param) {
 
 		// super.visit(node, param);
 
@@ -106,8 +106,8 @@ public class PrintVisitor extends DefaultVisitor {
 
 		// super.visit(node, param);
 		System.out.println("struct " + node.getNombre() + "{");
-		if (node.getDefinicion_struct() != null)
-			for (Definicion_struct child : node.getDefinicion_struct())
+		if (node.getDefinicion_variable_struct() != null)
+			for (Definicion_variable_struct child : node.getDefinicion_variable_struct())
 				child.accept(this, param);
 		System.out.println("};");
 
@@ -345,7 +345,7 @@ public class PrintVisitor extends DefaultVisitor {
 	}
 
 	// class Expr_llamada { String nombre; List<Expr> parametros; }
-	public Object visit(Expr_llamada node, Object param) {
+	public Object visit(Expr_llamada_funcion node, Object param) {
 
 		// super.visit(node, param);
 		System.out.print(node.getNombre()+ "(");
@@ -356,9 +356,21 @@ public class PrintVisitor extends DefaultVisitor {
 		return null;
 	}
 
-	// class Operador { String operador; }
-	public Object visit(Operador node, Object param) {
-		System.out.print(node.getOperador());
+	//	class Operador_aritmetico { Operador operador_aritmetico; }
+	public Object visit(Operador_aritmetico node, Object param) {
+		System.out.print(node.getOperador_aritmetico());
+		return null;
+	}
+
+	//	class Operador_logico { Operador operador_logico; }
+	public Object visit(Operador_logico node, Object param) {
+		System.out.print(node.getOperador_logico());
+		return null;
+	}
+
+	//	class Operador_booleano { Operador operador_booleano; }
+	public Object visit(Operador_booleano node, Object param) {
+		System.out.print(node.getOperador_booleano());
 		return null;
 	}
 }

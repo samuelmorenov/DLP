@@ -8,9 +8,9 @@ import ast.*;
 
 public interface Visitor {
 	public Object visit(Program node, Object param);
-	public Object visit(Definicion_variables node, Object param);
-	public Object visit(Definicion_struct node, Object param);
-	public Object visit(Definicion_funcion node, Object param);
+	public Object visit(Definicion_variable node, Object param);
+	public Object visit(Definicion_variable_struct node, Object param);
+	public Object visit(Definicion_variable_funcion node, Object param);
 	public Object visit(Tamanio_vector node, Object param);
 	public Object visit(TipoInt node, Object param);
 	public Object visit(TipoFloat node, Object param);
@@ -36,6 +36,8 @@ public interface Visitor {
 	public Object visit(Expr_punto node, Object param);
 	public Object visit(Expr_parentesis node, Object param);
 	public Object visit(Expr_cast node, Object param);
-	public Object visit(Expr_llamada node, Object param);
-	public Object visit(Operador node, Object param);
+	public Object visit(Expr_llamada_funcion node, Object param);
+	public Object visit(Operador_aritmetico node, Object param);
+	public Object visit(Operador_logico node, Object param);
+	public Object visit(Operador_booleano node, Object param);
 }

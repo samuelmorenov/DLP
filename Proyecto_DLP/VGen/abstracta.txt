@@ -1,12 +1,12 @@
 CATEGORIES
-bloque, tipo, sentencia, expr
+bloque, tipo, sentencia, expr, operador
 
 NODES
 program -> bloque*;
 
-definicion_variables:bloque -> nombre:string tipo;
-definicion_struct -> nombre:string tipo;
-definicion_funcion:sentencia -> nombre:string tipo;
+definicion_variable:bloque -> nombre:string tipo;
+definicion_variable_struct -> nombre:string tipo;
+definicion_variable_funcion:sentencia -> nombre:string tipo;
 
 tamanio_vector -> numero:int;
 
@@ -16,7 +16,7 @@ tipoChar:tipo -> ;
 tipoVar:tipo -> string;
 tipoArray:tipo -> tamanio:string tipo;
 
-struct:bloque -> nombre:string definicion_struct*;
+struct:bloque -> nombre:string definicion_variable_struct*;
 
 funcion:bloque -> nombre:string parametros:parametro* retorno:tipo* sentencia*;
 
@@ -40,6 +40,8 @@ expr_vector:expr -> fuera:expr dentro:expr;
 expr_punto:expr -> izquierda:expr derecha:expr;
 expr_parentesis:expr -> expr;
 expr_cast:expr -> tipo:tipo expr:expr;
-expr_llamada:expr -> nombre:string parametros:expr*;
+expr_llamada_funcion:expr -> nombre:string parametros:expr*;
 
-operador -> operador:string;
+operador_aritmetico:operador-> operador_aritmetico:operador;
+operador_logico:operador-> operador_logico:operador;
+operador_booleano:operador-> operador_booleano:operador;
