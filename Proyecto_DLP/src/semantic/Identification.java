@@ -36,6 +36,44 @@ public class Identification extends DefaultVisitor {
 		return null;
 	}
 
+	
+	//	class Struct { String nombre;  List<Definicion_variable_struct> definicion_variable_struct; }
+	public Object visit(Struct node, Object param) {
+		Struct definicion = estructuras.get(node.getNombre());
+		predicado(definicion == null, "Struct ya definido: " + node.getNombre(), node);
+		estructuras.put(node.getNombre(), node);
+
+		campos_struct.set();
+		if (node.getDefinicion_variable_struct() != null)
+			for (Definicion_variable_struct child : node.getDefinicion_variable_struct())
+				child.accept(this, param);
+		campos_struct.reset();
+		
+		
+		return null;
+	}
+	
+	//	class Definicion_variable_struct { String nombre;  Tipo tipo; }
+	public Object visit(Definicion_variable_struct node, Object param) {
+
+		Definicion_variable_struct definicion = campos_struct.getFromAny(node.getNombre());
+		predicado(definicion == null, "Campo ya definido: " + node.getNombre(), node);
+		node.setDefinicion(definicion); // Enlazar referencia con definicion
+		campos_struct.put(node.getNombre(), node);
+		super.visit(node, param);
+		return null;
+	}
+	
+	//	class TipoVar { String string; }
+	public Object visit(TipoVar node, Object param) {
+		Struct definicion = estructuras.get(node.getString());
+		predicado(definicion != null, "Struct no definido: " + node.getString(), node);
+		node.setDefinicion(definicion); // Enlazar referencia con definicion
+		super.visit(node, param);
+		return null;
+	}
+	
+
 	/**
 	 * predicado. Metodo auxiliar para implementar los predicados. Borrar si no se
 	 * quiere usar.
@@ -78,4 +116,7 @@ public class Identification extends DefaultVisitor {
 
 	private ErrorManager errorManager;
 	private Map<String, Funcion> funciones = new HashMap<String, Funcion>();
+	private Map<String, Struct> estructuras = new HashMap<String, Struct>();
+	private ContextMap<String, Definicion_variable_struct> campos_struct = new ContextMap<String, Definicion_variable_struct>();
+	
 }

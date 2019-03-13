@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Attribute Grammar (VGen)</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style type="text/css">
+        body {
+            font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        .cabecera {
+            color: #FFFFFF;
+            background-color: #8DB3E2;
+        }
+
+        .nodo {
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .categoria {
+            color: #808080;
+        }
+
+        .nombreAtt {
+            font-style: italic;
+        }
+
+        .tipoAtt {
+            color: #808080;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Attribute Grammar</h2>
+    <table border="1" cellspacing="0">
+        <tr class="cabecera">
+            <td><strong>&nbsp;Nodo</strong></td>
+            <td><strong>&nbsp;Predicados&nbsp;</strong></td>
+            <td><strong>&nbsp;Reglas&nbsp;Semánticas&nbsp;</strong></td>
+        </tr>
+<tr><td><span class="nodo">program</span>&nbsp;&rarr;  <span class="nombreAtt">bloque</span><span class="tipoAtt">:bloque*</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">definicion_variable_struct</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">tipo</span><span class="tipoAtt">:tipo</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">tamanio_vector</span>&nbsp;&rarr;  <span class="nombreAtt">numero</span><span class="tipoAtt">:int</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">parametro</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">tipo</span><span class="tipoAtt">:tipo</span></td><td></td><td></td></tr>
+<tr><td>&nbsp;</td><td></td><td></td></tr>
+
+<tr><td><span class="nodo">definicion_variable</span>:<span class="categoria">bloque</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">tipo</span><span class="tipoAtt">:tipo</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">struct</span>:<span class="categoria">bloque</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">definicion_variable_struct</span><span class="tipoAtt">:definicion_variable_struct*</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">funcion</span>:<span class="categoria">bloque</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">parametros</span><span class="tipoAtt">:parametro*</span> <span class="nombreAtt">retorno</span><span class="tipoAtt">:tipo*</span> <span class="nombreAtt">sentencia</span><span class="tipoAtt">:sentencia*</span></td><td></td><td></td></tr>
+<tr><td>&nbsp;</td><td></td><td></td></tr>
+
+<tr><td><span class="nodo">definicion_variable_funcion</span>:<span class="categoria">sentencia</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">tipo</span><span class="tipoAtt">:tipo</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">sentencia_asignacion</span>:<span class="categoria">sentencia</span>&nbsp;&rarr;  <span class="nombreAtt">izquierda</span><span class="tipoAtt">:expr</span> <span class="nombreAtt">derecha</span><span class="tipoAtt">:expr</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">sentencia_print</span>:<span class="categoria">sentencia</span>&nbsp;&rarr;  <span class="nombreAtt">expresiones</span><span class="tipoAtt">:expr</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">sentencia_read</span>:<span class="categoria">sentencia</span>&nbsp;&rarr;  <span class="nombreAtt">expresiones</span><span class="tipoAtt">:expr</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">sentencia_if</span>:<span class="categoria">sentencia</span>&nbsp;&rarr;  <span class="nombreAtt">condicion</span><span class="tipoAtt">:expr</span> <span class="nombreAtt">sentencias</span><span class="tipoAtt">:sentencia*</span> <span class="nombreAtt">sino</span><span class="tipoAtt">:sentencia*</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">sentencia_while</span>:<span class="categoria">sentencia</span>&nbsp;&rarr;  <span class="nombreAtt">condicion</span><span class="tipoAtt">:expr</span> <span class="nombreAtt">sentencias</span><span class="tipoAtt">:sentencia*</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">sentencia_return</span>:<span class="categoria">sentencia</span>&nbsp;&rarr;  <span class="nombreAtt">expresion</span><span class="tipoAtt">:expr</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">sentencia_expresion</span>:<span class="categoria">sentencia</span>&nbsp;&rarr;  <span class="nombreAtt">expresion</span><span class="tipoAtt">:expr</span></td><td></td><td></td></tr>
+<tr><td>&nbsp;</td><td></td><td></td></tr>
+
+<tr><td><span class="nodo">tipoInt</span>:<span class="categoria">tipo</span>&nbsp;&rarr; &lambda;</td><td></td><td></td></tr>
+<tr><td><span class="nodo">tipoFloat</span>:<span class="categoria">tipo</span>&nbsp;&rarr; &lambda;</td><td></td><td></td></tr>
+<tr><td><span class="nodo">tipoChar</span>:<span class="categoria">tipo</span>&nbsp;&rarr; &lambda;</td><td></td><td></td></tr>
+<tr><td><span class="nodo">tipoVar</span>:<span class="categoria">tipo</span>&nbsp;&rarr;  <span class="nombreAtt">string</span><span class="tipoAtt">:String</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">tipoArray</span>:<span class="categoria">tipo</span>&nbsp;&rarr;  <span class="nombreAtt">tamanio</span><span class="tipoAtt">:String</span> <span class="nombreAtt">tipo</span><span class="tipoAtt">:tipo</span></td><td></td><td></td></tr>
+<tr><td>&nbsp;</td><td></td><td></td></tr>
+
+<tr><td><span class="nodo">expr_int</span>:<span class="categoria">expr</span>&nbsp;&rarr;  <span class="nombreAtt">string</span><span class="tipoAtt">:String</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">expr_real</span>:<span class="categoria">expr</span>&nbsp;&rarr;  <span class="nombreAtt">string</span><span class="tipoAtt">:String</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">expr_char</span>:<span class="categoria">expr</span>&nbsp;&rarr;  <span class="nombreAtt">string</span><span class="tipoAtt">:String</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">expr_ident</span>:<span class="categoria">expr</span>&nbsp;&rarr;  <span class="nombreAtt">string</span><span class="tipoAtt">:String</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">expr_binaria</span>:<span class="categoria">expr</span>&nbsp;&rarr;  <span class="nombreAtt">izquierda</span><span class="tipoAtt">:expr</span> <span class="nombreAtt">operador</span><span class="tipoAtt">:operador</span> <span class="nombreAtt">derecha</span><span class="tipoAtt">:expr</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">expr_vector</span>:<span class="categoria">expr</span>&nbsp;&rarr;  <span class="nombreAtt">fuera</span><span class="tipoAtt">:expr</span> <span class="nombreAtt">dentro</span><span class="tipoAtt">:expr</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">expr_punto</span>:<span class="categoria">expr</span>&nbsp;&rarr;  <span class="nombreAtt">izquierda</span><span class="tipoAtt">:expr</span> <span class="nombreAtt">derecha</span><span class="tipoAtt">:expr</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">expr_parentesis</span>:<span class="categoria">expr</span>&nbsp;&rarr;  <span class="nombreAtt">expr</span><span class="tipoAtt">:expr</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">expr_cast</span>:<span class="categoria">expr</span>&nbsp;&rarr;  <span class="nombreAtt">tipo</span><span class="tipoAtt">:tipo</span> <span class="nombreAtt">expr</span><span class="tipoAtt">:expr</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">expr_llamada_funcion</span>:<span class="categoria">expr</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">parametros</span><span class="tipoAtt">:expr*</span></td><td></td><td></td></tr>
+<tr><td>&nbsp;</td><td></td><td></td></tr>
+
+<tr><td><span class="nodo">operador_aritmetico</span>:<span class="categoria">operador</span>&nbsp;&rarr;  <span class="nombreAtt">operador_aritmetico</span><span class="tipoAtt">:operador</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">operador_logico</span>:<span class="categoria">operador</span>&nbsp;&rarr;  <span class="nombreAtt">operador_logico</span><span class="tipoAtt">:operador</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">operador_booleano</span>:<span class="categoria">operador</span>&nbsp;&rarr;  <span class="nombreAtt">operador_booleano</span><span class="tipoAtt">:operador</span></td><td></td><td></td></tr>
+<tr><td>&nbsp;</td><td></td><td></td></tr>
+
+
+    </table>
+
+    <br>
+    Recordatorio de los operadores (para cortar y pegar): &rArr; &hArr; &ne; &empty; &isin; &notin; &cup; &cap; &sub; &nsub; &sum; &exist; &forall;
+    <h3>Atributos</h3>
+    <table border="1" cellspacing="0">
+        <tr class="cabecera">
+            <td>&nbsp;<strong>Categoría Sintáctica</strong>&nbsp;</td>
+            <td>&nbsp;<strong>Nombre del atributo</strong>&nbsp;</td>
+            <td>&nbsp;<strong>Tipo Java</strong>&nbsp;</td>
+            <td>&nbsp;<strong>Heredado/Sintetizado</strong>&nbsp;</td>
+            <td>&nbsp;<strong>Descripción</strong>&nbsp;</td>
+        </tr>
+
+        <tr>
+            <td>&nbsp;</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+
+</body>
+
+</html>
