@@ -23,7 +23,25 @@ public class Identification extends DefaultVisitor {
 		Funcion definicion = funciones.get(node.getNombre());
 		predicado(definicion == null, "Funcion ya definida: " + node.getNombre(), node);
 		funciones.put(node.getNombre(), node);
-		super.visit(node, param);
+		
+		
+		parametros.set();
+		variables_locales.set();
+		if (node.getParametros() != null)
+			for (Parametro child : node.getParametros())
+				child.accept(this, param);
+
+		if (node.getRetorno() != null)
+			for (Tipo child : node.getRetorno())
+				child.accept(this, param);
+
+		if (node.getSentencia() != null)
+			for (Sentencia child : node.getSentencia())
+				child.accept(this, param);
+		variables_locales.reset();
+		parametros.reset();
+		
+		
 		return null;
 	}
 
@@ -73,6 +91,62 @@ public class Identification extends DefaultVisitor {
 		return null;
 	}
 	
+	//	class Parametro { String nombre;  Tipo tipo; }
+	public Object visit(Parametro node, Object param) {
+		Parametro definicion = parametros.getFromAny(node.getNombre());
+		predicado(definicion == null, "Parametro repetido: " + node.getNombre(), node);
+		node.setDefinicion(definicion); // Enlazar referencia con definicion
+		parametros.put(node.getNombre(), node);
+		super.visit(node, param);
+		return null;
+	}
+	
+	//	class Definicion_variable { String nombre;  Tipo tipo; }
+	public Object visit(Definicion_variable node, Object param) {
+		Definicion_variable definicion = variables_globales.getFromAny(node.getNombre());
+		predicado(definicion == null, "Variable ya definida: " + node.getNombre(), node);
+		node.setDefinicion(definicion); // Enlazar referencia con definicion
+		variables_globales.put(node.getNombre(), node);
+		super.visit(node, param);
+		return null;
+	}
+	
+	
+	//	class Definicion_variable_funcion { String nombre;  Tipo tipo; }
+	public Object visit(Definicion_variable_funcion node, Object param) {
+
+		Parametro definicion1 = parametros.getFromAny(node.getNombre());
+		Definicion_variable_funcion definicion2 = variables_locales.getFromAny(node.getNombre());
+		
+		//TODO: revisar que este bien el predicado
+		predicado(definicion1 == null && definicion2 == null, "Variable local ya definida: " + node.getNombre(), node);
+		node.setDefinicion(definicion2); // Enlazar referencia con definicion
+		variables_locales.put(node.getNombre(), node);
+		super.visit(node, param);
+		return null;
+	}
+	
+	//	class Expr_ident { String string; }
+	public Object visit(Expr_ident node, Object param) {
+		Parametro definicion_parametro = parametros.getFromAny(node.getString());
+		Definicion_variable_funcion definicion_local = variables_locales.getFromAny(node.getString());
+		Definicion_variable definicion_global = variables_globales.getFromAny(node.getString());
+		predicado(definicion_parametro != null || definicion_local != null || definicion_global != null, "Variable no definida: " + node.getString(), node);
+		
+		if(definicion_parametro != null) {
+			node.setDefinicion(definicion_parametro);
+			return null;
+		}
+		if(definicion_local != null) {
+			node.setDefinicion(definicion_local);
+			return null;
+		}
+		if(definicion_global != null) {
+			node.setDefinicion(definicion_global);
+			return null;
+		}
+		return null;
+	}
 
 	/**
 	 * predicado. Metodo auxiliar para implementar los predicados. Borrar si no se
@@ -118,5 +192,8 @@ public class Identification extends DefaultVisitor {
 	private Map<String, Funcion> funciones = new HashMap<String, Funcion>();
 	private Map<String, Struct> estructuras = new HashMap<String, Struct>();
 	private ContextMap<String, Definicion_variable_struct> campos_struct = new ContextMap<String, Definicion_variable_struct>();
+	private ContextMap<String, Parametro> parametros = new ContextMap<String, Parametro>();
+	private ContextMap<String, Definicion_variable> variables_globales = new ContextMap<String, Definicion_variable>();
+	private ContextMap<String, Definicion_variable_funcion> variables_locales = new ContextMap<String, Definicion_variable_funcion>();
 	
 }

@@ -44,6 +44,14 @@ public class Definicion_variable_funcion extends AbstractSentencia {
 		this.tipo = tipo;
 	}
 
+	public Definicion_variable_funcion getDefinicion() {
+		return definicion;
+	}
+
+	public void setDefinicion(Definicion_variable_funcion definicion) {
+		this.definicion = definicion;
+	}
+
 	@Override
 	public Object accept(Visitor v, Object param) { 
 		return v.visit(this, param);
@@ -51,8 +59,11 @@ public class Definicion_variable_funcion extends AbstractSentencia {
 
 	private String nombre;
 	private Tipo tipo;
+	private Definicion_variable_funcion definicion;
 
 	public String toString() {
        return "{nombre:" + getNombre() + ", tipo:" + getTipo() + "}";
    }
+
+
 }
