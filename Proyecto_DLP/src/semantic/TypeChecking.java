@@ -60,7 +60,7 @@ public class TypeChecking extends DefaultVisitor {
 	//	class Expr_binaria { Expr izquierda;  Operador operador;  Expr derecha; }
 	public Object visit(Expr_binaria node, Object param) {
 		
-		predicado(mismoTipo(node.getIzquierda().getTipo() derecha.tipo) , "Struct ya definido: " + node.getNombre(), node);
+		//predicado(mismoTipo(node.getIzquierda().getTipo() derecha.tipo) , "Struct ya definido: " + node.getNombre(), node);
 
 		// super.visit(node, param);
 
