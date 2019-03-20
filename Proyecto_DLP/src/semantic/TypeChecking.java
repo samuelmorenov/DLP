@@ -12,18 +12,75 @@ public class TypeChecking extends DefaultVisitor {
         this.errorManager = errorManager;
     }
 
-    /*
-     * Poner aquí los visit necesarios.
-     * Si se ha usado VGen, solo hay que copiarlos de la clase 'visitor/_PlantillaParaVisitors.txt'.
-     */
+    
+	//	class Expr_int { String string; }
+	public Object visit(Expr_int node, Object param) {
+		node.setTipo(new TipoInt());
+		node.setModificable(false);
 
-    // public Object visit(Programa prog, Object param) {
-    //      ...
-    // }
+		return null;
+	}
+	
+	//	class Expr_real { String string; }
+	public Object visit(Expr_real node, Object param) {
+		node.setTipo(new TipoFloat());
+		node.setModificable(false);
+		return null;
+	}
 
-    // ...
-    // ...
-    // ...
+	//	class Expr_char { String string; }
+	public Object visit(Expr_char node, Object param) {
+		node.setTipo(new TipoChar());
+		node.setModificable(false);
+		return null;
+	}
+
+	//	class Expr_ident { String string; }
+	public Object visit(Expr_ident node, Object param) {
+		node.setModificable(true);
+		
+		if(node.getDefinicion_global() != null) {
+			node.setTipo(node.getDefinicion_global().getTipo());
+			return null;
+		}
+		if(node.getDefinicion_parametro() != null) {
+			node.setTipo(node.getDefinicion_parametro().getTipo());
+			return null;
+		}
+		if(node.getDefinicion_local() != null) {
+			node.setTipo(node.getDefinicion_local().getTipo());
+			return null;
+		}
+		
+		return null;
+
+		
+	}
+
+	//	class Expr_binaria { Expr izquierda;  Operador operador;  Expr derecha; }
+	public Object visit(Expr_binaria node, Object param) {
+		
+		predicado(mismoTipo(node.getIzquierda().getTipo() derecha.tipo) , "Struct ya definido: " + node.getNombre(), node);
+
+		// super.visit(node, param);
+
+		if (node.getIzquierda() != null)
+			node.getIzquierda().accept(this, param);
+
+		if (node.getOperador() != null)
+			node.getOperador().accept(this, param);
+
+		if (node.getDerecha() != null)
+			node.getDerecha().accept(this, param);
+
+		return null;
+	}
+	
+	/////////////////////////////////////////////////////////////////////////
+	//Metodos auxiliares:
+	
+	
+	
 
     /**
      * predicado. Método auxiliar para implementar los predicados. Borrar si no se quiere usar.
