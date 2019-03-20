@@ -8,31 +8,27 @@ import visitor.*;
 
 import org.antlr.v4.runtime.*;
 
-//	operador_aritmetico:operador -> operador_aritmetico:operador
+//	operador_aritmetico:operador -> string:String
 
 public class Operador_aritmetico extends AbstractOperador {
 
-	public Operador_aritmetico(Operador operador_aritmetico) {
-		this.operador_aritmetico = operador_aritmetico;
+	public Operador_aritmetico(String string) {
+		this.string = string;
+	}
+
+	public Operador_aritmetico(Object string) {
+		this.string = (string instanceof Token) ? ((Token)string).getText() : (String) string;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(operador_aritmetico);
+       setPositions(string);
 	}
 
-	public Operador_aritmetico(Object operador_aritmetico) {
-		this.operador_aritmetico = (Operador) ((operador_aritmetico instanceof ParserRuleContext) ? getAST(operador_aritmetico) : operador_aritmetico);
-
-       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
-       // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(operador_aritmetico);
+	public String getString() {
+		return string;
 	}
-
-	public Operador getOperador_aritmetico() {
-		return operador_aritmetico;
-	}
-	public void setOperador_aritmetico(Operador operador_aritmetico) {
-		this.operador_aritmetico = operador_aritmetico;
+	public void setString(String string) {
+		this.string = string;
 	}
 
 	@Override
@@ -40,9 +36,9 @@ public class Operador_aritmetico extends AbstractOperador {
 		return v.visit(this, param);
 	}
 
-	private Operador operador_aritmetico;
+	private String string;
 
 	public String toString() {
-       return "{operador_aritmetico:" + getOperador_aritmetico() + "}";
+       return "{string:" + getString() + "}";
    }
 }

@@ -358,19 +358,19 @@ public class PrintVisitor extends DefaultVisitor {
 
 	//	class Operador_aritmetico { Operador operador_aritmetico; }
 	public Object visit(Operador_aritmetico node, Object param) {
-		System.out.print(node.getOperador_aritmetico());
+		System.out.print(node.getString());
 		return null;
 	}
 
 	//	class Operador_logico { Operador operador_logico; }
 	public Object visit(Operador_logico node, Object param) {
-		System.out.print(node.getOperador_logico());
+		System.out.print(node.getString());
 		return null;
 	}
 
 	//	class Operador_booleano { Operador operador_booleano; }
 	public Object visit(Operador_booleano node, Object param) {
-		System.out.print(node.getOperador_booleano());
+		System.out.print(node.getString());
 		return null;
 	}
 }

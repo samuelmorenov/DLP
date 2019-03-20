@@ -42,6 +42,6 @@ expr_parentesis:expr -> expr;
 expr_cast:expr -> tipo:tipo expr:expr;
 expr_llamada_funcion:expr -> nombre:string parametros:expr*;
 
-operador_aritmetico:operador-> operador_aritmetico:operador;
-operador_logico:operador-> operador_logico:operador;
-operador_booleano:operador-> operador_booleano:operador;
+operador_aritmetico:operador-> string;
+operador_logico:operador-> string;
+operador_booleano:operador-> string;

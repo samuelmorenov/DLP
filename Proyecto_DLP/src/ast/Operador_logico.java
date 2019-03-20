@@ -8,31 +8,27 @@ import visitor.*;
 
 import org.antlr.v4.runtime.*;
 
-//	operador_logico:operador -> operador_logico:operador
+//	operador_logico:operador -> string:String
 
 public class Operador_logico extends AbstractOperador {
 
-	public Operador_logico(Operador operador_logico) {
-		this.operador_logico = operador_logico;
+	public Operador_logico(String string) {
+		this.string = string;
+	}
+
+	public Operador_logico(Object string) {
+		this.string = (string instanceof Token) ? ((Token)string).getText() : (String) string;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(operador_logico);
+       setPositions(string);
 	}
 
-	public Operador_logico(Object operador_logico) {
-		this.operador_logico = (Operador) ((operador_logico instanceof ParserRuleContext) ? getAST(operador_logico) : operador_logico);
-
-       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
-       // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(operador_logico);
+	public String getString() {
+		return string;
 	}
-
-	public Operador getOperador_logico() {
-		return operador_logico;
-	}
-	public void setOperador_logico(Operador operador_logico) {
-		this.operador_logico = operador_logico;
+	public void setString(String string) {
+		this.string = string;
 	}
 
 	@Override
@@ -40,9 +36,9 @@ public class Operador_logico extends AbstractOperador {
 		return v.visit(this, param);
 	}
 
-	private Operador operador_logico;
+	private String string;
 
 	public String toString() {
-       return "{operador_logico:" + getOperador_logico() + "}";
+       return "{string:" + getString() + "}";
    }
 }

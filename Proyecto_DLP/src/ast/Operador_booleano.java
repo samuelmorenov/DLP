@@ -8,31 +8,27 @@ import visitor.*;
 
 import org.antlr.v4.runtime.*;
 
-//	operador_booleano:operador -> operador_booleano:operador
+//	operador_booleano:operador -> string:String
 
 public class Operador_booleano extends AbstractOperador {
 
-	public Operador_booleano(Operador operador_booleano) {
-		this.operador_booleano = operador_booleano;
+	public Operador_booleano(String string) {
+		this.string = string;
+	}
+
+	public Operador_booleano(Object string) {
+		this.string = (string instanceof Token) ? ((Token)string).getText() : (String) string;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(operador_booleano);
+       setPositions(string);
 	}
 
-	public Operador_booleano(Object operador_booleano) {
-		this.operador_booleano = (Operador) ((operador_booleano instanceof ParserRuleContext) ? getAST(operador_booleano) : operador_booleano);
-
-       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
-       // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(operador_booleano);
+	public String getString() {
+		return string;
 	}
-
-	public Operador getOperador_booleano() {
-		return operador_booleano;
-	}
-	public void setOperador_booleano(Operador operador_booleano) {
-		this.operador_booleano = operador_booleano;
+	public void setString(String string) {
+		this.string = string;
 	}
 
 	@Override
@@ -40,9 +36,9 @@ public class Operador_booleano extends AbstractOperador {
 		return v.visit(this, param);
 	}
 
-	private Operador operador_booleano;
+	private String string;
 
 	public String toString() {
-       return "{operador_booleano:" + getOperador_booleano() + "}";
+       return "{string:" + getString() + "}";
    }
 }

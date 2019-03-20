@@ -400,33 +400,27 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Operador_aritmetico { Operador operador_aritmetico; }
+	//	class Operador_aritmetico { String string; }
 	public Object visit(Operador_aritmetico node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "Operador_aritmetico", node, false);
-
-		visit(indent + 1, "operador_aritmetico", "Operador",node.getOperador_aritmetico());
+		printCompact(indent, "Operador_aritmetico", node, "string", node.getString());
 		return null;
 	}
 
-	//	class Operador_logico { Operador operador_logico; }
+	//	class Operador_logico { String string; }
 	public Object visit(Operador_logico node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "Operador_logico", node, false);
-
-		visit(indent + 1, "operador_logico", "Operador",node.getOperador_logico());
+		printCompact(indent, "Operador_logico", node, "string", node.getString());
 		return null;
 	}
 
-	//	class Operador_booleano { Operador operador_booleano; }
+	//	class Operador_booleano { String string; }
 	public Object visit(Operador_booleano node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "Operador_booleano", node, false);
-
-		visit(indent + 1, "operador_booleano", "Operador",node.getOperador_booleano());
+		printCompact(indent, "Operador_booleano", node, "string", node.getString());
 		return null;
 	}
 

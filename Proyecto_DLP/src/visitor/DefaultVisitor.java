@@ -219,24 +219,18 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Operador_aritmetico { Operador operador_aritmetico; }
+	//	class Operador_aritmetico { String string; }
 	public Object visit(Operador_aritmetico node, Object param) {
-		if (node.getOperador_aritmetico() != null)
-			node.getOperador_aritmetico().accept(this, param);
 		return null;
 	}
 
-	//	class Operador_logico { Operador operador_logico; }
+	//	class Operador_logico { String string; }
 	public Object visit(Operador_logico node, Object param) {
-		if (node.getOperador_logico() != null)
-			node.getOperador_logico().accept(this, param);
 		return null;
 	}
 
-	//	class Operador_booleano { Operador operador_booleano; }
+	//	class Operador_booleano { String string; }
 	public Object visit(Operador_booleano node, Object param) {
-		if (node.getOperador_booleano() != null)
-			node.getOperador_booleano().accept(this, param);
 		return null;
 	}
 
