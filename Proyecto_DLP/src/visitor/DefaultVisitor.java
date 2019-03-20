@@ -73,6 +73,11 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
+	//	class TipoStruct {  }
+	public Object visit(TipoStruct node, Object param) {
+		return null;
+	}
+
 	//	class Struct { String nombre;  List<Definicion_variable_struct> definicion_variable_struct; }
 	public Object visit(Struct node, Object param) {
 		visitChildren(node.getDefinicion_variable_struct(), param);
@@ -204,10 +209,10 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Expr_cast { Tipo tipo;  Expr expr; }
+	//	class Expr_cast { Tipo tipo_convertido;  Expr expr; }
 	public Object visit(Expr_cast node, Object param) {
-		if (node.getTipo() != null)
-			node.getTipo().accept(this, param);
+		if (node.getTipo_convertido() != null)
+			node.getTipo_convertido().accept(this, param);
 		if (node.getExpr() != null)
 			node.getExpr().accept(this, param);
 		return null;

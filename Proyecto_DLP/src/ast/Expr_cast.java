@@ -8,33 +8,33 @@ import visitor.*;
 
 import org.antlr.v4.runtime.*;
 
-//	expr_cast:expr -> tipo:tipo  expr:expr
+//	expr_cast:expr -> tipo_convertido:tipo  expr:expr
 
 public class Expr_cast extends AbstractExpr {
 
-	public Expr_cast(Tipo tipo, Expr expr) {
-		this.tipo = tipo;
+	public Expr_cast(Tipo tipo_convertido, Expr expr) {
+		this.tipo_convertido = tipo_convertido;
 		this.expr = expr;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(tipo, expr);
+       setPositions(tipo_convertido, expr);
 	}
 
-	public Expr_cast(Object tipo, Object expr) {
-		this.tipo = (Tipo) ((tipo instanceof ParserRuleContext) ? getAST(tipo) : tipo);
+	public Expr_cast(Object tipo_convertido, Object expr) {
+		this.tipo_convertido = (Tipo) ((tipo_convertido instanceof ParserRuleContext) ? getAST(tipo_convertido) : tipo_convertido);
 		this.expr = (Expr) ((expr instanceof ParserRuleContext) ? getAST(expr) : expr);
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(tipo, expr);
+       setPositions(tipo_convertido, expr);
 	}
 
-	public Tipo getTipo() {
-		return tipo;
+	public Tipo getTipo_convertido() {
+		return tipo_convertido;
 	}
-	public void setTipo(Tipo tipo) {
-		this.tipo = tipo;
+	public void setTipo_convertido(Tipo tipo_convertido) {
+		this.tipo_convertido = tipo_convertido;
 	}
 
 	public Expr getExpr() {
@@ -49,10 +49,10 @@ public class Expr_cast extends AbstractExpr {
 		return v.visit(this, param);
 	}
 
-	private Tipo tipo;
+	private Tipo tipo_convertido;
 	private Expr expr;
 
 	public String toString() {
-       return "{tipo:" + getTipo() + ", expr:" + getExpr() + "}";
+       return "{tipo_convertido:" + getTipo_convertido() + ", expr:" + getExpr() + "}";
    }
 }

@@ -12,70 +12,136 @@ public class TypeChecking extends DefaultVisitor {
         this.errorManager = errorManager;
     }
 
-//    
-//	//	class Expr_int { String string; }
-//	public Object visit(Expr_int node, Object param) {
-//		node.setTipo(new TipoInt());
-//		node.setModificable(false);
-//
-//		return null;
-//	}
-//	
-//	//	class Expr_real { String string; }
-//	public Object visit(Expr_real node, Object param) {
-//		node.setTipo(new TipoFloat());
-//		node.setModificable(false);
-//		return null;
-//	}
-//
-//	//	class Expr_char { String string; }
-//	public Object visit(Expr_char node, Object param) {
-//		node.setTipo(new TipoChar());
-//		node.setModificable(false);
-//		return null;
-//	}
-//
-//	//	class Expr_ident { String string; }
-//	public Object visit(Expr_ident node, Object param) {
-//		node.setModificable(true);
-//		
-//		if(node.getDefinicion_global() != null) {
-//			node.setTipo(node.getDefinicion_global().getTipo());
-//			return null;
-//		}
-//		if(node.getDefinicion_parametro() != null) {
-//			node.setTipo(node.getDefinicion_parametro().getTipo());
-//			return null;
-//		}
-//		if(node.getDefinicion_local() != null) {
-//			node.setTipo(node.getDefinicion_local().getTipo());
-//			return null;
-//		}
-//		
-//		return null;
-//
-//		
-//	}
-//
-//	//	class Expr_binaria { Expr izquierda;  Operador operador;  Expr derecha; }
-//	public Object visit(Expr_binaria node, Object param) {
-//		
-//		//predicado(mismoTipo(node.getIzquierda().getTipo() derecha.tipo) , "Struct ya definido: " + node.getNombre(), node);
-//
-//		// super.visit(node, param);
-//
-//		if (node.getIzquierda() != null)
-//			node.getIzquierda().accept(this, param);
-//
-//		if (node.getOperador() != null)
-//			node.getOperador().accept(this, param);
-//
-//		if (node.getDerecha() != null)
-//			node.getDerecha().accept(this, param);
-//
-//		return null;
-//	}
-//	
+    
+	//	class Expr_int { String string; }
+	public Object visit(Expr_int node, Object param) {
+		node.setTipo(new TipoInt());
+		node.setModificable(false);
+
+		return null;
+	}
+	
+	//	class Expr_real { String string; }
+	public Object visit(Expr_real node, Object param) {
+		node.setTipo(new TipoFloat());
+		node.setModificable(false);
+		return null;
+	}
+
+	//	class Expr_char { String string; }
+	public Object visit(Expr_char node, Object param) {
+		node.setTipo(new TipoChar());
+		node.setModificable(false);
+		return null;
+	}
+
+	//	class Expr_ident { String string; }
+	public Object visit(Expr_ident node, Object param) {
+		
+		node.setModificable(true);
+		
+		if(node.getDefinicion_global() != null) {
+			node.setTipo(node.getDefinicion_global().getTipo());
+			return null;
+		}
+		if(node.getDefinicion_parametro() != null) {
+			node.setTipo(node.getDefinicion_parametro().getTipo());
+			return null;
+		}
+		if(node.getDefinicion_local() != null) {
+			node.setTipo(node.getDefinicion_local().getTipo());
+			return null;
+		}
+		return null;
+
+		
+	}
+
+	//	class Expr_binaria { Expr izquierda;  Operador operador;  Expr derecha; }
+	public Object visit(Expr_binaria node, Object param) {
+		
+		node.setTipo(node.getIzquierda().getTipo());
+		node.setModificable(false);
+
+		super.visit(node, param);
+
+		return null;
+	}
+
+	//	class Expr_vector { Expr fuera;  Expr dentro; }
+	public Object visit(Expr_vector node, Object param) {
+		
+		//expr_vector.tipo = tipoArray
+		//expr_vector.modificable=false
+		node.setTipo(new TipoArray(0, node.getFuera().getTipo())); //TODO: revisar el 0
+
+		super.visit(node, param);
+
+		return null;
+	}
+
+	//	class Expr_punto { Expr izquierda;  Expr derecha; }
+	public Object visit(Expr_punto node, Object param) {
+		
+		//expr_punto = tipoStruct
+		//expr_punto.modificable=false
+		node.setTipo(new TipoStruct());
+		node.setModificable(false);
+
+
+		super.visit(node, param);
+
+		return null;
+	}
+
+	//	class Expr_parentesis { Expr expr; }
+	public Object visit(Expr_parentesis node, Object param) {
+		
+		//expr_parentesis.tipo = expr.tipo
+		//expr_parentesis.modificable=expr.modificable
+		node.setTipo(node.getExpr().getTipo());
+		node.setModificable(node.getExpr().isModificable());
+
+
+		super.visit(node, param);
+
+		return null;
+	}
+
+	//	class Expr_cast { Tipo tipo;  Expr expr; }
+	public Object visit(Expr_cast node, Object param) {
+		
+		//expr_cast.tipo = tipo.tipo
+		//expr_cast.modificable=false
+		node.setTipo(node.getTipo_convertido());
+		node.setModificable(false);
+
+
+		super.visit(node, param);
+		return null;
+	}
+
+	//	class Expr_llamada_funcion { String nombre;  List<Expr> parametros; }
+	public Object visit(Expr_llamada_funcion node, Object param) {
+		
+		//expr_llamada_funcion.tipo = expr.tipo
+		//expr_llamada_funcion.modificable=false
+		if(node.getDefinicion().getRetorno().size() == 0) {
+			node.setTipo(null);
+		}
+		else {
+			node.setTipo(node.getDefinicion().getRetorno().get(1));
+		}
+		node.setModificable(false);
+		super.visit(node, param);
+
+		return null;
+	}
+
+	//	class Operador_aritmetico { String string; }
+	public Object visit(Operador_aritmetico node, Object param) {
+		return null;
+	}
 	/////////////////////////////////////////////////////////////////////////
 	//Metodos auxiliares:
 	

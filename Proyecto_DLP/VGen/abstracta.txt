@@ -15,6 +15,7 @@ tipoFloat:tipo -> ;
 tipoChar:tipo -> ;
 tipoVar:tipo -> string;
 tipoArray:tipo -> tamanio:string tipo;
+tipoStruct:tipo -> ;
 
 struct:bloque -> nombre:string definicion_variable_struct*;
 
@@ -39,7 +40,7 @@ expr_binaria:expr -> izquierda:expr operador:operador derecha:expr;
 expr_vector:expr -> fuera:expr dentro:expr;
 expr_punto:expr -> izquierda:expr derecha:expr;
 expr_parentesis:expr -> expr;
-expr_cast:expr -> tipo:tipo expr:expr;
+expr_cast:expr -> tipo_convertido:tipo expr:expr;
 expr_llamada_funcion:expr -> nombre:string parametros:expr*;
 
 operador_aritmetico:operador-> string;

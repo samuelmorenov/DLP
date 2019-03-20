@@ -193,6 +193,15 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
+	//	class TipoStruct {  }
+	public Object visit(TipoStruct node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "TipoStruct", node, true);
+
+		return null;
+	}
+
 	//	class Struct { String nombre;  List<Definicion_variable_struct> definicion_variable_struct; }
 	public Object visit(Struct node, Object param) {
 		int indent = ((Integer)param).intValue();
@@ -378,13 +387,13 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Expr_cast { Tipo tipo;  Expr expr; }
+	//	class Expr_cast { Tipo tipo_convertido;  Expr expr; }
 	public Object visit(Expr_cast node, Object param) {
 		int indent = ((Integer)param).intValue();
 
 		printName(indent, "Expr_cast", node, false);
 
-		visit(indent + 1, "tipo", "Tipo",node.getTipo());
+		visit(indent + 1, "tipo_convertido", "Tipo",node.getTipo_convertido());
 		visit(indent + 1, "expr", "Expr",node.getExpr());
 		return null;
 	}
