@@ -57,6 +57,7 @@ main() {
 	5 = 6; // Valor de la izquierda no modificable
 	i = f; // Valores de distinto tipo
 	juan = anton; // Valor de la izquierda debe ser simple
+	i = 5;
 
 	read juan;	// Debe ser un tipo simple
 	read 35;	// Debe ser modificable
@@ -96,10 +97,6 @@ main() {
 	print 2[5];	// Debe ser tipo array
 	print v[5.0];	// Debe ser indice entero
 	print v[i+2];
-	
-	print juan.edad;
-	print 5.edad;	// Se requiere tipo struct
-	print juan.nombre; // Campo no definido
 	
 }
 
