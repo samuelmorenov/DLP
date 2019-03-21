@@ -52,6 +52,60 @@ public class TypeChecking extends DefaultVisitor {
 
 	}
 
+	// class Sentencia_print { Expr expresiones; }
+	public Object visit(Sentencia_print node, Object param) {
+
+		super.visit(node, param);
+
+		// tipoSimple(expresiones.tipo)
+		// TODO
+		// predicado(tipoSimple(node.getExpresiones().getTipo()), "Valor a imprimir debe
+		// ser simple", node);
+
+		return null;
+	}
+
+	// class Sentencia_read { Expr expresiones; }
+	public Object visit(Sentencia_read node, Object param) {
+
+		super.visit(node, param);
+
+		// TODO
+
+		return null;
+	}
+
+	// class Sentencia_if { Expr condicion; List<Sentencia> sentencias;
+	// List<Sentencia> sino; }
+	public Object visit(Sentencia_if node, Object param) {
+
+		super.visit(node, param);
+
+		// TODO
+
+		return null;
+	}
+
+	// class Sentencia_while { Expr condicion; List<Sentencia> sentencias; }
+	public Object visit(Sentencia_while node, Object param) {
+
+		super.visit(node, param);
+
+		// TODO
+
+		return null;
+	}
+
+	// class Sentencia_return { Expr expresion; }
+	public Object visit(Sentencia_return node, Object param) {
+
+		super.visit(node, param);
+
+		// TODO
+
+		return null;
+	}
+
 	// class Expr_int { String string; }
 	public Object visit(Expr_int node, Object param) {
 		node.setTipo(new TipoInt());
@@ -103,6 +157,17 @@ public class TypeChecking extends DefaultVisitor {
 
 		super.visit(node, param);
 
+		// TODO
+		/*
+		 * mismoTipo(izquierda.tipo, derecha.tipo)
+		 * 
+		 * si(operador es aritmético) tipoSimple(izquierda.tipo)
+		 * 
+		 * si(operador es lógico) tipoSimple(izquierda.tipo)
+		 * 
+		 * si(operador es booleano) izquierda.tipo==tipoInt
+		 */
+
 		return null;
 	}
 
@@ -114,6 +179,13 @@ public class TypeChecking extends DefaultVisitor {
 		node.setTipo(new TipoArray("0", node.getFuera().getTipo())); // TODO: revisar el 0
 
 		super.visit(node, param);
+
+		// TODO
+		/*
+		 * fuera.tipo==tipoArray
+		 * 
+		 * dentro.tipo==tipoInt
+		 */
 
 		return null;
 	}
@@ -153,6 +225,15 @@ public class TypeChecking extends DefaultVisitor {
 		node.setModificable(false);
 
 		super.visit(node, param);
+
+		// TODO
+		/*
+		 * tipoSimple(tipo.tipo)
+		 * 
+		 * tipoSimple(expr.tipo)
+		 * 
+		 * mismoTipo(tipo.tipo, expr.tipo)
+		 */
 		return null;
 	}
 
