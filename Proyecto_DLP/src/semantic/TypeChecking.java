@@ -26,7 +26,7 @@ public class TypeChecking extends DefaultVisitor {
 		}
 
 		for (int i = 0; i < node.getParametros().size(); i++) {
-			predicado(tipoPrimitivo(node.getParametros().get(i).getTipo()),
+			predicado(tipoSimple(node.getParametros().get(i).getTipo()),
 					"Los parametros de una funcion debe ser de tipo primitivo: "
 							+ node.getParametros().get(i).getNombre(),
 					node);
@@ -55,12 +55,15 @@ public class TypeChecking extends DefaultVisitor {
 	// class Sentencia_print { Expr expresiones; }
 	public Object visit(Sentencia_print node, Object param) {
 
-		super.visit(node, param);
+		// super.visit(node, param);
+		if (node.getExpresiones() != null)
+			node.getExpresiones().accept(this, param);
 
 		// tipoSimple(expresiones.tipo)
-		// TODO
-		// predicado(tipoSimple(node.getExpresiones().getTipo()), "Valor a imprimir debe
-		// ser simple", node);
+		predicado(node.getExpresiones().getTipo() != null, "No tiene tipo de retorno", node);
+		if (node.getExpresiones().getTipo() == null)
+			return null;
+		predicado(tipoSimpleYArray(node.getExpresiones().getTipo()), "Valor a imprimir debe ser simple", node);
 
 		return null;
 	}
@@ -152,10 +155,10 @@ public class TypeChecking extends DefaultVisitor {
 	// class Expr_binaria { Expr izquierda; Operador operador; Expr derecha; }
 	public Object visit(Expr_binaria node, Object param) {
 
+		super.visit(node, param);
+
 		node.setTipo(node.getIzquierda().getTipo());
 		node.setModificable(false);
-
-		super.visit(node, param);
 
 		// TODO
 		/*
@@ -174,11 +177,11 @@ public class TypeChecking extends DefaultVisitor {
 	// class Expr_vector { Expr fuera; Expr dentro; }
 	public Object visit(Expr_vector node, Object param) {
 
+		super.visit(node, param);
+
 		// expr_vector.tipo = tipoArray
 		// expr_vector.modificable=false
 		node.setTipo(new TipoArray("0", node.getFuera().getTipo())); // TODO: revisar el 0
-
-		super.visit(node, param);
 
 		// TODO
 		/*
@@ -193,12 +196,12 @@ public class TypeChecking extends DefaultVisitor {
 	// class Expr_punto { Expr izquierda; Expr derecha; }
 	public Object visit(Expr_punto node, Object param) {
 
+		super.visit(node, param);
+
 		// expr_punto = tipoStruct
 		// expr_punto.modificable=false
 		node.setTipo(new TipoStruct());
 		node.setModificable(false);
-
-		super.visit(node, param);
 
 		return null;
 	}
@@ -206,12 +209,12 @@ public class TypeChecking extends DefaultVisitor {
 	// class Expr_parentesis { Expr expr; }
 	public Object visit(Expr_parentesis node, Object param) {
 
+		super.visit(node, param);
+
 		// expr_parentesis.tipo = expr.tipo
 		// expr_parentesis.modificable=expr.modificable
 		node.setTipo(node.getExpr().getTipo());
 		node.setModificable(node.getExpr().isModificable());
-
-		super.visit(node, param);
 
 		return null;
 	}
@@ -219,12 +222,12 @@ public class TypeChecking extends DefaultVisitor {
 	// class Expr_cast { Tipo tipo; Expr expr; }
 	public Object visit(Expr_cast node, Object param) {
 
+		super.visit(node, param);
+
 		// expr_cast.tipo = tipo.tipo
 		// expr_cast.modificable=false
 		node.setTipo(node.getTipo_convertido());
 		node.setModificable(false);
-
-		super.visit(node, param);
 
 		// TODO
 		/*
@@ -240,6 +243,8 @@ public class TypeChecking extends DefaultVisitor {
 	// class Expr_llamada_funcion { String nombre; List<Expr> parametros; }
 	public Object visit(Expr_llamada_funcion node, Object param) {
 
+		super.visit(node, param);
+
 		// expr_llamada_funcion.tipo = expr.tipo
 		// expr_llamada_funcion.modificable=false
 		if (node.getDefinicion().getRetorno().size() == 0) {
@@ -248,7 +253,6 @@ public class TypeChecking extends DefaultVisitor {
 			node.setTipo(node.getDefinicion().getRetorno().get(0));
 		}
 		node.setModificable(false);
-		super.visit(node, param);
 
 		return null;
 	}
@@ -268,8 +272,10 @@ public class TypeChecking extends DefaultVisitor {
 		return false;
 	}
 
-	private boolean tipoPrimitivo(Tipo tipo) {
-		if (tipoSimple(tipo)) { // TODO
+	private boolean tipoSimpleYArray(Tipo tipo) {
+		if (tipoSimple(tipo) || (tipo.getClass().equals(new TipoArray(null, null).getClass())
+
+		)) {
 			return true;
 		}
 		return false;

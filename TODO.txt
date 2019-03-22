@@ -1,0 +1,21 @@
+tamanio_vector?
+
+Una función podrá declarar variables locales solo al inicio de su cuerpo. Por tanto, no podrá haber declaración de variables locales en cualquier lugar de la función ni dentro de bloques anidados (por ejemplo, no podrá haber dentro de un while ).
+
+
+sentencia_expresion:sentencia -> expresion:expr no debe existir
+
+
+
+InvocaFuncion:expr -> args:expr*
+		|args| == |InvocaFunc.def.param|
+		argsi.tipo == InvocaFunc.def.parami.tipo
+		InvocaFunc.def.tipoRetorno =/= tipoVoid
+
+pasarle a las sentencias la funcion
+atributo heredado
+
+
+
+
+separar llamada_funcion_como_sentencias llamada_funcion_como_funcion
