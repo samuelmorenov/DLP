@@ -30,6 +30,13 @@ public class TipoVar extends AbstractTipo {
 	public void setString(String string) {
 		this.string = string;
 	}
+	public Struct getDefinicion() {
+		return definicion;
+	}
+
+	public void setDefinicion(Struct definicion) {
+		this.definicion = definicion;
+	}
 
 	@Override
 	public Object accept(Visitor v, Object param) { 
@@ -37,8 +44,14 @@ public class TipoVar extends AbstractTipo {
 	}
 
 	private String string;
+	private Struct definicion;
 
 	public String toString() {
        return "{string:" + getString() + "}";
    }
+
+
+
+
+
 }

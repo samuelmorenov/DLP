@@ -7,21 +7,26 @@ con la del lenguaje que le corresponde.
 */
 
 
-// ------------- 
-dobleSuma() {
-}
+struct Persona {
+	edad:int;
+	meses:[12] int;
+	edad:float;  // Campo repetido 
+};
 
-prueba() {
-}
+var k:[10] Window;	// Estructura no definida 
+
+struct Persona {	// Estructura repetida 
+	j:int;
+};
+
+struct Punto {
+	x:int;
+};
+
+var centro:Punto;
 
 main() {
-	print f();	// Función no definida 
-	g(2);		// Procedimiento no definido 
-	
-	dobleSuma();
-	dobleSuma(5.6);	// No error en esta fase aunque no coincidan parámetros 
+	print centro.x;
+	print centro.y; // No error en esta fase aunque aunque el campo no está en la struct 
 }
 
-dobleSuma() {	// Función repetida 
-
-}

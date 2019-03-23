@@ -44,6 +44,14 @@ public class Parametro extends AbstractAST  {
 		this.tipo = tipo;
 	}
 
+	public Parametro getDefinicion() {
+		return definicion;
+	}
+
+	public void setDefinicion(Parametro definicion) {
+		this.definicion = definicion;
+	}
+
 	@Override
 	public Object accept(Visitor v, Object param) { 
 		return v.visit(this, param);
@@ -51,8 +59,11 @@ public class Parametro extends AbstractAST  {
 
 	private String nombre;
 	private Tipo tipo;
+	private Parametro definicion;
 
 	public String toString() {
        return "{nombre:" + getNombre() + ", tipo:" + getTipo() + "}";
    }
+
+
 }

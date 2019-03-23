@@ -44,6 +44,14 @@ public class Definicion_variable_global extends AbstractBloque {
 		this.tipo = tipo;
 	}
 
+	public Definicion_variable_global getDefinicion() {
+		return definicion;
+	}
+
+	public void setDefinicion(Definicion_variable_global definicion) {
+		this.definicion = definicion;
+	}
+
 	@Override
 	public Object accept(Visitor v, Object param) { 
 		return v.visit(this, param);
@@ -51,8 +59,10 @@ public class Definicion_variable_global extends AbstractBloque {
 
 	private String nombre;
 	private Tipo tipo;
+	private Definicion_variable_global definicion;
 
 	public String toString() {
        return "{nombre:" + getNombre() + ", tipo:" + getTipo() + "}";
    }
+
 }

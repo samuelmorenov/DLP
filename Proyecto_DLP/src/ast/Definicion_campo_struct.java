@@ -43,6 +43,13 @@ public class Definicion_campo_struct extends AbstractAST  {
 	public void setTipo(Tipo tipo) {
 		this.tipo = tipo;
 	}
+	public Definicion_campo_struct getDefinicion() {
+		return definicion;
+	}
+
+	public void setDefinicion(Definicion_campo_struct definicion) {
+		this.definicion = definicion;
+	}
 
 	@Override
 	public Object accept(Visitor v, Object param) { 
@@ -51,6 +58,7 @@ public class Definicion_campo_struct extends AbstractAST  {
 
 	private String nombre;
 	private Tipo tipo;
+	private Definicion_campo_struct definicion;
 
 	public String toString() {
        return "{nombre:" + getNombre() + ", tipo:" + getTipo() + "}";
