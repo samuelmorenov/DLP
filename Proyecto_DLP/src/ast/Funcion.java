@@ -9,31 +9,33 @@ import visitor.*;
 
 import org.antlr.v4.runtime.*;
 
-//	funcion:bloque -> nombre:String  parametros:parametro*  retorno:tipo*  sentencia:sentencia*
+//	funcion:bloque -> nombre:String  parametros:parametro*  retorno:tipo*  locales:definicion_variable_local*  sentencias:sentencia*
 
 public class Funcion extends AbstractBloque {
 
-	public Funcion(String nombre, List<Parametro> parametros, List<Tipo> retorno, List<Sentencia> sentencia) {
+	public Funcion(String nombre, List<Parametro> parametros, List<Tipo> retorno, List<Definicion_variable_local> locales, List<Sentencia> sentencias) {
 		this.nombre = nombre;
 		this.parametros = parametros;
 		this.retorno = retorno;
-		this.sentencia = sentencia;
+		this.locales = locales;
+		this.sentencias = sentencias;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(parametros, retorno, sentencia);
+       setPositions(parametros, retorno, locales, sentencias);
 	}
 
 	@SuppressWarnings("unchecked")
-	public Funcion(Object nombre, Object parametros, Object retorno, Object sentencia) {
+	public Funcion(Object nombre, Object parametros, Object retorno, Object locales, Object sentencias) {
 		this.nombre = (nombre instanceof Token) ? ((Token)nombre).getText() : (String) nombre;
 		this.parametros = (List<Parametro>) parametros;
 		this.retorno = (List<Tipo>) retorno;
-		this.sentencia = (List<Sentencia>) sentencia;
+		this.locales = (List<Definicion_variable_local>) locales;
+		this.sentencias = (List<Sentencia>) sentencias;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(nombre, parametros, retorno, sentencia);
+       setPositions(nombre, parametros, retorno, locales, sentencias);
 	}
 
 	public String getNombre() {
@@ -57,11 +59,18 @@ public class Funcion extends AbstractBloque {
 		this.retorno = retorno;
 	}
 
-	public List<Sentencia> getSentencia() {
-		return sentencia;
+	public List<Definicion_variable_local> getLocales() {
+		return locales;
 	}
-	public void setSentencia(List<Sentencia> sentencia) {
-		this.sentencia = sentencia;
+	public void setLocales(List<Definicion_variable_local> locales) {
+		this.locales = locales;
+	}
+
+	public List<Sentencia> getSentencias() {
+		return sentencias;
+	}
+	public void setSentencias(List<Sentencia> sentencias) {
+		this.sentencias = sentencias;
 	}
 
 	@Override
@@ -72,9 +81,10 @@ public class Funcion extends AbstractBloque {
 	private String nombre;
 	private List<Parametro> parametros;
 	private List<Tipo> retorno;
-	private List<Sentencia> sentencia;
+	private List<Definicion_variable_local> locales;
+	private List<Sentencia> sentencias;
 
 	public String toString() {
-       return "{nombre:" + getNombre() + ", parametros:" + getParametros() + ", retorno:" + getRetorno() + ", sentencia:" + getSentencia() + "}";
+       return "{nombre:" + getNombre() + ", parametros:" + getParametros() + ", retorno:" + getRetorno() + ", locales:" + getLocales() + ", sentencias:" + getSentencias() + "}";
    }
 }

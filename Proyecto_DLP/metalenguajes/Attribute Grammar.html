@@ -47,24 +47,23 @@
             <td><strong>&nbsp;Reglas&nbsp;Semánticas&nbsp;</strong></td>
         </tr>
 <tr><td><span class="nodo">program</span>&nbsp;&rarr;  <span class="nombreAtt">bloque</span><span class="tipoAtt">:bloque*</span></td><td></td><td></td></tr>
-<tr><td><span class="nodo">definicion_variable_struct</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">tipo</span><span class="tipoAtt">:tipo</span></td><td></td><td></td></tr>
-<tr><td><span class="nodo">tamanio_vector</span>&nbsp;&rarr;  <span class="nombreAtt">numero</span><span class="tipoAtt">:int</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">definicion_campo_struct</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">tipo</span><span class="tipoAtt">:tipo</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">definicion_variable_local</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">tipo</span><span class="tipoAtt">:tipo</span></td><td></td><td></td></tr>
 <tr><td><span class="nodo">parametro</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">tipo</span><span class="tipoAtt">:tipo</span></td><td></td><td></td></tr>
 <tr><td>&nbsp;</td><td></td><td></td></tr>
 
-<tr><td><span class="nodo">definicion_variable</span>:<span class="categoria">bloque</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">tipo</span><span class="tipoAtt">:tipo</span></td><td></td><td></td></tr>
-<tr><td><span class="nodo">struct</span>:<span class="categoria">bloque</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">definicion_variable_struct</span><span class="tipoAtt">:definicion_variable_struct*</span></td><td></td><td></td></tr>
-<tr><td><span class="nodo">funcion</span>:<span class="categoria">bloque</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">parametros</span><span class="tipoAtt">:parametro*</span> <span class="nombreAtt">retorno</span><span class="tipoAtt">:tipo*</span> <span class="nombreAtt">sentencia</span><span class="tipoAtt">:sentencia*</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">definicion_variable_global</span>:<span class="categoria">bloque</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">tipo</span><span class="tipoAtt">:tipo</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">struct</span>:<span class="categoria">bloque</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">definicion_campo_struct</span><span class="tipoAtt">:definicion_campo_struct*</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">funcion</span>:<span class="categoria">bloque</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">parametros</span><span class="tipoAtt">:parametro*</span> <span class="nombreAtt">retorno</span><span class="tipoAtt">:tipo*</span> <span class="nombreAtt">locales</span><span class="tipoAtt">:definicion_variable_local*</span> <span class="nombreAtt">sentencias</span><span class="tipoAtt">:sentencia*</span></td><td></td><td></td></tr>
 <tr><td>&nbsp;</td><td></td><td></td></tr>
 
-<tr><td><span class="nodo">definicion_variable_funcion</span>:<span class="categoria">sentencia</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">tipo</span><span class="tipoAtt">:tipo</span></td><td></td><td></td></tr>
 <tr><td><span class="nodo">sentencia_asignacion</span>:<span class="categoria">sentencia</span>&nbsp;&rarr;  <span class="nombreAtt">izquierda</span><span class="tipoAtt">:expr</span> <span class="nombreAtt">derecha</span><span class="tipoAtt">:expr</span></td><td></td><td></td></tr>
 <tr><td><span class="nodo">sentencia_print</span>:<span class="categoria">sentencia</span>&nbsp;&rarr;  <span class="nombreAtt">expresiones</span><span class="tipoAtt">:expr</span></td><td></td><td></td></tr>
 <tr><td><span class="nodo">sentencia_read</span>:<span class="categoria">sentencia</span>&nbsp;&rarr;  <span class="nombreAtt">expresiones</span><span class="tipoAtt">:expr</span></td><td></td><td></td></tr>
 <tr><td><span class="nodo">sentencia_if</span>:<span class="categoria">sentencia</span>&nbsp;&rarr;  <span class="nombreAtt">condicion</span><span class="tipoAtt">:expr</span> <span class="nombreAtt">sentencias</span><span class="tipoAtt">:sentencia*</span> <span class="nombreAtt">sino</span><span class="tipoAtt">:sentencia*</span></td><td></td><td></td></tr>
 <tr><td><span class="nodo">sentencia_while</span>:<span class="categoria">sentencia</span>&nbsp;&rarr;  <span class="nombreAtt">condicion</span><span class="tipoAtt">:expr</span> <span class="nombreAtt">sentencias</span><span class="tipoAtt">:sentencia*</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">sentencia_llamada_funcion</span>:<span class="categoria">sentencia</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">parametros</span><span class="tipoAtt">:expr*</span></td><td></td><td></td></tr>
 <tr><td><span class="nodo">sentencia_return</span>:<span class="categoria">sentencia</span>&nbsp;&rarr;  <span class="nombreAtt">expresion</span><span class="tipoAtt">:expr</span></td><td></td><td></td></tr>
-<tr><td><span class="nodo">sentencia_expresion</span>:<span class="categoria">sentencia</span>&nbsp;&rarr;  <span class="nombreAtt">expresion</span><span class="tipoAtt">:expr</span></td><td></td><td></td></tr>
 <tr><td>&nbsp;</td><td></td><td></td></tr>
 
 <tr><td><span class="nodo">tipoInt</span>:<span class="categoria">tipo</span>&nbsp;&rarr; &lambda;</td><td></td><td></td></tr>

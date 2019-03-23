@@ -11,7 +11,6 @@ import visitor.*;
 import parser.*;
 import semantic.*;
 import codegeneration.*;
-import myVisitors.PrintVisitor;
 
 /**
  * Clase que inicia el compilador e invoca a todas sus fases.
@@ -32,7 +31,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         ErrorManager errorManager = new ErrorManager();
 
-        AST ast = compile(program, errorManager); // Poner args[0] en vez de "programa" en la version final
+        AST ast = compile(program, errorManager); // TODO: Poner args[0] en vez de "programa" en la version final
         if (errorManager.errorsCount() == 0)
             System.out.println("El programa se ha compilado correctamente.");
 

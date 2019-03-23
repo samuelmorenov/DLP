@@ -4,22 +4,14 @@ bloque, tipo, sentencia, expr, operador
 NODES
 program -> bloque*;
 
-definicion_variable:bloque -> nombre:string tipo;
-definicion_variable_struct -> nombre:string tipo;
-definicion_variable_funcion:sentencia -> nombre:string tipo;
+definicion_variable_global:bloque -> nombre:string tipo;
 
-tamanio_vector -> numero:int;
+struct:bloque -> nombre:string definicion_campo_struct*;
+definicion_campo_struct -> nombre:string tipo;
 
-tipoInt:tipo -> ;
-tipoFloat:tipo -> ;
-tipoChar:tipo -> ;
-tipoVar:tipo -> string;
-tipoArray:tipo -> tamanio:string tipo;
-tipoStruct:tipo -> ;
+funcion:bloque -> nombre:string parametros:parametro* retorno:tipo* locales:definicion_variable_local* sentencias:sentencia*;
 
-struct:bloque -> nombre:string definicion_variable_struct*;
-
-funcion:bloque -> nombre:string parametros:parametro* retorno:tipo* sentencia*;
+definicion_variable_local -> nombre:string tipo;
 
 parametro -> nombre:string tipo;
 
@@ -28,20 +20,27 @@ sentencia_print:sentencia -> expresiones:expr;
 sentencia_read:sentencia -> expresiones:expr;
 sentencia_if:sentencia -> condicion:expr sentencias:sentencia* sino:sentencia*;
 sentencia_while:sentencia -> condicion:expr sentencias:sentencia*;
+sentencia_llamada_funcion:sentencia -> nombre:string parametros:expr*;
 sentencia_return:sentencia -> expresion:expr;
-sentencia_expresion:sentencia -> expresion:expr;
+
+tipoInt:tipo -> ;
+tipoFloat:tipo -> ;
+tipoChar:tipo -> ;
+tipoVar:tipo -> string;
+tipoArray:tipo -> tamanio:string tipo;
+tipoStruct:tipo -> ;
 
 expr_int:expr -> string;
 expr_real:expr -> string;
 expr_char:expr -> string;
 expr_ident:expr -> string;
-
 expr_binaria:expr -> izquierda:expr operador:operador derecha:expr;
 expr_vector:expr -> fuera:expr dentro:expr;
 expr_punto:expr -> izquierda:expr derecha:expr;
 expr_parentesis:expr -> expr;
 expr_cast:expr -> tipo_convertido:tipo expr:expr;
 expr_llamada_funcion:expr -> nombre:string parametros:expr*;
+
 
 operador_aritmetico:operador-> string;
 operador_logico:operador-> string;

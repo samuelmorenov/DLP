@@ -45,15 +45,6 @@ public class Expr_llamada_funcion extends AbstractExpr {
 	public void setParametros(List<Expr> parametros) {
 		this.parametros = parametros;
 	}
-	public Funcion getDefinicion() {
-		return definicion;
-	}
-
-	public void setDefinicion(Funcion definicion) {
-		this.definicion = definicion;
-	}
-
-
 
 	@Override
 	public Object accept(Visitor v, Object param) { 
@@ -62,7 +53,6 @@ public class Expr_llamada_funcion extends AbstractExpr {
 
 	private String nombre;
 	private List<Expr> parametros;
-	private Funcion definicion;
 
 	public String toString() {
        return "{nombre:" + getNombre() + ", parametros:" + getParametros() + "}";
