@@ -67,11 +67,9 @@ public class TypeChecking extends DefaultVisitor {
 
 		super.visit(node, param);
 
-		if (mismoTipo(node.getExpresiones().getTipo(), new TipoVoid())) {
-			predicado(false, "No tiene tipo de retorno", node);
-		} else {
-			predicado(tipoSimple(node.getExpresiones().getTipo()), "Solo se pueden imprimir tipos simples", node);
-		}
+
+		predicado(tipoSimple(node.getExpresiones().getTipo()), "Solo se pueden imprimir tipos simples", node);
+		
 
 		return null;
 	}
@@ -133,21 +131,22 @@ public class TypeChecking extends DefaultVisitor {
 
 		/** Predicados */
 		// |sentencia_llamada_funcion.parametrosi| ==
-		// |sentencia_llamada_funcion.funcionActual.parametrosi|
+		// |sentencia_llamada_funcion.definicion.parametrosi|
 		// sentencia_llamada_funcion.parametrosi.tipo ==
-		// sentencia_llamada_funcion.funcionActual.parametrosi.tipo
-		// TODO
+		// sentencia_llamada_funcion.definicion.parametrosi.tipo
 
 		super.visit(node, param);
-		boolean mismoNumParametros = node.getParametros().size() == node.getFuncionActual().getParametros().size();
+
+		boolean mismoNumParametros = node.getParametros().size() == node.getDefinicion().getParametros().size();
 		predicado(mismoNumParametros, "Numero de argumentos incorrecto", node);
 		if (!mismoNumParametros) {
 			return null;
 		}
+
 		for (int i = 0; i < node.getParametros().size(); i++) {
 			predicado(
 					mismoTipo(node.getParametros().get(i).getTipo(),
-							node.getFuncionActual().getParametros().get(i).getTipo()),
+							node.getDefinicion().getParametros().get(i).getTipo()),
 					"Tipo de los parametros no coincide", node);
 		}
 
@@ -272,16 +271,19 @@ public class TypeChecking extends DefaultVisitor {
 	// class Expr_vector { Expr fuera; Expr dentro; }
 	public Object visit(Expr_vector node, Object param) {
 		/** Reglas Semánticas */
-		// expr_vector.tipo = tipoArray
-		// expr_vector.modificable=false
+		// expr_vector.tipo = dentro.tipo
+		// expr_vector.modificable=true
 		/** Predicados */
 		// fuera.tipo==tipoArray
 		// dentro.tipo==tipoInt
-
-		node.setTipo(new TipoArray("0", node.getFuera().getTipo()));
-		node.setModificable(false);
-
+		
 		super.visit(node, param);
+
+		node.setTipo(node.getDentro().getTipo());
+		node.setModificable(true);
+		
+		predicado(mismoTipo(node.getFuera().getTipo(), new TipoArray("", null)), "Debe ser tipo array", node);
+		predicado(mismoTipo(node.getDentro().getTipo(), new TipoInt()), "Debe ser indice entero", node);
 
 		return null;
 	}
@@ -319,11 +321,19 @@ public class TypeChecking extends DefaultVisitor {
 		/** Reglas Semánticas */
 		// expr_cast.tipo = tipo.tipo
 		// expr_cast.modificable=false
+		/** Predicados */
+		//tipoSimple(expr_cast.tipo_convertido)
+		//tipoSimple(expr_cast.expr.tipo)
+		//!mismoTipo(expr.tipo_convertido, expr.tipo)
 
 		node.setTipo(node.getTipo_convertido());
 		node.setModificable(false);
 
 		super.visit(node, param);
+		
+		predicado(tipoSimple(node.getTipo_convertido()), "Se debe convertira a un tipo simple", node);
+		predicado(tipoSimple(node.getExpr().getTipo()), "Se debe convertira un tipo simple", node);
+		predicado(!mismoTipo(node.getTipo_convertido(), node.getExpr().getTipo()), "No se pueden convertir si son del mismo tipo ", node);
 
 		return null;
 	}
@@ -334,17 +344,31 @@ public class TypeChecking extends DefaultVisitor {
 		// expr_llamada_funcion.tipo = expr.tipo
 		// expr_llamada_funcion.modificable=false
 		/** Predicados */
-		// |expr_llamada_funcion.parametrosi| ==
-		// |expr_llamada_funcion.funcionActual.parametrosi|
-		// expr_llamada_funcion.parametrosi.tipo ==
-		// expr_llamada_funcion.funcionActual.parametrosi.tipo
-		// expr_llamada_funcion.funcionActual.retorno =/= tipoVoid
-		// TODO
+		// |sentencia_llamada_funcion.parametrosi| ==
+		// |sentencia_llamada_funcion.definicion.parametrosi|
+		// sentencia_llamada_funcion.parametrosi.tipo ==
+		// sentencia_llamada_funcion.definicion.parametrosi.tipo
+		// expr_llamada_funcion.definicion.retorno =/= tipoVoid
 
 		node.setTipo(node.getDefinicion().getRetorno());
 		node.setModificable(false);
 
 		super.visit(node, param);
+
+		boolean mismoNumParametros = node.getParametros().size() == node.getDefinicion().getParametros().size();
+		predicado(mismoNumParametros, "Numero de argumentos incorrecto", node);
+		if (!mismoNumParametros) {
+			return null;
+		}
+
+		for (int i = 0; i < node.getParametros().size(); i++) {
+			predicado(
+					mismoTipo(node.getParametros().get(i).getTipo(),
+							node.getDefinicion().getParametros().get(i).getTipo()),
+					"Tipo de los parametros no coincide", node);
+		}
+
+		predicado(!mismoTipo(node.getDefinicion().getRetorno(), new TipoVoid()), "No tiene retorno", node);
 
 		return null;
 	}

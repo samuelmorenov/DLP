@@ -276,7 +276,6 @@
 //
 //	// class Expr_binaria { Expr izquierda; Operador operador; Expr derecha; }
 //	public Object visit(Expr_binaria node, Object param) {
-//		//TODO
 //		// super.visit(node, param);
 //		
 //		if (node.getIzquierda() != null)
