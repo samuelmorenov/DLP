@@ -5,7 +5,7 @@ import Lexicon;
     import ast.*;
 }
 
-//////////////
+////////////// Program //////////////
 start returns[Program ast]
 	: bloques { $ast = new Program($bloques.ast); }
 	;
@@ -20,12 +20,12 @@ bloque  returns[Bloque ast]
 	| funcion { $ast = $funcion.ast; }
 	;
 	
-//////////////
+////////////// Variables globales //////////////
 definicion_variable_global returns[Definicion_variable_global ast]
 	:'var' IDENT ':' tipo ';'{ $ast = new Definicion_variable_global($IDENT, $tipo.ast); }
 	;
 	
-//////////////
+////////////// Struct //////////////
 struct returns[Struct ast]
 	: 'struct' IDENT '{' definiciones '}' ';'{ $ast = new Struct($IDENT, $definiciones.ast); }
 	;
@@ -38,7 +38,7 @@ definicion_campo_struct returns[Definicion_campo_struct ast]
 	: IDENT ':' tipo ';'{ $ast = new Definicion_campo_struct($IDENT, $tipo.ast); }
 	;
 	
-//////////////
+////////////// Funcion //////////////
 funcion  returns[Funcion ast]
 	: IDENT '(' parametros ')' retorno '{' locales sentencias '}' { $ast = new Funcion($IDENT, $parametros.ast, $retorno.ast, $locales.ast, $sentencias.ast); }
 	;
@@ -57,7 +57,7 @@ retorno returns[Tipo ast]
 	| { $ast = new TipoVoid(); }
 	;
 
-//////////////
+////////////// Variables locales //////////////
 locales returns[List<Definicion_variable_local> ast = new ArrayList<Definicion_variable_local>()]
 	: (definicion_variable_local{ $ast.add($definicion_variable_local.ast); }	)*
 	;	
@@ -66,7 +66,7 @@ definicion_variable_local returns[Definicion_variable_local ast]
 	:'var' IDENT ':' tipo ';'{ $ast = new Definicion_variable_local($IDENT, $tipo.ast); }
 	;
 
-//////////////
+////////////// Sentencias //////////////
 sentencias returns[List<Sentencia> ast = new ArrayList<Sentencia>()]
 	: (sentencia{ $ast.add($sentencia.ast); }	)*
 	;	
@@ -114,7 +114,7 @@ sentencia_return returns[Sentencia_return ast]
 	| 'return' ';'{ $ast = new Sentencia_return(null); }
 	;
 	
-//////////////		
+////////////// Tipos //////////////
 tipo  returns[Tipo ast]
 	: 'int'{ $ast = new TipoInt(); }
 	| 'float' { $ast = new TipoFloat(); }
@@ -127,7 +127,7 @@ array returns[TipoArray ast]
 	: '[' INT_CONSTANT ']' tipo{ $ast = new TipoArray($INT_CONSTANT, $tipo.ast); }
 	;
 	
-//////////////
+////////////// Expresiones //////////////
 expr returns[Expr ast]
 	: INT_CONSTANT{ $ast = new Expr_int($INT_CONSTANT); }
 	| REAL_CONSTANT{ $ast = new Expr_real($REAL_CONSTANT); }
@@ -145,7 +145,7 @@ parametros_llamada returns[List<Expr> ast = new ArrayList<Expr>()]
 	: (expr { $ast.add($ctx.expr(0).ast); } (',' expr{ $ast.add($ctx.expr(1).ast); })*)?
 	;
 	
-//////////////	
+////////////// Operadores //////////////
 operador returns[Operador ast]
 	:operador_aritmetico { $ast = $operador_aritmetico.ast; }
 	|operador_logico { $ast = $operador_logico.ast; }
@@ -166,5 +166,3 @@ operador_booleano returns[Operador_booleano ast]
 	: op='&&' { $ast = new Operador_booleano($op.text); }
 	| op='||' { $ast = new Operador_booleano($op.text); }
 	;
-
-//////////////

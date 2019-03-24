@@ -1,7 +1,0 @@
-InvocaFuncion:expr -> args:expr*
-		|args| == |InvocaFunc.def.param|
-		argsi.tipo == InvocaFunc.def.parami.tipo
-		InvocaFunc.def.tipoRetorno =/= tipoVoid
-
-pasarle a las sentencias la funcion
-atributo heredado

@@ -20,14 +20,14 @@ public class TypeChecking extends DefaultVisitor {
 		// tipoSimple(parametroi)
 		/** Reglas Semánticas */
 		// sentenciasi.funcionActual = defFuncion
+		// si retorno == null
+		// retorno = tipoVoid
 
-		for (int i = 0; i < node.getParametros().size(); i++) {
+		for (int i = 0; i < node.getSentencias().size(); i++) {
 			node.getSentencias().get(i).setFuncionActual(node);
 		}
 
 		super.visit(node, param);
-
-		predicado(tipoSimple(node.getRetorno()) || esTipoVoid(node.getRetorno()), "Retorno de tipo no simple", node);
 
 		for (int i = 0; i < node.getParametros().size(); i++) {
 			predicado(tipoSimple(node.getParametros().get(i).getTipo()),
@@ -35,6 +35,9 @@ public class TypeChecking extends DefaultVisitor {
 							+ node.getParametros().get(i).getNombre(),
 					node);
 		}
+
+		predicado(tipoSimple(node.getRetorno()) || mismoTipo(node.getRetorno(), new TipoVoid()),
+				"Retorno de tipo no simple", node);
 
 		return null;
 	}
@@ -64,10 +67,10 @@ public class TypeChecking extends DefaultVisitor {
 
 		super.visit(node, param);
 
-		if (node.getExpresiones().getTipo().getClass().equals(new TipoVoid().getClass())) {
+		if (mismoTipo(node.getExpresiones().getTipo(), new TipoVoid())) {
 			predicado(false, "No tiene tipo de retorno", node);
 		} else {
-			predicado(tipoSimple(node.getExpresiones().getTipo()), "Debe ser un tipo simple", node);
+			predicado(tipoSimple(node.getExpresiones().getTipo()), "Solo se pueden imprimir tipos simples", node);
 		}
 
 		return null;
@@ -101,8 +104,8 @@ public class TypeChecking extends DefaultVisitor {
 
 		super.visit(node, param);
 
-		predicado(node.getCondicion().getTipo().getClass().equals(new TipoInt().getClass()),
-				"La condicion debe ser de tipo entero", node);
+		predicado(mismoTipo(node.getCondicion().getTipo(), new TipoInt()), "La condicion debe ser de tipo entero",
+				node);
 		return null;
 	}
 
@@ -119,8 +122,34 @@ public class TypeChecking extends DefaultVisitor {
 
 		super.visit(node, param);
 
-		predicado(node.getCondicion().getTipo().getClass().equals(new TipoInt().getClass()),
-				"La condicion debe ser de tipo entero", node);
+		predicado(mismoTipo(node.getCondicion().getTipo(), new TipoInt()), "La condicion debe ser de tipo entero",
+				node);
+
+		return null;
+	}
+
+	// class Sentencia_llamada_funcion { String nombre; List<Expr> parametros; }
+	public Object visit(Sentencia_llamada_funcion node, Object param) {
+
+		/** Predicados */
+		// |sentencia_llamada_funcion.parametrosi| ==
+		// |sentencia_llamada_funcion.funcionActual.parametrosi|
+		// sentencia_llamada_funcion.parametrosi.tipo ==
+		// sentencia_llamada_funcion.funcionActual.parametrosi.tipo
+		// TODO
+
+		super.visit(node, param);
+		boolean mismoNumParametros = node.getParametros().size() == node.getFuncionActual().getParametros().size();
+		predicado(mismoNumParametros, "Numero de argumentos incorrecto", node);
+		if (!mismoNumParametros) {
+			return null;
+		}
+		for (int i = 0; i < node.getParametros().size(); i++) {
+			predicado(
+					mismoTipo(node.getParametros().get(i).getTipo(),
+							node.getFuncionActual().getParametros().get(i).getTipo()),
+					"Tipo de los parametros no coincide", node);
+		}
 
 		return null;
 	}
@@ -128,13 +157,20 @@ public class TypeChecking extends DefaultVisitor {
 	// class Sentencia_return { Expr expresion; }
 	public Object visit(Sentencia_return node, Object param) {
 		/** Predicados */
-		// expresion.tipo == funcion.retorno.tipo
-		/** Reglas Semánticas */
-		// expr =/= null
-		// sentencia.funcionActual = return.funcionActual
-		// TODO
+		// si expresion == null
+		// sentencia_return.funcionActual.tipo == tipoVoid
+		// sino
+		// sentencia_return.funcionActual.tipo == expresion.tipo
 
 		super.visit(node, param);
+
+		if (node.getExpresion() == null) {
+			predicado(mismoTipo(node.getFuncionActual().getRetorno(), new TipoVoid()),
+					"Los return deben tener un valor de retorno", node.getFuncionActual());
+		} else {
+			predicado(mismoTipo(node.getFuncionActual().getRetorno(), node.getExpresion().getTipo()),
+					"Tipo de retorno no coincide", node);
+		}
 
 		return null;
 	}
@@ -193,7 +229,7 @@ public class TypeChecking extends DefaultVisitor {
 			return null;
 		}
 
-		System.out.println("Este mensaje no deberia salir"); //TODO borrar esto
+		System.out.println("Este mensaje no deberia salir"); // TODO borrar esto
 		return null;
 
 	}
@@ -210,13 +246,25 @@ public class TypeChecking extends DefaultVisitor {
 		// tipoSimple(izquierda.tipo)
 		// si(operador es booleano)
 		// izquierda.tipo==tipoInt
-		//TODO
-
+		// mismoTipo(izquierda, derecha)
 
 		super.visit(node, param);
 
 		node.setTipo(node.getIzquierda().getTipo());
 		node.setModificable(false);
+
+		if (node.getOperador().getClass().equals(new Operador_aritmetico("").getClass())) {
+			predicado(tipoSimple(node.getIzquierda().getTipo()), "Deben ser tipos simples", node);
+		}
+		if (node.getOperador().getClass().equals(new Operador_logico("").getClass())) {
+			predicado(tipoSimple(node.getIzquierda().getTipo()), "Deben ser tipos simples", node);
+		}
+		if (node.getOperador().getClass().equals(new Operador_booleano("").getClass())) {
+			predicado(node.getIzquierda().getTipo().getClass().equals(new TipoInt().getClass()), "Deben ser entero",
+					node);
+		}
+		predicado(mismoTipo(node.getIzquierda().getTipo(), node.getDerecha().getTipo()), "Valores de distinto tipo",
+				node);
 
 		return null;
 	}
@@ -230,8 +278,7 @@ public class TypeChecking extends DefaultVisitor {
 		// fuera.tipo==tipoArray
 		// dentro.tipo==tipoInt
 
-
-		node.setTipo(new TipoArray("0", node.getFuera().getTipo())); // TODO: revisar el 0
+		node.setTipo(new TipoArray("0", node.getFuera().getTipo()));
 		node.setModificable(false);
 
 		super.visit(node, param);
@@ -286,6 +333,13 @@ public class TypeChecking extends DefaultVisitor {
 		/** Reglas Semánticas */
 		// expr_llamada_funcion.tipo = expr.tipo
 		// expr_llamada_funcion.modificable=false
+		/** Predicados */
+		// |expr_llamada_funcion.parametrosi| ==
+		// |expr_llamada_funcion.funcionActual.parametrosi|
+		// expr_llamada_funcion.parametrosi.tipo ==
+		// expr_llamada_funcion.funcionActual.parametrosi.tipo
+		// expr_llamada_funcion.funcionActual.retorno =/= tipoVoid
+		// TODO
 
 		node.setTipo(node.getDefinicion().getRetorno());
 		node.setModificable(false);
@@ -306,10 +360,6 @@ public class TypeChecking extends DefaultVisitor {
 	private boolean tipoSimple(Tipo tipo) {
 		return tipo.getClass().equals(new TipoInt().getClass()) || tipo.getClass().equals(new TipoFloat().getClass())
 				|| tipo.getClass().equals(new TipoChar().getClass());
-	}
-
-	private boolean esTipoVoid(Tipo tipo) {
-		return tipo.getClass().equals(new TipoVoid().getClass());
 	}
 
 	private boolean mismoTipo(Tipo tipo1, Tipo tipo2) {
