@@ -35,10 +35,6 @@ public class Expr_ident extends AbstractExpr {
 		return definicion_parametro;
 	}
 
-	public void setDefinicion(Parametro definicion_parametro) {
-		this.definicion_parametro = definicion_parametro;
-	}
-
 
 	public Definicion_variable_local getDefinicion_local() {
 		return definicion_local;

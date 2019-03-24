@@ -9,11 +9,11 @@ import visitor.*;
 
 import org.antlr.v4.runtime.*;
 
-//	funcion:bloque -> nombre:String  parametros:parametro*  retorno:tipo*  locales:definicion_variable_local*  sentencias:sentencia*
+//	funcion:bloque -> nombre:String  parametros:parametro*  retorno:tipo  locales:definicion_variable_local*  sentencias:sentencia*
 
 public class Funcion extends AbstractBloque {
 
-	public Funcion(String nombre, List<Parametro> parametros, List<Tipo> retorno, List<Definicion_variable_local> locales, List<Sentencia> sentencias) {
+	public Funcion(String nombre, List<Parametro> parametros, Tipo retorno, List<Definicion_variable_local> locales, List<Sentencia> sentencias) {
 		this.nombre = nombre;
 		this.parametros = parametros;
 		this.retorno = retorno;
@@ -29,7 +29,7 @@ public class Funcion extends AbstractBloque {
 	public Funcion(Object nombre, Object parametros, Object retorno, Object locales, Object sentencias) {
 		this.nombre = (nombre instanceof Token) ? ((Token)nombre).getText() : (String) nombre;
 		this.parametros = (List<Parametro>) parametros;
-		this.retorno = (List<Tipo>) retorno;
+		this.retorno = (Tipo) ((retorno instanceof ParserRuleContext) ? getAST(retorno) : retorno);
 		this.locales = (List<Definicion_variable_local>) locales;
 		this.sentencias = (List<Sentencia>) sentencias;
 
@@ -52,10 +52,10 @@ public class Funcion extends AbstractBloque {
 		this.parametros = parametros;
 	}
 
-	public List<Tipo> getRetorno() {
+	public Tipo getRetorno() {
 		return retorno;
 	}
-	public void setRetorno(List<Tipo> retorno) {
+	public void setRetorno(Tipo retorno) {
 		this.retorno = retorno;
 	}
 
@@ -80,7 +80,7 @@ public class Funcion extends AbstractBloque {
 
 	private String nombre;
 	private List<Parametro> parametros;
-	private List<Tipo> retorno;
+	private Tipo retorno;
 	private List<Definicion_variable_local> locales;
 	private List<Sentencia> sentencias;
 

@@ -84,7 +84,7 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Funcion { String nombre;  List<Parametro> parametros;  List<Tipo> retorno;  List<Definicion_variable_local> locales;  List<Sentencia> sentencias; }
+	//	class Funcion { String nombre;  List<Parametro> parametros;  Tipo retorno;  List<Definicion_variable_local> locales;  List<Sentencia> sentencias; }
 	public Object visit(Funcion node, Object param) {
 
 		// super.visit(node, param);
@@ -94,8 +94,7 @@ public class <nombre clase> extends DefaultVisitor {
 				child.accept(this, param);
 
 		if (node.getRetorno() != null)
-			for (Tipo child : node.getRetorno())
-				child.accept(this, param);
+			node.getRetorno().accept(this, param);
 
 		if (node.getLocales() != null)
 			for (Definicion_variable_local child : node.getLocales())
@@ -256,6 +255,11 @@ public class <nombre clase> extends DefaultVisitor {
 
 	//	class TipoStruct {  }
 	public Object visit(TipoStruct node, Object param) {
+		return null;
+	}
+
+	//	class TipoVoid {  }
+	public Object visit(TipoVoid node, Object param) {
 		return null;
 	}
 

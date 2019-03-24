@@ -47,12 +47,14 @@ parametros  returns[List<Parametro> ast = new ArrayList<Parametro>()]
 	: (parametro { $ast.add($parametro.ast); } (',' parametro { $ast.add($parametro.ast); })*)?
 	//:(parametro (',' parametro)*)?
 	;
+	
 parametro  returns[Parametro ast]
 	: IDENT ':' tipo { $ast = new Parametro($IDENT, $tipo.ast); }
 	;
 	
-retorno returns[List<Tipo> ast = new ArrayList<Tipo>()]
-	: (':' tipo { $ast.add($tipo.ast); })?
+retorno returns[Tipo ast]
+	: (':' tipo { $ast = $tipo.ast; })
+	| { $ast = new TipoVoid(); }
 	;
 
 //////////////

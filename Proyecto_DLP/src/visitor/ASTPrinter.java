@@ -137,7 +137,7 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Funcion { String nombre;  List<Parametro> parametros;  List<Tipo> retorno;  List<Definicion_variable_local> locales;  List<Sentencia> sentencias; }
+	//	class Funcion { String nombre;  List<Parametro> parametros;  Tipo retorno;  List<Definicion_variable_local> locales;  List<Sentencia> sentencias; }
 	public Object visit(Funcion node, Object param) {
 		int indent = ((Integer)param).intValue();
 
@@ -145,7 +145,7 @@ public class ASTPrinter extends DefaultVisitor {
 
 		print(indent + 1, "nombre", "String", node.getNombre());
 		visit(indent + 1, "parametros", "List<Parametro>",node.getParametros());
-		visit(indent + 1, "retorno", "List<Tipo>",node.getRetorno());
+		visit(indent + 1, "retorno", "Tipo",node.getRetorno());
 		visit(indent + 1, "locales", "List<Definicion_variable_local>",node.getLocales());
 		visit(indent + 1, "sentencias", "List<Sentencia>",node.getSentencias());
 		return null;
@@ -299,6 +299,15 @@ public class ASTPrinter extends DefaultVisitor {
 		int indent = ((Integer)param).intValue();
 
 		printName(indent, "TipoStruct", node, true);
+
+		return null;
+	}
+
+	//	class TipoVoid {  }
+	public Object visit(TipoVoid node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "TipoVoid", node, true);
 
 		return null;
 	}

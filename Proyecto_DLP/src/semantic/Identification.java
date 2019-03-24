@@ -12,63 +12,7 @@ public class Identification extends DefaultVisitor {
 		this.errorManager = errorManager;
 	}
 
-	/*
-	 * Poner aqui los visit necesarios. Si se ha usado VGen, solo hay que copiarlos
-	 * de la clase 'visitor/_PlantillaParaVisitors.txt'.
-	 */
-
-	// class Funcion { String nombre; List<Parametro> parametros; List<Tipo>
-	// retorno; List<Sentencia> sentencia; }
-	public Object visit(Funcion node, Object param) {
-		Funcion definicion = funciones.get(node.getNombre());
-		predicado(definicion == null, "Funcion ya definida: " + node.getNombre(), node);
-		funciones.put(node.getNombre(), node);
-		
-		
-		parametros.set();
-		variables_locales.set();
-		super.visit(node, param);
-		variables_locales.reset();
-		parametros.reset();
-		
-		
-		return null;
-	}
-
-	// class Expr_llamada { String nombre; List<Expr> parametros; }
-	public Object visit(Expr_llamada_funcion node, Object param) {
-		Funcion definicion = funciones.get(node.getNombre());
-		predicado(definicion != null, "Funcion no definida: " + node.getNombre(), node);
-		node.setDefinicion(definicion); // Enlazar referencia con definicion
-		super.visit(node, param);
-		return null;
-	}
-
-	
-	//	class Sentencia_llamada_funcion { String nombre;  List<Expr> parametros; }
-	public Object visit(Sentencia_llamada_funcion node, Object param) {
-		Funcion definicion = funciones.get(node.getNombre());
-		predicado(definicion != null, "Procedimiento no definido: " + node.getNombre(), node);
-		node.setDefinicion(definicion); // Enlazar referencia con definicion
-		super.visit(node, param);
-		return null;
-	}
-
-	//	class Struct { String nombre;  List<Definicion_variable_struct> definicion_variable_struct; }
-	public Object visit(Struct node, Object param) {
-		Struct definicion = estructuras.get(node.getNombre());
-		predicado(definicion == null, "Struct ya definido: " + node.getNombre(), node);
-		estructuras.put(node.getNombre(), node);
-
-		campos_struct.set();
-		super.visit(node, param);
-		campos_struct.reset();
-		
-		
-		return null;
-	}
-	
-	//	class Definicion_variable_struct { String nombre;  Tipo tipo; }
+	// class Definicion_variable_struct { String nombre; Tipo tipo; }
 	public Object visit(Definicion_campo_struct node, Object param) {
 
 		Definicion_campo_struct definicion = campos_struct.getFromAny(node.getNombre());
@@ -78,16 +22,21 @@ public class Identification extends DefaultVisitor {
 		super.visit(node, param);
 		return null;
 	}
-	//	class TipoVar { String string; }
-	public Object visit(TipoVar node, Object param) {
-		Struct definicion = estructuras.get(node.getString());
-		predicado(definicion != null, "Struct no definido: " + node.getString(), node);
-		node.setDefinicion(definicion); // Enlazar referencia con definicion
+
+	// class Definicion_variable_funcion { String nombre; Tipo tipo; }
+	public Object visit(Definicion_variable_local node, Object param) {
+
+		Parametro definicion1 = parametros.getFromAny(node.getNombre());
+		Definicion_variable_local definicion2 = variables_locales.getFromAny(node.getNombre());
+
+		predicado(definicion1 == null && definicion2 == null, "Variable local ya definida: " + node.getNombre(), node);
+		node.setDefinicion(definicion2); // Enlazar referencia con definicion
+		variables_locales.put(node.getNombre(), node);
 		super.visit(node, param);
 		return null;
 	}
-	
-	//	class Parametro { String nombre;  Tipo tipo; }
+
+	// class Parametro { String nombre; Tipo tipo; }
 	public Object visit(Parametro node, Object param) {
 		Parametro definicion = parametros.getFromAny(node.getNombre());
 		predicado(definicion == null, "Parametro repetido: " + node.getNombre(), node);
@@ -96,8 +45,8 @@ public class Identification extends DefaultVisitor {
 		super.visit(node, param);
 		return null;
 	}
-	
-	//	class Definicion_variable { String nombre;  Tipo tipo; }
+
+	// class Definicion_variable { String nombre; Tipo tipo; }
 	public Object visit(Definicion_variable_global node, Object param) {
 		Definicion_variable_global definicion = variables_globales.getFromAny(node.getNombre());
 		predicado(definicion == null, "Variable ya definida: " + node.getNombre(), node);
@@ -106,29 +55,89 @@ public class Identification extends DefaultVisitor {
 		super.visit(node, param);
 		return null;
 	}
-	
-	
-	//	class Definicion_variable_funcion { String nombre;  Tipo tipo; }
-	public Object visit(Definicion_variable_local node, Object param) {
 
-		Parametro definicion1 = parametros.getFromAny(node.getNombre());
-		Definicion_variable_local definicion2 = variables_locales.getFromAny(node.getNombre());
-		
-		//TODO: revisar que este bien el predicado
-		predicado(definicion1 == null && definicion2 == null, "Variable local ya definida: " + node.getNombre(), node);
-		node.setDefinicion(definicion2); // Enlazar referencia con definicion
-		variables_locales.put(node.getNombre(), node);
+	// class Struct { String nombre; List<Definicion_variable_struct>
+	// definicion_variable_struct; }
+	public Object visit(Struct node, Object param) {
+		Struct definicion = estructuras.get(node.getNombre());
+		predicado(definicion == null, "Struct ya definido: " + node.getNombre(), node);
+		estructuras.put(node.getNombre(), node);
+
+		campos_struct.set();
+		super.visit(node, param);
+		campos_struct.reset();
+
+		return null;
+	}
+
+	// class Funcion { String nombre; List<Parametro> parametros; List<Tipo>
+	// retorno; List<Sentencia> sentencia; }
+	public Object visit(Funcion node, Object param) {
+		Funcion definicion = funciones.get(node.getNombre());
+		predicado(definicion == null, "Funcion ya definida: " + node.getNombre(), node);
+		funciones.put(node.getNombre(), node);
+
+		parametros.set();
+		variables_locales.set();
+		super.visit(node, param);
+		variables_locales.reset();
+		parametros.reset();
+
+		return null;
+	}
+
+	// class Sentencia_llamada_funcion { String nombre; List<Expr> parametros; }
+	public Object visit(Sentencia_llamada_funcion node, Object param) {
+		Funcion definicion = funciones.get(node.getNombre());
+		predicado(definicion != null, "Procedimiento no definido: " + node.getNombre(), node);
+		node.setDefinicion(definicion); // Enlazar referencia con definicion
 		super.visit(node, param);
 		return null;
 	}
-	
-	//	class Expr_ident { String string; }
+
+	// class TipoVar { String string; }
+	public Object visit(TipoVar node, Object param) {
+		Struct definicion = estructuras.get(node.getString());
+		predicado(definicion != null, "Struct no definido: " + node.getString(), node);
+		node.setDefinicion(definicion); // Enlazar referencia con definicion
+		super.visit(node, param);
+		return null;
+	}
+
+	// class Expr_ident { String string; }
 	public Object visit(Expr_ident node, Object param) {
 		Parametro definicion_parametro = parametros.getFromAny(node.getString());
 		Definicion_variable_local definicion_local = variables_locales.getFromAny(node.getString());
 		Definicion_variable_global definicion_global = variables_globales.getFromAny(node.getString());
-		predicado(definicion_parametro != null || definicion_local != null || definicion_global != null, "Variable no definida: " + node.getString(), node);
-		
+		predicado(definicion_parametro != null || definicion_local != null || definicion_global != null,
+				"Variable no definida: " + node.getString(), node);
+
+		node.setDefinicion_global(definicion_global); // Enlazar referencia con definicion
+		node.setDefinicion_local(definicion_local); // Enlazar referencia con definicion
+		node.setDefinicion_parametro(definicion_parametro); // Enlazar referencia con definicion
+
+		super.visit(node, param);
+		return null;
+	}
+
+	// class Expr_punto { Expr izquierda; Expr derecha; }
+	public Object visit(Expr_punto node, Object param) {
+
+		super.visit(node, param);
+
+		//if (node.getIzquierda() != null)
+		//	node.getIzquierda().accept(this, param);
+		// if (node.getDerecha() != null)
+		// node.getDerecha().accept(this, param);
+
+		return null;
+	}
+
+	// class Expr_llamada { String nombre; List<Expr> parametros; }
+	public Object visit(Expr_llamada_funcion node, Object param) {
+		Funcion definicion = funciones.get(node.getNombre());
+		predicado(definicion != null, "Funcion no definida: " + node.getNombre(), node);
+		node.setDefinicion(definicion); // Enlazar referencia con definicion
 		super.visit(node, param);
 		return null;
 	}

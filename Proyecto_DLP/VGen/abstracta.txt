@@ -9,7 +9,7 @@ definicion_variable_global:bloque -> nombre:string tipo;
 struct:bloque -> nombre:string definicion_campo_struct*;
 definicion_campo_struct -> nombre:string tipo;
 
-funcion:bloque -> nombre:string parametros:parametro* retorno:tipo* locales:definicion_variable_local* sentencias:sentencia*;
+funcion:bloque -> nombre:string parametros:parametro* retorno:tipo locales:definicion_variable_local* sentencias:sentencia*;
 
 definicion_variable_local -> nombre:string tipo;
 
@@ -29,6 +29,7 @@ tipoChar:tipo -> ;
 tipoVar:tipo -> string;
 tipoArray:tipo -> tamanio:string tipo;
 tipoStruct:tipo -> ;
+tipoVoid -> ;
 
 expr_int:expr -> string;
 expr_real:expr -> string;

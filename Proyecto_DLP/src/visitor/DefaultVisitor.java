@@ -40,10 +40,11 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Funcion { String nombre;  List<Parametro> parametros;  List<Tipo> retorno;  List<Definicion_variable_local> locales;  List<Sentencia> sentencias; }
+	//	class Funcion { String nombre;  List<Parametro> parametros;  Tipo retorno;  List<Definicion_variable_local> locales;  List<Sentencia> sentencias; }
 	public Object visit(Funcion node, Object param) {
 		visitChildren(node.getParametros(), param);
-		visitChildren(node.getRetorno(), param);
+		if (node.getRetorno() != null)
+			node.getRetorno().accept(this, param);
 		visitChildren(node.getLocales(), param);
 		visitChildren(node.getSentencias(), param);
 		return null;
@@ -145,6 +146,11 @@ public class DefaultVisitor implements Visitor {
 
 	//	class TipoStruct {  }
 	public Object visit(TipoStruct node, Object param) {
+		return null;
+	}
+
+	//	class TipoVoid {  }
+	public Object visit(TipoVoid node, Object param) {
 		return null;
 	}
 

@@ -67,4 +67,6 @@ public class Sentencia_if extends AbstractSentencia {
 	public String toString() {
        return "{condicion:" + getCondicion() + ", sentencias:" + getSentencias() + ", sino:" + getSino() + "}";
    }
+
+
 }
