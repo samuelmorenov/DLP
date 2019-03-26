@@ -67,9 +67,7 @@ public class TypeChecking extends DefaultVisitor {
 
 		super.visit(node, param);
 
-
 		predicado(tipoSimple(node.getExpresiones().getTipo()), "Solo se pueden imprimir tipos simples", node);
-		
 
 		return null;
 	}
@@ -219,16 +217,17 @@ public class TypeChecking extends DefaultVisitor {
 		node.setModificable(true);
 		if (node.getDefinicion_global() != null) {
 			node.setTipo(node.getDefinicion_global().getTipo());
-			return null;
-		} else if (node.getDefinicion_parametro() != null) {
-			node.setTipo(node.getDefinicion_parametro().getTipo());
-			return null;
-		} else if (node.getDefinicion_local() != null) {
-			node.setTipo(node.getDefinicion_local().getTipo());
-			return null;
+
 		}
 
-		System.out.println("Este mensaje no deberia salir"); // TODO borrar esto
+		else if (node.getDefinicion_parametro() != null) {
+			node.setTipo(node.getDefinicion_parametro().getTipo());
+		}
+
+		else if (node.getDefinicion_local() != null) {
+			node.setTipo(node.getDefinicion_local().getTipo());
+		}
+
 		return null;
 
 	}
@@ -276,12 +275,12 @@ public class TypeChecking extends DefaultVisitor {
 		/** Predicados */
 		// fuera.tipo==tipoArray
 		// dentro.tipo==tipoInt
-		
+
 		super.visit(node, param);
 
 		node.setTipo(node.getDentro().getTipo());
 		node.setModificable(true);
-		
+
 		predicado(mismoTipo(node.getFuera().getTipo(), new TipoArray("", null)), "Debe ser tipo array", node);
 		predicado(mismoTipo(node.getDentro().getTipo(), new TipoInt()), "Debe ser indice entero", node);
 
@@ -291,13 +290,26 @@ public class TypeChecking extends DefaultVisitor {
 	// class Expr_punto { Expr izquierda; Expr derecha; }
 	public Object visit(Expr_punto node, Object param) {
 		/** Reglas Semánticas */
-		// expr_punto = tipoStruct
-		// expr_punto.modificable=false
+		// expr_punto.tipo = derecha.tipo
+		// expr_punto.modificable=true
+		// TODO Tipos Punto
 
+		// super.visit(node, param);
+
+		if (node.getIzquierda() != null)
+			node.getIzquierda().accept(this, param);
+
+		//System.out.println(node.getIzquierda().getTipo().toString());
+		//System.out.println(node.getIzquierda());
+
+		// if (node.getDerecha() != null)
+		// node.getDerecha().accept(this, param);
+
+		// System.out.println("punto ["+node.getStart()+"]");
+
+		// node.setTipo(node.getDerecha().getTipo());
 		node.setTipo(new TipoStruct());
 		node.setModificable(false);
-
-		super.visit(node, param);
 
 		return null;
 	}
@@ -322,18 +334,19 @@ public class TypeChecking extends DefaultVisitor {
 		// expr_cast.tipo = tipo.tipo
 		// expr_cast.modificable=false
 		/** Predicados */
-		//tipoSimple(expr_cast.tipo_convertido)
-		//tipoSimple(expr_cast.expr.tipo)
-		//!mismoTipo(expr.tipo_convertido, expr.tipo)
+		// tipoSimple(expr_cast.tipo_convertido)
+		// tipoSimple(expr_cast.expr.tipo)
+		// !mismoTipo(expr.tipo_convertido, expr.tipo)
 
 		node.setTipo(node.getTipo_convertido());
 		node.setModificable(false);
 
 		super.visit(node, param);
-		
+
 		predicado(tipoSimple(node.getTipo_convertido()), "Se debe convertira a un tipo simple", node);
 		predicado(tipoSimple(node.getExpr().getTipo()), "Se debe convertira un tipo simple", node);
-		predicado(!mismoTipo(node.getTipo_convertido(), node.getExpr().getTipo()), "No se pueden convertir si son del mismo tipo ", node);
+		predicado(!mismoTipo(node.getTipo_convertido(), node.getExpr().getTipo()),
+				"No se pueden convertir si son del mismo tipo ", node);
 
 		return null;
 	}

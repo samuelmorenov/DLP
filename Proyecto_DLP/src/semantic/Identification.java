@@ -60,7 +60,9 @@ public class Identification extends DefaultVisitor {
 	// definicion_variable_struct; }
 	public Object visit(Struct node, Object param) {
 		Struct definicion = estructuras.get(node.getNombre());
+
 		predicado(definicion == null, "Struct ya definido: " + node.getNombre(), node);
+
 		estructuras.put(node.getNombre(), node);
 
 		campos_struct.set();
@@ -106,6 +108,15 @@ public class Identification extends DefaultVisitor {
 
 	// class Expr_ident { String string; }
 	public Object visit(Expr_ident node, Object param) {
+		/** Predicados */
+		// variables[nombre]= null
+		// variables_funcion[nombre] =/= null
+		// parametros[nombre] =/= null
+		/** Reglas Semanticas */
+		// expr_ident.definicion = variables[nombre]
+		// expr_ident.definicion = variables_funcion [nombre]
+		// expr_ident.definicion = parametros [nombre]
+
 		Parametro definicion_parametro = parametros.getFromAny(node.getString());
 		Definicion_variable_local definicion_local = variables_locales.getFromAny(node.getString());
 		Definicion_variable_global definicion_global = variables_globales.getFromAny(node.getString());
@@ -123,12 +134,14 @@ public class Identification extends DefaultVisitor {
 	// class Expr_punto { Expr izquierda; Expr derecha; }
 	public Object visit(Expr_punto node, Object param) {
 
-		super.visit(node, param);
+		// super.visit(node, param);
 
-		//if (node.getIzquierda() != null)
-		//	node.getIzquierda().accept(this, param);
-		// if (node.getDerecha() != null)
-		// node.getDerecha().accept(this, param);
+		if (node.getIzquierda() != null)
+			node.getIzquierda().accept(this, param);
+
+		//if (node.getDerecha() != null)
+		//	node.getDerecha().accept(this, param);
+		// TODO Identificacion Punto
 
 		return null;
 	}
