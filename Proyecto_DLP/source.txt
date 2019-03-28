@@ -1,17 +1,27 @@
+var a:char;	// Dir 0
+ 
 struct Persona {
-	edad:int;
-	meses:[12] int;
+	edad:int;	// Dir 0 
+	meses:[12] int;	// Dir 2 
+	a:float;	// Dir 26 
 };
 
-var juan:Persona;
-var anton:Persona;
-var Persona:Persona;
-var Pedro:Personooo;
-var i:int;
-var f:float;
+var b:float;	// Dir 1 
 
-main(){
-	print juan.edad;
-	print 5.edad;	// Se requiere tipo struct
-	print juan.nombre; // Campo no definido
+struct Prueba {
+	campo1: int; // Dir 0 
+	campo2: int; // Dir 2 
+};
+
+var c:[2]Persona;	// Dir 5 
+var d:int;		// Dir 65 
+var p:Prueba;
+var p2:Prueba;
+
+f(a:int, b:float, h:char) { // a = BP+9, b = BP+5, h = BP+4 
+	var c:char;	// BP-1 
+	var d:int;	// BP-3 
+	var e:[2]Persona; // BP-63 
+	var f:float; 	// BP-67 	
 }
+

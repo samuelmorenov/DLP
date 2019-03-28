@@ -8,13 +8,40 @@ import visitor.*;
  */
 public class MemoryAllocation extends DefaultVisitor {
 
-    /*
-     * Poner aquí los visit necesarios. Si se ha usado VGen, solo hay que copiarlos
-     * de la clase 'visitor/_PlantillaParaVisitors.txt'.
-     */
+	public Object visit(Program node, Object param) {
 
-    // public Object visit(Programa prog, Object param) {
-    //      ...
-    // }
+		int currentAddress = 0;
+
+		for (Bloque child : node.getBloque()) {
+
+			if (child instanceof Definicion_variable_global) {
+				Definicion_variable_global vg = (Definicion_variable_global) child;
+				vg.setAddress(currentAddress);
+				currentAddress += vg.getTipo().getSize();
+			}
+		}
+		return null;
+	}
+	
+	
+	
+	//	class Program { List<Bloque> bloque; }
+	public Object visit(Program node, Object param) {
+
+		// super.visit(node, param);
+
+		if (node.getBloque() != null)
+			for (Bloque child : node.getBloque())
+				child.accept(this, param);
+
+		return null;
+	}
+	
+	//	class TipoVar { String string; }
+	public Object visit(TipoVar node, Object param) {
+		return null;
+	}
+	
+
 
 }

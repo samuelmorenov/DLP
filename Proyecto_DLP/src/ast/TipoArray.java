@@ -43,6 +43,9 @@ public class TipoArray extends AbstractTipo {
 	public void setTipo(Tipo tipo) {
 		this.tipo = tipo;
 	}
+	public int getSize() {
+		return this.tipo.getSize() * Integer.parseInt(this.tamanio); //TODO Añadido ??
+	}
 
 	@Override
 	public Object accept(Visitor v, Object param) { 

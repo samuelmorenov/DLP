@@ -26,9 +26,8 @@ sentencia_return:sentencia -> expresion:expr;
 tipoInt:tipo -> ;
 tipoFloat:tipo -> ;
 tipoChar:tipo -> ;
-tipoVar:tipo -> string;
-tipoArray:tipo -> tamanio:string tipo;
-tipoStruct:tipo -> ;
+tipoStruct:tipo -> nombre:string;
+tipoArray:tipo -> tipoElementos:tipo tamanio:int;
 tipoVoid -> ;
 
 expr_int:expr -> string;

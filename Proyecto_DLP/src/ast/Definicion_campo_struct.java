@@ -55,12 +55,24 @@ public class Definicion_campo_struct extends AbstractAST  {
 	public Object accept(Visitor v, Object param) { 
 		return v.visit(this, param);
 	}
+	
+
+	public int getAddress() {
+		return address;
+	}
+
+	public void setAddress(int address) {
+		this.address = address;
+	}
+
 
 	private String nombre;
 	private Tipo tipo;
 	private Definicion_campo_struct definicion;
+	private int address; //TODO Añadido
 
 	public String toString() {
        return "{nombre:" + getNombre() + ", tipo:" + getTipo() + "}";
    }
+
 }

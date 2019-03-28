@@ -21,4 +21,8 @@ public class TipoInt extends AbstractTipo {
 	public String toString() {
        return "{TipoInt}";
    }
+
+	public int getSize() {
+		return 2; //TODO Añadido
+	}
 }

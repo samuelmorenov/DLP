@@ -112,6 +112,7 @@ public class ASTPrinter extends DefaultVisitor {
 
 		print(indent + 1, "nombre", "String", node.getNombre());
 		visit(indent + 1, "tipo", "Tipo",node.getTipo());
+		print(indent + 1, "address", "Int", node.getAddress()); //TODO: Opcional
 		return null;
 	}
 
@@ -134,6 +135,7 @@ public class ASTPrinter extends DefaultVisitor {
 
 		print(indent + 1, "nombre", "String", node.getNombre());
 		visit(indent + 1, "tipo", "Tipo",node.getTipo());
+		print(indent + 1, "address", "Int", node.getAddress()); //TODO: Opcional
 		return null;
 	}
 
@@ -291,15 +293,6 @@ public class ASTPrinter extends DefaultVisitor {
 
 		print(indent + 1, "tamanio", "String", node.getTamanio());
 		visit(indent + 1, "tipo", "Tipo",node.getTipo());
-		return null;
-	}
-
-	//	class TipoStruct {  }
-	public Object visit(TipoStruct node, Object param) {
-		int indent = ((Integer)param).intValue();
-
-		printName(indent, "TipoStruct", node, true);
-
 		return null;
 	}
 

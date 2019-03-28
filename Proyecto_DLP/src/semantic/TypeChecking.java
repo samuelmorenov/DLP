@@ -292,7 +292,7 @@ public class TypeChecking extends DefaultVisitor {
 		/** Reglas Semánticas */
 		// expr_punto.tipo = derecha.tipo
 		// expr_punto.modificable=true
-		// TODO Tipos Punto
+		// Tipos Punto
 
 		// super.visit(node, param);
 
@@ -308,7 +308,7 @@ public class TypeChecking extends DefaultVisitor {
 		// System.out.println("punto ["+node.getStart()+"]");
 
 		// node.setTipo(node.getDerecha().getTipo());
-		node.setTipo(new TipoStruct());
+		node.setTipo(new TipoVar(""));
 		node.setModificable(false);
 
 		return null;

@@ -17,6 +17,10 @@ public class TipoFloat extends AbstractTipo {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public int getSize() {
+		return 4; //TODO Añadido
+	}
 
 	public String toString() {
        return "{TipoFloat}";

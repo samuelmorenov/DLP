@@ -141,7 +141,7 @@ public class Identification extends DefaultVisitor {
 
 		//if (node.getDerecha() != null)
 		//	node.getDerecha().accept(this, param);
-		// TODO Identificacion Punto
+		// Identificacion Punto
 
 		return null;
 	}

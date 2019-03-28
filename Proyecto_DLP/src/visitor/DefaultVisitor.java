@@ -144,11 +144,6 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class TipoStruct {  }
-	public Object visit(TipoStruct node, Object param) {
-		return null;
-	}
-
 	//	class TipoVoid {  }
 	public Object visit(TipoVoid node, Object param) {
 		return null;

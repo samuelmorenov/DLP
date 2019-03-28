@@ -6,6 +6,8 @@ package ast;
 
 import visitor.*;
 
+import java.util.List;
+
 import org.antlr.v4.runtime.*;
 
 //	definicion_variable_global:bloque -> nombre:String  tipo:tipo
@@ -52,6 +54,16 @@ public class Definicion_variable_global extends AbstractBloque {
 		this.definicion = definicion;
 	}
 
+	
+	
+	public int getAddress() {
+		return address;
+	}
+
+	public void setAddress(int address) {
+		this.address = address;
+	}
+
 	@Override
 	public Object accept(Visitor v, Object param) { 
 		return v.visit(this, param);
@@ -60,9 +72,12 @@ public class Definicion_variable_global extends AbstractBloque {
 	private String nombre;
 	private Tipo tipo;
 	private Definicion_variable_global definicion;
+	private int address; //TODO Añadido
 
 	public String toString() {
        return "{nombre:" + getNombre() + ", tipo:" + getTipo() + "}";
    }
+
+
 
 }

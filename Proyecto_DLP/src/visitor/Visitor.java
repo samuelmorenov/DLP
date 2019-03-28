@@ -26,7 +26,6 @@ public interface Visitor {
 	public Object visit(TipoChar node, Object param);
 	public Object visit(TipoVar node, Object param);
 	public Object visit(TipoArray node, Object param);
-	public Object visit(TipoStruct node, Object param);
 	public Object visit(TipoVoid node, Object param);
 	public Object visit(Expr_int node, Object param);
 	public Object visit(Expr_real node, Object param);
