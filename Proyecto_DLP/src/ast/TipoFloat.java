@@ -19,7 +19,7 @@ public class TipoFloat extends AbstractTipo {
 
 	@Override
 	public int getSize() {
-		return 4; //TODO Añadido
+		return 4;
 	}
 
 	public String toString() {

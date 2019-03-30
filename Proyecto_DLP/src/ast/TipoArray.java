@@ -44,7 +44,7 @@ public class TipoArray extends AbstractTipo {
 		this.tipoElementos = tipo;
 	}
 	public int getSize() {
-		return this.tipoElementos.getSize() * Integer.parseInt(this.tamanio); //TODO Añadido ??
+		return this.tipoElementos.getSize() * Integer.parseInt(this.tamanio);
 	}
 
 	@Override

@@ -72,7 +72,7 @@ public class Definicion_variable_global extends AbstractBloque {
 	private String nombre;
 	private Tipo tipo;
 	private Definicion_variable_global definicion;
-	private int address; //TODO Añadido
+	private int address;
 
 	public String toString() {
        return "{nombre:" + getNombre() + ", tipo:" + getTipo() + "}";

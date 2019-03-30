@@ -23,6 +23,6 @@ public class TipoInt extends AbstractTipo {
    }
 
 	public int getSize() {
-		return 2; //TODO Añadido
+		return 2;
 	}
 }

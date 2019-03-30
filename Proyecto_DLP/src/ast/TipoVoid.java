@@ -11,7 +11,6 @@ public class TipoVoid extends AbstractTipo {
 
 	@Override
 	public int getSize() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

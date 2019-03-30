@@ -69,7 +69,7 @@ public class Definicion_campo_struct extends AbstractAST  {
 	private String nombre;
 	private Tipo tipo;
 	private Definicion_campo_struct definicion;
-	private int address; //TODO Añadido
+	private int address;
 
 	public String toString() {
        return "{nombre:" + getNombre() + ", tipo:" + getTipo() + "}";

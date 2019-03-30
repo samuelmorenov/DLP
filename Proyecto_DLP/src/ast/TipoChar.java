@@ -18,7 +18,7 @@ public class TipoChar extends AbstractTipo {
 	}
 	
 	public int getSize() {
-		return 1; //TODO Añadido
+		return 1;
 	}
 
 

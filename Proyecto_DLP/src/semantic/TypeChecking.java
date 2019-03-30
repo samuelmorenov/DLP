@@ -292,25 +292,44 @@ public class TypeChecking extends DefaultVisitor {
 		/** Reglas Semánticas */
 		// expr_punto.tipo = derecha.tipo
 		// expr_punto.modificable=true
-		// Tipos Punto
+		/** Predicados */
+		// izquierda.tipo == tipoStruct
+		// derecha esta en izquierda.tipo.definicion.Definicion_campo_struct
 
-		// super.visit(node, param);
+		super.visit(node, param);
 
-		if (node.getIzquierda() != null)
-			node.getIzquierda().accept(this, param);
+		try {
+			Struct definicion = ((TipoStruct) node.getIzquierda().getTipo()).getDefinicion();
+			String nombreDerecha = ((Expr_ident) node.getDerecha()).getString();
 
-		//System.out.println(node.getIzquierda().getTipo().toString());
-		//System.out.println(node.getIzquierda());
+			boolean existe = false;
 
-		// if (node.getDerecha() != null)
-		// node.getDerecha().accept(this, param);
+			for (int i = 0; i < definicion.getDefinicion_campo_struct().size(); i++) {
+				Definicion_campo_struct campoActual = definicion.getDefinicion_campo_struct().get(i);
+				//System.out.println(actual);
+				if (nombreDerecha.equals(campoActual.getNombre())) {
+					node.getDerecha().setTipo(campoActual.getTipo());
+					existe = true;
+				}
+			}
 
-		// System.out.println("punto ["+node.getStart()+"]");
+			if(existe) {
+				node.setTipo(node.getDerecha().getTipo());
+				System.out.println("Tipo de "+nombreDerecha+" es "+ node.getTipo());
+				node.setModificable(true);
+			}
+			else {
+				predicado(false, "Campo no definido", node);
+				node.setTipo(new TipoInt());
+				node.setModificable(false);
+			}
 
-		// node.setTipo(node.getDerecha().getTipo());
-		node.setTipo(new TipoStruct(""));
-		node.setModificable(false);
-
+			
+		} catch (ClassCastException e) {
+			predicado(false, "Se requiere tipo struct", node);
+			node.setTipo(new TipoInt());
+			node.setModificable(false);
+		}
 		return null;
 	}
 

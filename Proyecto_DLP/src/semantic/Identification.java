@@ -97,7 +97,7 @@ public class Identification extends DefaultVisitor {
 		return null;
 	}
 
-	// class TipoVar { String string; }
+	// class TipoStruct { String string; }
 	public Object visit(TipoStruct node, Object param) {
 		Struct definicion = estructuras.get(node.getNombre());
 		predicado(definicion != null, "Struct no definido: " + node.getNombre(), node);
@@ -141,7 +141,6 @@ public class Identification extends DefaultVisitor {
 
 		//if (node.getDerecha() != null)
 		//	node.getDerecha().accept(this, param);
-		// Identificacion Punto
 
 		return null;
 	}
