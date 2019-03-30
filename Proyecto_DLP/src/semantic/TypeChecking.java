@@ -251,13 +251,13 @@ public class TypeChecking extends DefaultVisitor {
 		node.setTipo(node.getIzquierda().getTipo());
 		node.setModificable(false);
 
-		if (node.getOperador().getClass().equals(new Operador_aritmetico("").getClass())) {
+		if (node.getOperador() instanceof Operador_aritmetico) {
 			predicado(tipoSimple(node.getIzquierda().getTipo()), "Deben ser tipos simples", node);
 		}
-		if (node.getOperador().getClass().equals(new Operador_logico("").getClass())) {
+		if (node.getOperador() instanceof Operador_logico) {
 			predicado(tipoSimple(node.getIzquierda().getTipo()), "Deben ser tipos simples", node);
 		}
-		if (node.getOperador().getClass().equals(new Operador_booleano("").getClass())) {
+		if (node.getOperador() instanceof Operador_booleano) {
 			predicado(node.getIzquierda().getTipo().getClass().equals(new TipoInt().getClass()), "Deben ser entero",
 					node);
 		}
@@ -306,25 +306,23 @@ public class TypeChecking extends DefaultVisitor {
 
 			for (int i = 0; i < definicion.getDefinicion_campo_struct().size(); i++) {
 				Definicion_campo_struct campoActual = definicion.getDefinicion_campo_struct().get(i);
-				//System.out.println(actual);
+				// System.out.println(actual);
 				if (nombreDerecha.equals(campoActual.getNombre())) {
 					node.getDerecha().setTipo(campoActual.getTipo());
 					existe = true;
 				}
 			}
 
-			if(existe) {
+			if (existe) {
 				node.setTipo(node.getDerecha().getTipo());
-				System.out.println("Tipo de "+nombreDerecha+" es "+ node.getTipo());
+				// System.out.println("Tipo de "+nombreDerecha+" es "+ node.getTipo());
 				node.setModificable(true);
-			}
-			else {
+			} else {
 				predicado(false, "Campo no definido", node);
 				node.setTipo(new TipoInt());
 				node.setModificable(false);
 			}
 
-			
 		} catch (ClassCastException e) {
 			predicado(false, "Se requiere tipo struct", node);
 			node.setTipo(new TipoInt());
@@ -414,8 +412,7 @@ public class TypeChecking extends DefaultVisitor {
 	//////////////// Metodos auxiliares ////////////////
 	////////////////////////////////////////////////////
 	private boolean tipoSimple(Tipo tipo) {
-		return tipo.getClass().equals(new TipoInt().getClass()) || tipo.getClass().equals(new TipoFloat().getClass())
-				|| tipo.getClass().equals(new TipoChar().getClass());
+		return tipo instanceof TipoInt || tipo instanceof TipoFloat || tipo instanceof TipoChar;
 	}
 
 	private boolean mismoTipo(Tipo tipo1, Tipo tipo2) {
