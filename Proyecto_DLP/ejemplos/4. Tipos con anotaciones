@@ -100,7 +100,7 @@ main() {
 	print v[i+2];
 	
 	print juan.edad;
-	print 5.edad;	// Se requiere tipo struct
-	print juan.nombre; // Campo no definido
+	print 5.edad;				// [103:8] Se requiere tipo struct
+	print juan.nombre; 			// [104:8] Campo no definido
 	
 }

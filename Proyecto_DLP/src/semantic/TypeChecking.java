@@ -298,35 +298,29 @@ public class TypeChecking extends DefaultVisitor {
 
 		super.visit(node, param);
 
-		try {
-			Struct definicion = ((TipoStruct) node.getIzquierda().getTipo()).getDefinicion();
-			String nombreDerecha = ((Expr_ident) node.getDerecha()).getString();
+		// Valores por defecto:
+		node.setTipo(new TipoInt()); // Si no se cambia es que da otro error y no necesita dar error de tipo
+		node.setModificable(false);
 
-			boolean existe = false;
-
-			for (int i = 0; i < definicion.getDefinicion_campo_struct().size(); i++) {
-				Definicion_campo_struct campoActual = definicion.getDefinicion_campo_struct().get(i);
-				// System.out.println(actual);
-				if (nombreDerecha.equals(campoActual.getNombre())) {
-					node.getDerecha().setTipo(campoActual.getTipo());
-					existe = true;
+		if (node.getIzquierda().getTipo() instanceof TipoStruct) {
+			if (node.getDerecha() instanceof Expr_ident) {
+				Struct definicion = ((TipoStruct) node.getIzquierda().getTipo()).getDefinicion();
+				String nombreDerecha = ((Expr_ident) node.getDerecha()).getString();
+				boolean existe = false;
+				for (Definicion_campo_struct campoActual : definicion.getDefinicion_campo_struct()) {
+					if (nombreDerecha.equals(campoActual.getNombre())) {
+						node.getDerecha().setTipo(campoActual.getTipo());
+						node.setTipo(node.getDerecha().getTipo());
+						node.setModificable(true);
+						existe = true;
+					}
 				}
-			}
-
-			if (existe) {
-				node.setTipo(node.getDerecha().getTipo());
-				// System.out.println("Tipo de "+nombreDerecha+" es "+ node.getTipo());
-				node.setModificable(true);
+				predicado(existe, "Campo no definido", node);
 			} else {
-				predicado(false, "Campo no definido", node);
-				node.setTipo(new TipoInt());
-				node.setModificable(false);
+				predicado(false, "El campo del estuct no es un identificador", node);
 			}
-
-		} catch (ClassCastException e) {
+		} else {
 			predicado(false, "Se requiere tipo struct", node);
-			node.setTipo(new TipoInt());
-			node.setModificable(false);
 		}
 		return null;
 	}
