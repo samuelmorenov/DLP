@@ -1,22 +1,23 @@
-//package myVisitors;
-//
-//import ast.*;
-//import visitor.DefaultVisitor;
-//
-//public class PrintVisitor extends DefaultVisitor {
-//
-//	// class Program { List<Bloque> bloque; }
-//	public Object visit(Program node, Object param) {
-//
-//		// super.visit(node, param);
-//
-//		if (node.getBloque() != null)
-//			for (Bloque child : node.getBloque())
-//				child.accept(this, param);
-//
-//		return null;
-//	}
-//
+package myVisitors;
+
+import ast.*;
+import visitor.DefaultVisitor;
+
+@Deprecated
+public class PrintVisitor extends DefaultVisitor {
+
+	// class Program { List<Bloque> bloque; }
+	public Object visit(Program node, Object param) {
+
+		// super.visit(node, param);
+
+		if (node.getBloque() != null)
+			for (Bloque child : node.getBloque())
+				child.accept(this, param);
+
+		return null;
+	}
+
 //	// class Definicion_variables { String nombre; Tipo tipo; }
 //	public Object visit(Definicion_variable node, Object param) {
 //		// super.visit(node, param);
@@ -372,4 +373,4 @@
 //		System.out.print(node.getString());
 //		return null;
 //	}
-//}
+}

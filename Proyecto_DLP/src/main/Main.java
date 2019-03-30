@@ -37,10 +37,10 @@ public class Main {
             System.out.println("El programa se ha compilado correctamente.");
 
         ASTPrinter.toHtml(program, ast, "AST"); // Utilidad generada por VGen (opcional)
+
         
-        //Visitor:
         PrintMemoryAllocation pma = new PrintMemoryAllocation();
-        ast.accept(pma, null);
+        ast.accept(pma, null); // Comentar cuando no se quiera ver la asignacion de memoria
         
         
     }
