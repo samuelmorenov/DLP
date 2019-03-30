@@ -14,7 +14,7 @@ public class TipoArray extends AbstractTipo {
 
 	public TipoArray(String tamanio, Tipo tipo) {
 		this.tamanio = tamanio;
-		this.tipo = tipo;
+		this.tipoElementos = tipo;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
@@ -23,7 +23,7 @@ public class TipoArray extends AbstractTipo {
 
 	public TipoArray(Object tamanio, Object tipo) {
 		this.tamanio = (tamanio instanceof Token) ? ((Token)tamanio).getText() : (String) tamanio;
-		this.tipo = (Tipo) ((tipo instanceof ParserRuleContext) ? getAST(tipo) : tipo);
+		this.tipoElementos = (Tipo) ((tipo instanceof ParserRuleContext) ? getAST(tipo) : tipo);
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
@@ -37,14 +37,14 @@ public class TipoArray extends AbstractTipo {
 		this.tamanio = tamanio;
 	}
 
-	public Tipo getTipo() {
-		return tipo;
+	public Tipo getTipoElementos() {
+		return tipoElementos;
 	}
-	public void setTipo(Tipo tipo) {
-		this.tipo = tipo;
+	public void setTipoElementos(Tipo tipo) {
+		this.tipoElementos = tipo;
 	}
 	public int getSize() {
-		return this.tipo.getSize() * Integer.parseInt(this.tamanio); //TODO Añadido ??
+		return this.tipoElementos.getSize() * Integer.parseInt(this.tamanio); //TODO Añadido ??
 	}
 
 	@Override
@@ -53,9 +53,9 @@ public class TipoArray extends AbstractTipo {
 	}
 
 	private String tamanio;
-	private Tipo tipo;
+	private Tipo tipoElementos;
 
 	public String toString() {
-       return "{tamanio:" + getTamanio() + ", tipo:" + getTipo() + "}";
+       return "{tamanio:" + getTamanio() + ", tipo:" + getTipoElementos() + "}";
    }
 }

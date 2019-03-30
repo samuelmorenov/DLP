@@ -27,7 +27,7 @@ tipoInt:tipo -> ;
 tipoFloat:tipo -> ;
 tipoChar:tipo -> ;
 tipoStruct:tipo -> nombre:string;
-tipoArray:tipo -> tipoElementos:tipo tamanio:int;
+tipoArray:tipo -> tamanio:string tipoElementos:tipo;
 tipoVoid -> ;
 
 expr_int:expr -> string;

@@ -98,9 +98,9 @@ public class Identification extends DefaultVisitor {
 	}
 
 	// class TipoVar { String string; }
-	public Object visit(TipoVar node, Object param) {
-		Struct definicion = estructuras.get(node.getString());
-		predicado(definicion != null, "Struct no definido: " + node.getString(), node);
+	public Object visit(TipoStruct node, Object param) {
+		Struct definicion = estructuras.get(node.getNombre());
+		predicado(definicion != null, "Struct no definido: " + node.getNombre(), node);
 		node.setDefinicion(definicion); // Enlazar referencia con definicion
 		super.visit(node, param);
 		return null;

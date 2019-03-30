@@ -112,7 +112,6 @@ public class ASTPrinter extends DefaultVisitor {
 
 		print(indent + 1, "nombre", "String", node.getNombre());
 		visit(indent + 1, "tipo", "Tipo",node.getTipo());
-		print(indent + 1, "address", "Int", node.getAddress()); //TODO: Opcional
 		return null;
 	}
 
@@ -135,7 +134,6 @@ public class ASTPrinter extends DefaultVisitor {
 
 		print(indent + 1, "nombre", "String", node.getNombre());
 		visit(indent + 1, "tipo", "Tipo",node.getTipo());
-		print(indent + 1, "address", "Int", node.getAddress()); //TODO: Opcional
 		return null;
 	}
 
@@ -277,22 +275,22 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class TipoVar { String string; }
-	public Object visit(TipoVar node, Object param) {
+	//	class TipoStruct { String nombre; }
+	public Object visit(TipoStruct node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printCompact(indent, "TipoVar", node, "string", node.getString());
+		printCompact(indent, "TipoStruct", node, "nombre", node.getNombre());
 		return null;
 	}
 
-	//	class TipoArray { String tamanio;  Tipo tipo; }
+	//	class TipoArray { String tamanio;  Tipo tipoElementos; }
 	public Object visit(TipoArray node, Object param) {
 		int indent = ((Integer)param).intValue();
 
 		printName(indent, "TipoArray", node, false);
 
 		print(indent + 1, "tamanio", "String", node.getTamanio());
-		visit(indent + 1, "tipo", "Tipo",node.getTipo());
+		visit(indent + 1, "tipoElementos", "Tipo",node.getTipoElementos());
 		return null;
 	}
 

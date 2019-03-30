@@ -22,26 +22,4 @@ public class MemoryAllocation extends DefaultVisitor {
 		}
 		return null;
 	}
-	
-	
-	
-	//	class Program { List<Bloque> bloque; }
-	public Object visit(Program node, Object param) {
-
-		// super.visit(node, param);
-
-		if (node.getBloque() != null)
-			for (Bloque child : node.getBloque())
-				child.accept(this, param);
-
-		return null;
-	}
-	
-	//	class TipoVar { String string; }
-	public Object visit(TipoVar node, Object param) {
-		return null;
-	}
-	
-
-
 }

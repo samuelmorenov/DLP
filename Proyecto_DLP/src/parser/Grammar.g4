@@ -119,7 +119,7 @@ tipo  returns[Tipo ast]
 	: 'int'{ $ast = new TipoInt(); }
 	| 'float' { $ast = new TipoFloat(); }
 	| 'char' { $ast = new TipoChar(); }
-	| IDENT { $ast = new TipoVar($IDENT); }
+	| IDENT { $ast = new TipoStruct($IDENT); }
 	| array	{ $ast = $array.ast; }
 	;
 	

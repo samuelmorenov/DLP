@@ -132,15 +132,15 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class TipoVar { String string; }
-	public Object visit(TipoVar node, Object param) {
+	//	class TipoStruct { String nombre; }
+	public Object visit(TipoStruct node, Object param) {
 		return null;
 	}
 
-	//	class TipoArray { String tamanio;  Tipo tipo; }
+	//	class TipoArray { String tamanio;  Tipo tipoElementos; }
 	public Object visit(TipoArray node, Object param) {
-		if (node.getTipo() != null)
-			node.getTipo().accept(this, param);
+		if (node.getTipoElementos() != null)
+			node.getTipoElementos().accept(this, param);
 		return null;
 	}
 

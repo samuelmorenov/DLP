@@ -1377,7 +1377,7 @@ public class GrammarParser extends Parser {
 				{
 				setState(282);
 				((TipoContext)_localctx).IDENT = match(IDENT);
-				 ((TipoContext)_localctx).ast =  new TipoVar(((TipoContext)_localctx).IDENT); 
+				 ((TipoContext)_localctx).ast =  new TipoStruct(((TipoContext)_localctx).IDENT); 
 				}
 				break;
 			case T__21:

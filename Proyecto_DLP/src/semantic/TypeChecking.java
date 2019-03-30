@@ -308,7 +308,7 @@ public class TypeChecking extends DefaultVisitor {
 		// System.out.println("punto ["+node.getStart()+"]");
 
 		// node.setTipo(node.getDerecha().getTipo());
-		node.setTipo(new TipoVar(""));
+		node.setTipo(new TipoStruct(""));
 		node.setModificable(false);
 
 		return null;
