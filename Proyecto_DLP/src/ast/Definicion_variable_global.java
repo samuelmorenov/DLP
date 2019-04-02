@@ -6,8 +6,6 @@ package ast;
 
 import visitor.*;
 
-import java.util.List;
-
 import org.antlr.v4.runtime.*;
 
 //	definicion_variable_global:bloque -> nombre:String  tipo:tipo

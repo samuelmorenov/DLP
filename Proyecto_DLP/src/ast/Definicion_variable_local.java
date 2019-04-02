@@ -57,13 +57,28 @@ public class Definicion_variable_local extends AbstractAST  {
 		return v.visit(this, param);
 	}
 
+	
+	
+	public int getAddress() {
+		return address;
+	}
+
+	public void setAddress(int address) {
+		this.address = address;
+	}
+
+
+
 	private String nombre;
 	private Tipo tipo;
 	private Definicion_variable_local definicion;
+	private int address;
 
 	public String toString() {
        return "{nombre:" + getNombre() + ", tipo:" + getTipo() + "}";
    }
+
+
 
 
 }
