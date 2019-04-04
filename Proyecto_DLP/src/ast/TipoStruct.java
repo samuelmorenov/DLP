@@ -53,7 +53,6 @@ public class TipoStruct extends AbstractTipo {
 				Definicion_campo_struct def = this.definicion.getDefinicion_campo_struct().get(i);
 				def.setAddress(this.size);
 				this.size += def.getTipo().getSize();
-				//System.out.println(this.size + " " + def.getNombre()); //TODO borrar
 			}
 		}
 
