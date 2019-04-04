@@ -24,6 +24,19 @@ public class MemoryAllocation extends DefaultVisitor {
 		}
 
 		super.visit(node, param);
+		
+		for (Bloque child : node.getBloque()) {
+
+			if (child instanceof Struct) {
+				TipoStruct aux = new TipoStruct("") ;
+				Struct st = (Struct) child;
+				aux.setDefinicion(st);
+				aux.getSize();
+			}
+			
+
+		}
+		
 		return null;
 	}
 
