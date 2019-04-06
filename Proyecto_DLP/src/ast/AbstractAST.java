@@ -21,10 +21,10 @@ public abstract class AbstractAST implements AST {
     }
 
     // setPositions. Establece:
-    // 1. La posición inicial (start) a partir
-    // del PRIMER hijo que tenga posición inicial.
-    // 2. La posición final (end) a partir del ULTIMO
-    // hijo que tenga posición final.
+    // 1. La posicion inicial (start) a partir
+    // del PRIMER hijo que tenga posicion inicial.
+    // 2. La posicion final (end) a partir del ULTIMO
+    // hijo que tenga posicion final.
 
     @Override
     public void setPositions(Object... children) {
@@ -35,7 +35,7 @@ public abstract class AbstractAST implements AST {
     }
 
     // -----------------------------------------------
-    // Métodos protected para ser llamado desde los
+    // Metodos protected para ser llamado desde los
     // constructores de las clases AST
 
     // Dado un Contexto de una regla de ANTLR, extrae su campo "ast"
@@ -53,7 +53,7 @@ public abstract class AbstractAST implements AST {
     }
 
     // -----------------------------------------------
-    // Mótodos privados para ser llamados SÓLO desde los métodos anteriores
+    // Motodos privados para ser llamados SÓLO desde los metodos anteriores
 
     @SuppressWarnings("unchecked")
     private Position findStart(Object node) {
@@ -109,7 +109,7 @@ public abstract class AbstractAST implements AST {
         return end;
     }
 
-    // Para depuración
+    // Para depuracion
     private void invariant() {
         if ((getStart() != null || getEnd() != null) && getStart().greaterThan(getEnd()))
             throw new IllegalStateException(

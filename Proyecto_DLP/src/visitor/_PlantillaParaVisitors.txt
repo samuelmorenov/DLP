@@ -9,33 +9,33 @@ import ast.*;
 
 /*
 Plantilla para Visitors.
-Para crear un nuevo Visitor cortar y pegar este código y ya se tendría un visitor que compila y
-que al ejecutarlo recorrería todo el árbol (sin hacer nada aún en él).
-Solo quedaría añadir a cada método visit aquello adicional que se quiera realizar sobre su nodo del AST.
+Para crear un nuevo Visitor cortar y pegar este codigo y ya se tendria un visitor que compila y
+que al ejecutarlo recorreria todo el árbol (sin hacer nada aun en el).
+Solo quedaria añadir a cada metodo visit aquello adicional que se quiera realizar sobre su nodo del AST.
 */
 
 public class <nombre clase> extends DefaultVisitor {
 
 	// ---------------------------------------------------------
-	// Tareas a realizar en cada método visit:
+	// Tareas a realizar en cada metodo visit:
 	//
-	// Si en algún método visit NO SE QUIERE HACER NADA más que recorrer los hijos entonces se puede
-	// borrar (dicho método se heredaría de DefaultVisitor con el código de recorrido).
+	// Si en algun metodo visit NO SE QUIERE HACER NADA más que recorrer los hijos entonces se puede
+	// borrar (dicho metodo se heredaria de DefaultVisitor con el codigo de recorrido).
 	//
-	// Lo siguiente es para cuando se quiera AÑADIR alguna funcionalidad adicional a un visit:
+	// Lo siguiente es para cuando se quiera A�ADIR alguna funcionalidad adicional a un visit:
 	//
-	// - El código que aparece en cada método visit es aquel que recorre los hijos. Es el mismo código
+	// - El codigo que aparece en cada metodo visit es aquel que recorre los hijos. Es el mismo codigo
 	//		que está implementado en el padre (DefaultVisitor). Por tanto la llamada a 'super.visit' y el
-	//		resto del código del método hacen lo mismo (por ello 'super.visit' está comentado).
+	//		resto del codigo del metodo hacen lo mismo (por ello 'super.visit' está comentado).
 	//
-	// - Lo HABITUAL será borrar todo el código de recorrido dejando solo la llamada a 'super.visit'. De esta
-	//		manera, cada método visit se puede centrar en la tarea que tiene que realizar sobre su nodo del AST
+	// - Lo HABITUAL será borrar todo el codigo de recorrido dejando solo la llamada a 'super.visit'. De esta
+	//		manera, cada metodo visit se puede centrar en la tarea que tiene que realizar sobre su nodo del AST
     //      (dejando que el padre se encargue del recorrido de los hijos).
 	//
-	// - La razón de que aparezca el código de recorrido de los hijos es por si se necesita realizar alguna
+	// - La razon de que aparezca el codigo de recorrido de los hijos es por si se necesita realizar alguna
 	//		tarea DURANTE el mismo (por ejemplo ir comprobando su tipo). En este caso, ya se tiene implementado
-	//		dicho recorrido y solo habría que incrustar las acciones adicionales en el mismo. En este caso,
-	//		es la llamada a 'super.visit' la que debería ser borrada.
+	//		dicho recorrido y solo habria que incrustar las acciones adicionales en el mismo. En este caso,
+	//		es la llamada a 'super.visit' la que deberia ser borrada.
 	// ---------------------------------------------------------
 
 	//	class Program { List<Bloque> bloque; }

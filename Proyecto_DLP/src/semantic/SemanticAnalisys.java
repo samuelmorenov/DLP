@@ -9,9 +9,9 @@ import ast.*;
  *  2. Fase de Comprobacion de Tipos (Type Checking).
  *
  * No es necesario modificar esta clase. En su lugar hay que modificar las clases
- * que son llamadas desde aquí: "Identification.java" y "TypeChecking.java"
+ * que son llamadas desde aqui: "Identification.java" y "TypeChecking.java"
  *
- * @author Raúl Izquierdo
+ * @author Raul Izquierdo
  *
  */
 public class SemanticAnalisys {

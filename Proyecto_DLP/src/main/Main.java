@@ -17,13 +17,13 @@ import myVisitors.PrintMemoryAllocation;
  * Clase que inicia el compilador e invoca a todas sus fases.
  *
  * Normalmente, no es necesario modificar este fichero. En su lugar, modificar
- * los ficheros de cada fase (que son llamados desde aquí):
- * - Para Analisis Léxico: 'Lexico.g4'.
+ * los ficheros de cada fase (que son llamados desde aqui):
+ * - Para Analisis Lexico: 'Lexico.g4'.
  * - Para Analisis Sintactico: 'Grammar.g4'.
  * - Para Analisis Semantico: 'Identification.java' y 'TypeChecking.java'.
  * - Para Generacion de Codigo: 'MemoryAllocation.java' y 'CodeSelection.java'.
  *
- * @author Raúl Izquierdo
+ * @author Raul Izquierdo
  *
  */
 public class Main {
@@ -46,11 +46,11 @@ public class Main {
     }
 
     /**
-     * Método que coordina todas las fases del compilador
+     * Metodo que coordina todas las fases del compilador
      */
     public static AST compile(String sourceName, ErrorManager errorManager) throws Exception {
 
-        // 1. Fases de Analisis Léxico y Sintactico
+        // 1. Fases de Analisis Lexico y Sintactico
         GrammarLexer lexer = new GrammarLexer(CharStreams.fromFileName(sourceName));
 
         GrammarParser parser = new GrammarParser(new CommonTokenStream(lexer));
@@ -59,11 +59,11 @@ public class Main {
 
         AST ast = null;
 
-        // IMPORTANTE: Cuando se genere el AST, INTERCAMBIAR las dos líneas siguientes:
+        // IMPORTANTE: Cuando se genere el AST, INTERCAMBIAR las dos lineas siguientes:
         //parser.start();
         ast = parser.start().ast;
 
-        if (ast == null) // Hay errores o el AST no se ha implementado aún
+        if (ast == null) // Hay errores o el AST no se ha implementado aun
             return null;
 
         // 2. Fase de Analisis Semantico

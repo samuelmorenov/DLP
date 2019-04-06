@@ -1,5 +1,5 @@
 /**
- * @author Raúl Izquierdo
+ * @author Raul Izquierdo
  */
 
 package main;

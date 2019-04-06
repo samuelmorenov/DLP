@@ -13,8 +13,8 @@ import java.util.*;
  * ASTPrinter. Utilidad que ayuda a validar un arbol AST:
  * - Muestra la estructura del árbol en HTML.
  * - Destaca los hijos/propiedades a null.
- * - Muestra a qué texto apuntan las posiciones de cada nodo (linea/columna)
- *      ayudando a decidir cual de ellas usar en los errores y generación de código.
+ * - Muestra a que texto apuntan las posiciones de cada nodo (linea/columna)
+ *      ayudando a decidir cual de ellas usar en los errores y generacion de codigo.
  *
  * Esta clase se genera con VGen. El uso de esta clase es opcional (puede eliminarse del proyecto).
  *
@@ -22,8 +22,8 @@ import java.util.*;
 public class ASTPrinter extends DefaultVisitor {
 
     /**
-     * toHtml. Muestra la estructura del AST indicando qué hay en las posiciones
-     * (línea y columna) de cada nodo.
+     * toHtml. Muestra la estructura del AST indicando que hay en las posiciones
+     * (linea y columna) de cada nodo.
      *
      * @param sourceFile El fichero del cual se ha obtenido el AST
      * @param raiz       El AST creado a partir de sourceFile
@@ -38,8 +38,8 @@ public class ASTPrinter extends DefaultVisitor {
         toHtml(null, raiz, filename);
     }
 
-    // tabWidth deberían ser los espacios correspondientes a un tabulador en eclipse.
-    // Normalmente no sería necesario especificarlo. Usar mejor los dos métodos anteriores.
+    // tabWidth deberian ser los espacios correspondientes a un tabulador en eclipse.
+    // Normalmente no seria necesario especificarlo. Usar mejor los dos metodos anteriores.
 
     public static void toHtml(String sourceFile, AST raiz, String filename, int tabWidth) {
         try {
@@ -427,7 +427,7 @@ public class ASTPrinter extends DefaultVisitor {
 
 
 	// -----------------------------------------------------------------
-	// Métodos invocados desde los métodos visit -----------------------
+	// Metodos invocados desde los metodos visit -----------------------
 
 	private void printName(int indent, String name, AST node, boolean empty) {
 		String text = ls + tabula(indent) + name + " &rarr;  ";
@@ -450,7 +450,7 @@ public class ASTPrinter extends DefaultVisitor {
 			writer.print(" " + valueTag(null));
 	}
 
-	// Versión compacta de una linea para nodos que solo tienen un atributo String
+	// Version compacta de una linea para nodos que solo tienen un atributo String
 	private void printCompact(int indent, String nodeName, AST node, String attName, Object value) {
 		String fullName = nodeName + '.' + attName;
 		String text = ls + tabula(indent) + '\"' + value + "\"  " + fullName;
@@ -477,7 +477,7 @@ public class ASTPrinter extends DefaultVisitor {
 	}
 
 	// -----------------------------------------------------------------
-	// Métodos auxiliares privados -------------------------------------
+	// Metodos auxiliares privados -------------------------------------
 
 	private void write(int indent, String text) {
 		writer.print(ls + tabula(indent) + text);
@@ -511,7 +511,7 @@ public class ASTPrinter extends DefaultVisitor {
 
 
 	// -----------------------------------------------------------------
-	// Métodos para mostrar las Posiciones -----------------------------
+	// Metodos para mostrar las Posiciones -----------------------------
 
 	private String getPosition(AST node) {
 		String text = node.getStart() + "  " + node.getEnd();
@@ -571,10 +571,10 @@ public class ASTPrinter extends DefaultVisitor {
 			br.close();
 			return lines;
 		} catch (FileNotFoundException e) {
-			System.out.println("Warning. No se pudo encontrar el fichero fuente '" + sourceFile + "'. No se mostrará informaicón de posición.");
+			System.out.println("Warning. No se pudo encontrar el fichero fuente '" + sourceFile + "'. No se mostrará informaicon de posicion.");
 			return null;
 		} catch (IOException e) {
-			System.out.println("Warning. Error al leer del fichero fuente '" + sourceFile + "'. No se mostrará informaicón de posición.");
+			System.out.println("Warning. Error al leer del fichero fuente '" + sourceFile + "'. No se mostrará informaicon de posicion.");
 			return null;
 		}
 	}

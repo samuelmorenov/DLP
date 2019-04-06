@@ -426,7 +426,7 @@ public class TypeChecking extends DefaultVisitor {
 	 * primitivo");
 	 *
 	 * NOTA: El metodo getStart() (ejemplo 1) indica la linea/columna del fichero
-	 * fuente donde estaba el nodo (y así poder dar informacion mas detallada de la
+	 * fuente donde estaba el nodo (y asi poder dar informacion mas detallada de la
 	 * posicion del error). Si se usa VGen, dicho metodo habra sido generado en
 	 * todos los nodos del AST. No es obligatorio llamar a getStart() (ejemplo 2),
 	 * ya que si se pasa el nodo, se usara por defecto dicha posicion. Si no se

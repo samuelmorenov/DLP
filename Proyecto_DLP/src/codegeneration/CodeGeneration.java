@@ -10,9 +10,9 @@ import ast.*;
  *  2. Seleccion de Codigo.
  *
  * No es necesario modificar esta clase. En su lugar hay que modificar las clases
- * que son llamadas desde aquí: "MemoryAllocation.java" y "CodeSelection.java".
+ * que son llamadas desde aqui: "MemoryAllocation.java" y "CodeSelection.java".
  *
- * @author Raúl Izquierdo
+ * @author Raul Izquierdo
  *
  */
 public class CodeGeneration {
