@@ -17,4 +17,9 @@ public class TipoVoid extends AbstractTipo {
 	public String toString() {
        return "{TipoVoid}";
    }
+
+	@Override
+	public char getSuffix() {
+        return '?'; //TODO Añadido suffix ?
+	}
 }

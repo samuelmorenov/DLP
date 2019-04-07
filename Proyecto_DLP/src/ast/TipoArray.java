@@ -51,6 +51,7 @@ public class TipoArray extends AbstractTipo {
 	public Object accept(Visitor v, Object param) { 
 		return v.visit(this, param);
 	}
+	
 
 	private String tamanio;
 	private Tipo tipoElementos;
@@ -58,4 +59,9 @@ public class TipoArray extends AbstractTipo {
 	public String toString() {
        return "{tamanio:" + getTamanio() + ", tipo:" + getTipoElementos() + "}";
    }
+
+	@Override
+	public char getSuffix() {
+        return '?'; //TODO Añadido suffix ?
+	}
 }

@@ -70,4 +70,9 @@ public class TipoStruct extends AbstractTipo {
 	public String toString() {
 		return "{nombre:" + getNombre() + "}";
 	}
+
+	@Override
+	public char getSuffix() {
+        return '?'; //TODO Añadido suffix ?
+	}
 }

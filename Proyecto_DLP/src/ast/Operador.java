@@ -5,5 +5,5 @@
 package ast;
 
 public interface Operador extends AST {
-
+	public String getString();
 }

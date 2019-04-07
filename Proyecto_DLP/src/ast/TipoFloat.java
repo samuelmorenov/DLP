@@ -25,4 +25,9 @@ public class TipoFloat extends AbstractTipo {
 	public String toString() {
        return "{TipoFloat}";
    }
+
+	@Override
+	public char getSuffix() {
+        return 'f'; //TODO Añadido suffix f
+	}
 }

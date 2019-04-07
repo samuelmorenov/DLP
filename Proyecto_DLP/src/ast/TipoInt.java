@@ -25,4 +25,10 @@ public class TipoInt extends AbstractTipo {
 	public int getSize() {
 		return 2;
 	}
+
+
+	@Override
+	public char getSuffix() {
+        return 'i'; //TODO Añadido suffix i
+	}
 }

@@ -1,5 +1,0 @@
-C:\Users\UO266321\Downloads\MAPL 1.3.1\Tutorial\2 Gestion de Memoria\4 Locales y Parametros.txt
-
-El tipoVar es en realidad el tipoStruct
-
-He cambiado nombres en la gramatica abstracta, corregirlos
