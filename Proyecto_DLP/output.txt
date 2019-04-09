@@ -1,7 +1,26 @@
 #source "source.txt"
 
-#line 29
-pusha 20
+#line 23
+pusha 4
 add
+pushf 4.0
+storef
+
+#line 24
+pusha 4
+add
+pusha 0
+loadf
+pusha 4
+add
+addf
+storef
+
+#line 25
+pusha 0
+loadf
+pusha 4
+add
+addf
 outf
 halt

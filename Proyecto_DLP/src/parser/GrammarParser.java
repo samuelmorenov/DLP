@@ -1587,12 +1587,12 @@ public class GrammarParser extends Parser {
 						_localctx = new ExprContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(326);
-						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
+						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 						setState(327);
-						((ExprContext)_localctx).operador = operador();
+						match(T__23);
 						setState(328);
-						((ExprContext)_localctx).expr = expr(7);
-						 ((ExprContext)_localctx).ast =  new Expr_binaria(_localctx.expr(0).ast, ((ExprContext)_localctx).operador.ast, _localctx.expr(1).ast); 
+						((ExprContext)_localctx).expr = expr(6);
+						 ((ExprContext)_localctx).ast =  new Expr_punto(_localctx.expr(0).ast, _localctx.expr(1).ast); 
 						}
 						break;
 					case 2:
@@ -1602,10 +1602,10 @@ public class GrammarParser extends Parser {
 						setState(331);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
 						setState(332);
-						match(T__23);
+						((ExprContext)_localctx).operador = operador();
 						setState(333);
 						((ExprContext)_localctx).expr = expr(5);
-						 ((ExprContext)_localctx).ast =  new Expr_punto(_localctx.expr(0).ast, _localctx.expr(1).ast); 
+						 ((ExprContext)_localctx).ast =  new Expr_binaria(_localctx.expr(0).ast, ((ExprContext)_localctx).operador.ast, _localctx.expr(1).ast); 
 						}
 						break;
 					case 3:
@@ -1613,7 +1613,7 @@ public class GrammarParser extends Parser {
 						_localctx = new ExprContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(336);
-						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
+						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
 						{
 						setState(337);
 						match(T__21);
@@ -1977,11 +1977,11 @@ public class GrammarParser extends Parser {
 	private boolean expr_sempred(ExprContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 6);
+			return precpred(_ctx, 5);
 		case 1:
 			return precpred(_ctx, 4);
 		case 2:
-			return precpred(_ctx, 5);
+			return precpred(_ctx, 3);
 		}
 		return true;
 	}
@@ -2099,10 +2099,10 @@ public class GrammarParser extends Parser {
 		"\5\64\33\2\u0143\u0144\7\n\2\2\u0144\u0145\b\32\1\2\u0145\u0147\3\2\2"+
 		"\2\u0146\u0129\3\2\2\2\u0146\u012c\3\2\2\2\u0146\u012e\3\2\2\2\u0146\u0130"+
 		"\3\2\2\2\u0146\u0132\3\2\2\2\u0146\u0137\3\2\2\2\u0146\u0140\3\2\2\2\u0147"+
-		"\u015b\3\2\2\2\u0148\u0149\f\b\2\2\u0149\u014a\5\66\34\2\u014a\u014b\5"+
-		"\62\32\t\u014b\u014c\b\32\1\2\u014c\u015a\3\2\2\2\u014d\u014e\f\6\2\2"+
-		"\u014e\u014f\7\32\2\2\u014f\u0150\5\62\32\7\u0150\u0151\b\32\1\2\u0151"+
-		"\u015a\3\2\2\2\u0152\u0153\f\7\2\2\u0153\u0154\7\30\2\2\u0154\u0155\5"+
+		"\u015b\3\2\2\2\u0148\u0149\f\7\2\2\u0149\u014a\7\32\2\2\u014a\u014b\5"+
+		"\62\32\b\u014b\u014c\b\32\1\2\u014c\u015a\3\2\2\2\u014d\u014e\f\6\2\2"+
+		"\u014e\u014f\5\66\34\2\u014f\u0150\5\62\32\7\u0150\u0151\b\32\1\2\u0151"+
+		"\u015a\3\2\2\2\u0152\u0153\f\5\2\2\u0153\u0154\7\30\2\2\u0154\u0155\5"+
 		"\62\32\2\u0155\u0156\7\31\2\2\u0156\u0157\3\2\2\2\u0157\u0158\b\32\1\2"+
 		"\u0158\u015a\3\2\2\2\u0159\u0148\3\2\2\2\u0159\u014d\3\2\2\2\u0159\u0152"+
 		"\3\2\2\2\u015a\u015d\3\2\2\2\u015b\u0159\3\2\2\2\u015b\u015c\3\2\2\2\u015c"+

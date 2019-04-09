@@ -51,8 +51,8 @@ public class TypeChecking extends DefaultVisitor {
 
 		super.visit(node, param);
 
-		predicado(mismoTipo(node.getIzquierda().getTipo(), node.getDerecha().getTipo()), "Valores asignados de distinto tipo",
-				node);
+		predicado(mismoTipo(node.getIzquierda().getTipo(), node.getDerecha().getTipo()),
+				"Valores asignados de distinto tipo", node);
 		predicado(tipoSimple(node.getIzquierda().getTipo()), "Valor de la izquierda debe ser simple", node);
 		predicado(node.getIzquierda().isModificable() == true, "Valor de la izquierda no modificable", node);
 
@@ -240,13 +240,13 @@ public class TypeChecking extends DefaultVisitor {
 		/** Predicados */
 		// izquierda.tipo == tipoStruct
 		// derecha esta en izquierda.tipo.definicion.Definicion_campo_struct
-	
+
 		super.visit(node, param);
-	
+
 		// Valores por defecto:
 		node.setTipo(new TipoInt()); // Si no se cambia es que da otro error y no necesita dar error de tipo
 		node.setModificable(false);
-	
+
 		if (node.getIzquierda().getTipo() instanceof TipoStruct) {
 			if (node.getDerecha() instanceof Expr_ident) {
 				Struct definicion = ((TipoStruct) node.getIzquierda().getTipo()).getDefinicion();
@@ -267,7 +267,6 @@ public class TypeChecking extends DefaultVisitor {
 		} else {
 			predicado(false, "Se requiere tipo struct", node);
 		}
-		System.out.println("\tExpr_punto:\t" + node.getTipo()); //TODO Borrar Debug
 		return null;
 	}
 
@@ -286,7 +285,6 @@ public class TypeChecking extends DefaultVisitor {
 		// mismoTipo(izquierda, derecha)
 
 		super.visit(node, param);
-		System.out.println("\tExpr_binaria:\t" + node.getDerecha().getTipo());//TODO Borrar Debug
 
 		node.setTipo(node.getIzquierda().getTipo());
 		node.setModificable(false);
@@ -301,8 +299,8 @@ public class TypeChecking extends DefaultVisitor {
 			predicado(node.getIzquierda().getTipo().getClass().equals(new TipoInt().getClass()), "Deben ser entero",
 					node);
 		}
-		predicado(mismoTipo(node.getIzquierda().getTipo(), node.getDerecha().getTipo()), "Operacion con distintos tipos",
-				node);
+		predicado(mismoTipo(node.getIzquierda().getTipo(), node.getDerecha().getTipo()),
+				"Operacion con distintos tipos", node);
 		return null;
 	}
 
