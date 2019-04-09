@@ -39,5 +39,5 @@ public interface Visitor {
 	public Object visit(Expr_llamada_funcion node, Object param);
 	public Object visit(Operador_aritmetico node, Object param);
 	public Object visit(Operador_logico node, Object param);
-	public Object visit(Operador_booleano node, Object param);
+	public Object visit(Operador_comparacion node, Object param);
 }

@@ -10,13 +10,13 @@ import org.antlr.v4.runtime.*;
 
 //	operador_booleano:operador -> string:String
 
-public class Operador_booleano extends AbstractOperador {
+public class Operador_comparacion extends AbstractOperador {
 
-	public Operador_booleano(String string) {
+	public Operador_comparacion(String string) {
 		this.string = string;
 	}
 
-	public Operador_booleano(Object string) {
+	public Operador_comparacion(Object string) {
 		this.string = (string instanceof Token) ? ((Token)string).getText() : (String) string;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.

@@ -147,9 +147,9 @@ parametros_llamada returns[List<Expr> ast = new ArrayList<Expr>()]
 	
 ////////////// Operadores //////////////
 operador returns[Operador ast]
-	:operador_aritmetico { $ast = $operador_aritmetico.ast; }
-	|operador_logico { $ast = $operador_logico.ast; }
-	|operador_booleano { $ast = $operador_booleano.ast; }
+	: operador_aritmetico { $ast = $operador_aritmetico.ast; }
+	| operador_comparacion { $ast = $operador_comparacion.ast; }
+	| operador_logico { $ast = $operador_logico.ast; }
 	;
 	
 operador_aritmetico returns[Operador_aritmetico ast]
@@ -157,12 +157,13 @@ operador_aritmetico returns[Operador_aritmetico ast]
 	| op=('+'|'-') { $ast = new Operador_aritmetico($op.text); }
 	;
 	
-operador_logico returns[Operador_logico ast]
-	: op=('=='|'!=') { $ast = new Operador_logico($op.text); }
-	| op=('<'|'>'|'>='|'<=') { $ast = new Operador_logico($op.text); }
+operador_comparacion returns[Operador_comparacion ast]
+	: op=('=='|'!=') { $ast = new Operador_comparacion($op.text); }
+	| op=('<'|'>'|'>='|'<=') { $ast = new Operador_comparacion($op.text); }
 	;
 	
-operador_booleano returns[Operador_booleano ast]
-	: op='&&' { $ast = new Operador_booleano($op.text); }
-	| op='||' { $ast = new Operador_booleano($op.text); }
+operador_logico returns[Operador_logico ast]
+	: op='&&' { $ast = new Operador_logico($op.text); }
+	| op='||' { $ast = new Operador_logico($op.text); }
+	| op='!' { $ast = new Operador_logico($op.text); }
 	;

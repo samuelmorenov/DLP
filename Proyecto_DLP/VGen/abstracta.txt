@@ -44,4 +44,4 @@ expr_llamada_funcion:expr -> nombre:string parametros:expr*;
 
 operador_aritmetico:operador-> string;
 operador_logico:operador-> string;
-operador_booleano:operador-> string;
+operador_comparacion:operador-> string;

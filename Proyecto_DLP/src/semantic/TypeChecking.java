@@ -67,7 +67,7 @@ public class TypeChecking extends DefaultVisitor {
 
 		super.visit(node, param);
 
-		predicado(tipoSimple(node.getExpresiones().getTipo()), "Solo se pueden imprimir tipos simples", node);
+		predicado(tipoSimple(node.getExpresiones().getTipo()), "Solo se pueden imprimir tipos simples ", node);
 
 		return null;
 	}
@@ -292,15 +292,21 @@ public class TypeChecking extends DefaultVisitor {
 		if (node.getOperador() instanceof Operador_aritmetico) {
 			predicado(tipoSimple(node.getIzquierda().getTipo()), "Deben ser tipos simples", node);
 		}
-		if (node.getOperador() instanceof Operador_logico) {
+		if (node.getOperador() instanceof Operador_comparacion) {
 			predicado(tipoSimple(node.getIzquierda().getTipo()), "Deben ser tipos simples", node);
+			node.setTipo(new TipoInt());
 		}
-		if (node.getOperador() instanceof Operador_booleano) {
+		if (node.getOperador() instanceof Operador_logico) {
+
 			predicado(node.getIzquierda().getTipo().getClass().equals(new TipoInt().getClass()), "Deben ser entero",
 					node);
+			node.setTipo(new TipoInt());
 		}
+
 		predicado(mismoTipo(node.getIzquierda().getTipo(), node.getDerecha().getTipo()),
-				"Operacion con distintos tipos", node);
+				"Operacion con distintos tipos " + node.getIzquierda() + node.getIzquierda().getTipo()
+						+ node.getDerecha() + node.getDerecha().getTipo(),
+				node);
 		return null;
 	}
 
@@ -330,10 +336,10 @@ public class TypeChecking extends DefaultVisitor {
 		// expr_parentesis.tipo = expr.tipo
 		// expr_parentesis.modificable=expr.modificable
 
+		super.visit(node, param);
+
 		node.setTipo(node.getExpr().getTipo());
 		node.setModificable(node.getExpr().isModificable());
-
-		super.visit(node, param);
 
 		return null;
 	}
@@ -393,11 +399,6 @@ public class TypeChecking extends DefaultVisitor {
 
 		predicado(!mismoTipo(node.getDefinicion().getRetorno(), new TipoVoid()), "No tiene retorno", node);
 
-		return null;
-	}
-
-	// class Operador_aritmetico { String string; }
-	public Object visit(Operador_aritmetico node, Object param) {
 		return null;
 	}
 
