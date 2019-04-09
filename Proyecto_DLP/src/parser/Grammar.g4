@@ -133,10 +133,10 @@ expr returns[Expr ast]
 	| REAL_CONSTANT{ $ast = new Expr_real($REAL_CONSTANT); }
 	| CHAR_CONSTANT{ $ast = new Expr_char($CHAR_CONSTANT); }
 	| IDENT{ $ast = new Expr_ident($IDENT); }
+	| '(' expr ')'{ $ast = new Expr_parentesis($expr.ast); }
+	| expr '.' expr{ $ast = new Expr_punto($ctx.expr(0).ast, $ctx.expr(1).ast); }
 	| expr operador expr{ $ast = new Expr_binaria($ctx.expr(0).ast, $operador.ast, $ctx.expr(1).ast); }
 	| expr ('['expr']'){ $ast = new Expr_vector($ctx.expr(0).ast, $ctx.expr(1).ast); }
-	| expr '.' expr{ $ast = new Expr_punto($ctx.expr(0).ast, $ctx.expr(1).ast); }
-	| '(' expr ')'{ $ast = new Expr_parentesis($expr.ast); }
 	| 'cast' '<' tipo '>' '(' expr ')'{ $ast = new Expr_cast($tipo.ast, $expr.ast); }
 	| IDENT '(' parametros_llamada ')'{ $ast = new Expr_llamada_funcion($IDENT, $parametros_llamada.ast); }
 	;

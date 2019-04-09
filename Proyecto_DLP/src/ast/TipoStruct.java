@@ -73,6 +73,6 @@ public class TipoStruct extends AbstractTipo {
 
 	@Override
 	public char getSuffix() {
-        return '?'; //TODO Añadido suffix ?
+        return '?'; //Añadido suffix ?
 	}
 }

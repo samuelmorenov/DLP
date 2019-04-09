@@ -36,7 +36,7 @@ public class CodeSelection extends DefaultVisitor {
 
 	}
 
-	// TODO: Naranja
+	// Naranja
 	public Object visit(Program node, Object param) {
 		out("#source \"" + sourceFile + "\""); // #SOURCE {file}
 		visitChildren(node.getBloque(), param); // define[[bloquei]]
@@ -44,7 +44,7 @@ public class CodeSelection extends DefaultVisitor {
 		return null;
 	}
 
-	// TODO: Naranja
+	// Naranja
 	public Object visit(Funcion node, Object param) {
 		super.visit(node, param);// ejecuta[[sentenciasi]]
 		return null;

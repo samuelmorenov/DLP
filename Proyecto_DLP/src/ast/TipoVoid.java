@@ -20,6 +20,6 @@ public class TipoVoid extends AbstractTipo {
 
 	@Override
 	public char getSuffix() {
-        return '?'; //TODO Añadido suffix ?
+        return '?'; // Añadido suffix ?
 	}
 }

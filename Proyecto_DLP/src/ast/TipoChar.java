@@ -28,6 +28,6 @@ public class TipoChar extends AbstractTipo {
 
 	@Override
 	public char getSuffix() {
-        return 'b'; //TODO Añadido suffix b
+        return 'b'; // Añadido suffix b
 	}
 }

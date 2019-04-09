@@ -1,45 +1,7 @@
 #source "source.txt"
 
-#line 26
-pusha 0
-pushi 1111
-storei
-
-#line 27
-pusha 2
-pushf 2222.2
-storef
-
-#line 28
-pusha 6
-pushi 3
-pusha 2
-mul
-add
-pushi 3333
-storei
-
 #line 29
-pusha 16
+pusha 20
 add
-pushf 4444.4
-storef
-
-#line 31
-pusha 0
-outi
-
-#line 33
-pusha 6
-pushi 3
-pusha 2
-mul
-add
-outi
-
-#line 36
-pusha 2
-loadf
-f2i
-outi
+outf
 halt
