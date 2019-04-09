@@ -150,7 +150,12 @@ public class CodeSelection extends DefaultVisitor {
 	}
 
 	private void out(String instruccion, Tipo tipo) {
-		out(instruccion + tipo.getSuffix());
+		if(tipo instanceof TipoInt) {
+			out(instruccion);
+		}
+		else {
+			out(instruccion + tipo.getSuffix());
+		}
 	}
 
 	private void line(AST node) {

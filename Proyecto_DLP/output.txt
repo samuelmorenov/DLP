@@ -3,7 +3,7 @@
 #line 26
 pusha 0
 pushi 1111
-storei
+store
 
 #line 27
 pusha 2
@@ -17,7 +17,7 @@ pusha 2
 mul
 add
 pushi 3333
-storei
+store
 
 #line 29
 pusha 16
@@ -27,7 +27,7 @@ storef
 
 #line 31
 pusha 0
-outi
+out
 
 #line 32
 pusha 2
@@ -43,31 +43,31 @@ pushi 3
 pusha 2
 mul
 add
-outi
+out
 
 #line 35
 pusha 0
-outi
+out
 
 #line 36
 pusha 0
-outi
+out
 
 #line 37
 pusha 0
-loadi
+load
 pushi 0
-gti
+gt
 pusha 2
 loadf
 pushf 3333.3
-lti
-andi
-outi
+lt
+and
+out
 
 #line 38
 pusha 2
 loadf
 f2i
-outi
+out
 halt

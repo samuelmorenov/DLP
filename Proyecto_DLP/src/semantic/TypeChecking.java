@@ -291,22 +291,30 @@ public class TypeChecking extends DefaultVisitor {
 
 		if (node.getOperador() instanceof Operador_aritmetico) {
 			predicado(tipoSimple(node.getIzquierda().getTipo()), "Deben ser tipos simples", node);
+			predicado(tipoSimple(node.getDerecha().getTipo()), "Deben ser tipos simples", node);
 		}
 		if (node.getOperador() instanceof Operador_comparacion) {
 			predicado(tipoSimple(node.getIzquierda().getTipo()), "Deben ser tipos simples", node);
+			predicado(tipoSimple(node.getDerecha().getTipo()), "Deben ser tipos simples", node);
 			node.setTipo(new TipoInt());
 		}
 		if (node.getOperador() instanceof Operador_logico) {
-
 			predicado(node.getIzquierda().getTipo().getClass().equals(new TipoInt().getClass()), "Deben ser entero",
+					node);
+			predicado(node.getDerecha().getTipo().getClass().equals(new TipoInt().getClass()), "Deben ser entero",
 					node);
 			node.setTipo(new TipoInt());
 		}
 
 		predicado(mismoTipo(node.getIzquierda().getTipo(), node.getDerecha().getTipo()),
-				"Operacion con distintos tipos " + node.getIzquierda() + node.getIzquierda().getTipo()
-						+ node.getDerecha() + node.getDerecha().getTipo(),
-				node);
+				"Operacion con distintos tipos "
+				// + "\n"
+				// + node.getIzquierda()
+				// + node.getIzquierda().getTipo()
+				// + "\n"
+				// + node.getDerecha()
+				// + node.getDerecha().getTipo()
+				, node);
 		return null;
 	}
 
