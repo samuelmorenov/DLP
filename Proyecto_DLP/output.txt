@@ -1,73 +1,43 @@
 #source "source.txt"
+call main
+halt
+f:
+enter 0
+
+#line 17
+push 1
+out
+ret 0, 0, 0
+fecha:
+enter 0
+
+#line 21
+push 1492
+ret 2, 0, 0
+main:
+enter 0
 
 #line 26
-pusha 0
-pushi 1111
-store
+push 37
+jz else1
 
-#line 27
-pusha 2
-pushf 2222.2
-storef
-
-#line 28
-pusha 6
-pushi 3
-pusha 2
-mul
-add
-pushi 3333
-store
+#line 26
+push 750
+out
+jmp finElse1
+else1:
+finElse1:
 
 #line 29
-pusha 16
-add
-pushf 4444.4
-storef
+call fecha
+out
+
+#line 30
+pusha 0
+call fecha
+store
 
 #line 31
-pusha 0
-out
-
-#line 32
-pusha 2
-loadf
-pusha 16
-add
-addf
-outf
-
-#line 33
-pusha 6
-pushi 3
-pusha 2
-mul
-add
-out
-
-#line 35
-pusha 0
-out
-
-#line 36
-pusha 0
-out
-
-#line 37
-pusha 0
-load
-pushi 0
-gt
-pusha 2
-loadf
-pushf 3333.3
-lt
-and
-out
-
-#line 38
-pusha 2
-loadf
-f2i
-out
-halt
+call fecha
+pop
+ret 0, 0, 0

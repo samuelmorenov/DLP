@@ -38,7 +38,7 @@ public class CodeSelection extends DefaultVisitor {
 
 	public Object visit(Program node, Object param) {
 		out("#source \"" + sourceFile + "\""); // #SOURCE {file}
-		out("CALL main");// CALL main
+		out("call main");// CALL main
 		out("halt");// HALT
 		visitChildren(node.getBloque(), param);// define[[bloquei]]
 
@@ -49,17 +49,23 @@ public class CodeSelection extends DefaultVisitor {
 
 		int localesSize = 0;
 		int parametrosSize = 0;
-		for (Definicion_variable_local e : node.getLocales())
+		int retornoSize = 0;
+		retornoSize = node.getRetorno().getSize();
+		for (Definicion_variable_local e : node.getLocales()) {
 			localesSize += e.getTipo().getSize();
-		for (Parametro e : node.getParametros())
+		}
+		for (Parametro e : node.getParametros()) {
 			parametrosSize += e.getTipo().getSize();
+		}
 
 		out(node.getNombre() + ":");// {nombre}:
 		out("enter " + localesSize);// ENTER {sumatorio localesi.tipo.size}
 		super.visit(node, param);// ejecuta[[sentenciasi]]
+
 		if (node.getRetorno() instanceof TipoVoid)// si retorno == VOID
-			out("RET 0" + localesSize + parametrosSize);// RET 0, {sumatorio localesi.tipo.size}, {sumatorio
-														// parametrosi.tipo.size}
+			out("ret " + retornoSize + ", " + localesSize + ", " + parametrosSize);
+		// RET {retorno.size}, {sumatorio localesi.tipo.size}, {sumatorio
+		// parametrosi.tipo.size}
 
 		return null;
 	}
@@ -90,98 +96,72 @@ public class CodeSelection extends DefaultVisitor {
 	// class Sentencia_if { Expr condicion; List<Sentencia> sentencias;
 	// List<Sentencia> sino; }
 	public Object visit(Sentencia_if node, Object param) {
-		// TODO
 		line(node);// #LINE {end.line}
-		int contadorIf = ++contadorGeneralIF;// {contadorIF = ++contadorGeneralIF}
-		// if{contadorIf}:
-		// valor[[condicion]]
-		// jz else{contadorIf}
-		// ejecuta[[sentenciasi]]
-		// jmp finIf{contadorIf}
-		// else{contadorIf}:
-		// ejecuta[[sinoi]]
-		// finIf{contadorIf}:
-
-		// super.visit(node, param);
-
-		// if (node.getCondicion() != null)
-		// node.getCondicion().accept(this, param);
-		//
-		// if (node.getSentencias() != null)
-		// for (Sentencia child : node.getSentencias())
-		// child.accept(this, param);
-		//
-		// if (node.getSino() != null)
-		// for (Sentencia child : node.getSino())
-		// child.accept(this, param);
-
+		String contadorIf = String.valueOf(++contadorGeneralIF);// {contadorIF = ++contadorGeneralIF}
+		//out("if" + contadorIf +":");// if{contadorIf}:
+		node.getCondicion().accept(this, param);// valor[[condicion]]
+		out("jz else" + contadorIf);// jz else{contadorIf}
+		for (Sentencia child : node.getSentencias())
+			child.accept(this, param);// ejecuta[[sentenciasi]]
+		out("jmp finElse" + contadorIf);// jmp finIf{contadorIf}
+		out("else" + contadorIf +":");// else{contadorIf}:
+		for (Sentencia child : node.getSino())
+			child.accept(this, param);// ejecuta[[sinoi]]
+		out("finElse" + contadorIf +":");// finIf{contadorIf}:
 		return null;
 	}
 
 	// class Sentencia_while { Expr condicion; List<Sentencia> sentencias; }
 	public Object visit(Sentencia_while node, Object param) {
-		// TODO
 		line(node);// #LINE {end.line}
-		// {contadorWhile = ++contadorGeneralWhile}
-		// while{contadorWhile}:
-		// valor[[condicion]]
-		// jz finWhile{contadorWhile}
-		// ejecuta[[sentenciasi]]
-		// jmp while{contadorWhile}
-		// finWhile{contadorWhile}:
-
-		// super.visit(node, param);
-
-		// if (node.getCondicion() != null)
-		// node.getCondicion().accept(this, param);
-		//
-		// if (node.getSentencias() != null)
-		// for (Sentencia child : node.getSentencias())
-		// child.accept(this, param);
-
+		String contadorWhile = String.valueOf(++contadorGeneralWhile);// {contadorWhile = ++contadorGeneralWhile}
+		out("while" + contadorWhile +":");// while{contadorWhile}:
+		node.getCondicion().accept(this, param);// valor[[condicion]]
+		out("jz finWhile" + contadorWhile);// jz finWhile{contadorWhile}
+		for (Sentencia child : node.getSentencias())
+			child.accept(this, param);// ejecuta[[sentenciasi]]
+		out("jmp while" + contadorWhile);// jmp while{contadorWhile}
+		out("finWhile" + contadorWhile +":");// finWhile{contadorWhile}:
 		return null;
 	}
 
 	// class Sentencia_llamada_funcion { String nombre; List<Expr> parametros; }
 	public Object visit(Sentencia_llamada_funcion node, Object param) {
-		// TODO
 		line(node);// #LINE {end.line}
-		// valor[[parametrosi]]
-		// CALL {nombre}
-		// si sentencia_llamada_funcion.definicion.retorno != tipoVoid
-		// POP< sentencia_llamada_funcion.definición.retorno>
-
-		// super.visit(node, param);
-
-		// if (node.getParametros() != null)
-		// for (Expr child : node.getParametros())
-		// child.accept(this, param);
-
+		for (Expr child : node.getParametros())
+			child.accept(this, param);// valor[[parametrosi]]
+		out("call " + node.getNombre());// CALL {nombre}
+		if (node.getDefinicion().getRetorno() != null) {// si sentencia_llamada_funcion.definicion.retorno != tipoVoid
+			out("pop", node.getDefinicion().getRetorno());// POP< sentencia_llamada_funcion.definición.retorno>
+		}
 		return null;
 	}
 
 	// class Sentencia_return { Expr expresion; }
 	public Object visit(Sentencia_return node, Object param) {
-		// TODO
+		int retorno = 0;
+		int localesi = 0;
+		int parametrosi = 0;
+		retorno = node.getFuncionActual().getRetorno().getSize();
+		for (Definicion_variable_local child : node.getFuncionActual().getLocales())
+			localesi = localesi + child.getTipo().getSize();
+		for (Parametro child : node.getFuncionActual().getParametros())
+			parametrosi = localesi + child.getTipo().getSize();
+
 		line(node);// #LINE {end.line}
-		// si expresion != null
-		// valor[[expr]]
-		// RET {sentencia_return.funcion.retorno.size},
-		// {sumatorio sentencia_return.funcion.localesi.tipo.size},
-		// {sumatorio sentencia_return.funcion.parametrosi.tipo.size}
-
-		// super.visit(node, param);
-
-		// if (node.getExpresion() != null)
-		// node.getExpresion().accept(this, param);
-
+		if (node.getExpresion() != null) {// si expresion != null
+			node.getExpresion().accept(this, param);// valor[[expr]]
+		}
+		out("ret " + retorno + // RET {sentencia_return.funcion.retorno.size},
+				", " + localesi + // {sumatorio sentencia_return.funcion.localesi.tipo.size},
+				", " + parametrosi);// {sumatorio sentencia_return.funcion.parametrosi.tipo.size}
 		return null;
 	}
 
 	// class Expr_int { String string; }
 	public Object visit(Expr_int node, Object param) {
 		assert (param == CodeFunction.VALUE);
-		out("pushi " + node.getString()); // PUSHI {value}
+		out("push " + node.getString()); // PUSH {value}
 		return null;
 	}
 
@@ -256,23 +236,16 @@ public class CodeSelection extends DefaultVisitor {
 
 	// class Expr_llamada_funcion { String nombre; List<Expr> parametros; }
 	public Object visit(Expr_llamada_funcion node, Object param) {
-		// TODO
-		// valor[[parametrosi]]
-		// CALL {nombre}
-
-		// super.visit(node, param);
-
-		// if (node.getParametros() != null)
-		// for (Expr child : node.getParametros())
-		// child.accept(this, param);
-
+		for (Expr child : node.getParametros())
+			child.accept(this, param);// valor[[parametrosi]]
+		out("call " + node.getNombre());// CALL {nombre}
 		return null;
 	}
 	//////////////////////////////////////////
 
 	private void out(String instruction) {
 		writer.println(instruction);
-		// System.out.println(instruction); // Borrar para que no se imprima por
+		System.out.println(instruction); // TODO Borrar para que no se imprima por
 		// pantalla
 	}
 
