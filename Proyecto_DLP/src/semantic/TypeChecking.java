@@ -1,6 +1,6 @@
 package semantic;
 
-import java.util.*;
+//import java.util.*;
 
 import ast.*;
 import main.*;
@@ -457,6 +457,7 @@ public class TypeChecking extends DefaultVisitor {
 		predicado(condicion, mensajeError, node.getStart());
 	}
 
+	@SuppressWarnings("unused")
 	private void predicado(boolean condicion, String mensajeError) {
 		predicado(condicion, mensajeError, (Position) null);
 	}

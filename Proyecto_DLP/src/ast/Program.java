@@ -7,7 +7,7 @@ package ast;
 import java.util.*;
 import visitor.*;
 
-import org.antlr.v4.runtime.*;
+//import org.antlr.v4.runtime.*;
 
 //	program -> bloque:bloque*
 

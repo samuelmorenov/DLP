@@ -54,7 +54,7 @@ public class GrammarParser extends Parser {
 			"','", "'='", "'print'", "'printsp'", "'println'", "'read'", "'if'", 
 			"'else'", "'while'", "'return'", "'int'", "'float'", "'char'", "'['", 
 			"']'", "'.'", "'cast'", "'<'", "'>'", "'*'", "'/'", "'+'", "'-'", "'=='", 
-			"'!='", "'>='", "'<='", "'&&'", "'||'", "'!'"
+			"'!='", "'>='", "'<='", "'!'", "'&&'", "'||'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();

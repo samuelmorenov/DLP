@@ -60,7 +60,7 @@ public class CodeSelection extends DefaultVisitor {
 
 		out(node.getNombre() + ":");// {nombre}:
 		out("enter " + localesSize);// ENTER {sumatorio localesi.tipo.size}
-		super.visit(node, param);// ejecuta[[sentenciasi]]
+		visitChildren(node.getSentencias(), param);// ejecuta[[sentenciasi]]
 
 		if (node.getRetorno() instanceof TipoVoid)// si retorno == VOID
 			out("ret " + retornoSize + ", " + localesSize + ", " + parametrosSize);
@@ -81,6 +81,7 @@ public class CodeSelection extends DefaultVisitor {
 	public Object visit(Sentencia_print node, Object param) {
 		line(node);// #LINE {end.line}
 		super.visit(node, param); // value[[expresiones]]
+		//out("load", node.getExpresiones().getTipo()); //TODO Añadido ?
 		out("out", node.getExpresiones().getTipo()); // OUT<expresiones.tipo>
 		return null;
 	}
@@ -98,16 +99,14 @@ public class CodeSelection extends DefaultVisitor {
 	public Object visit(Sentencia_if node, Object param) {
 		line(node);// #LINE {end.line}
 		String contadorIf = String.valueOf(++contadorGeneralIF);// {contadorIF = ++contadorGeneralIF}
-		//out("if" + contadorIf +":");// if{contadorIf}:
+		// out("if" + contadorIf +":");// if{contadorIf}:
 		node.getCondicion().accept(this, param);// valor[[condicion]]
 		out("jz else" + contadorIf);// jz else{contadorIf}
-		for (Sentencia child : node.getSentencias())
-			child.accept(this, param);// ejecuta[[sentenciasi]]
+		visitChildren(node.getSentencias(), param);// ejecuta[[sentenciasi]]
 		out("jmp finElse" + contadorIf);// jmp finIf{contadorIf}
-		out("else" + contadorIf +":");// else{contadorIf}:
-		for (Sentencia child : node.getSino())
-			child.accept(this, param);// ejecuta[[sinoi]]
-		out("finElse" + contadorIf +":");// finIf{contadorIf}:
+		out("else" + contadorIf + ":");// else{contadorIf}:
+		visitChildren(node.getSino(), param);// ejecuta[[sinoi]]
+		out("finElse" + contadorIf + ":");// finIf{contadorIf}:
 		return null;
 	}
 
@@ -115,23 +114,21 @@ public class CodeSelection extends DefaultVisitor {
 	public Object visit(Sentencia_while node, Object param) {
 		line(node);// #LINE {end.line}
 		String contadorWhile = String.valueOf(++contadorGeneralWhile);// {contadorWhile = ++contadorGeneralWhile}
-		out("while" + contadorWhile +":");// while{contadorWhile}:
+		out("while" + contadorWhile + ":");// while{contadorWhile}:
 		node.getCondicion().accept(this, param);// valor[[condicion]]
 		out("jz finWhile" + contadorWhile);// jz finWhile{contadorWhile}
-		for (Sentencia child : node.getSentencias())
-			child.accept(this, param);// ejecuta[[sentenciasi]]
+		visitChildren(node.getSentencias(), param);// ejecuta[[sentenciasi]]
 		out("jmp while" + contadorWhile);// jmp while{contadorWhile}
-		out("finWhile" + contadorWhile +":");// finWhile{contadorWhile}:
+		out("finWhile" + contadorWhile + ":");// finWhile{contadorWhile}:
 		return null;
 	}
 
 	// class Sentencia_llamada_funcion { String nombre; List<Expr> parametros; }
 	public Object visit(Sentencia_llamada_funcion node, Object param) {
 		line(node);// #LINE {end.line}
-		for (Expr child : node.getParametros())
-			child.accept(this, param);// valor[[parametrosi]]
+		visitChildren(node.getParametros(), param);// valor[[parametrosi]]
 		out("call " + node.getNombre());// CALL {nombre}
-		if (node.getDefinicion().getRetorno() != null) {// si sentencia_llamada_funcion.definicion.retorno != tipoVoid
+		if (!(node.getDefinicion().getRetorno() instanceof TipoVoid)) {// si sentencia_llamada_funcion.definicion.retorno != tipoVoid
 			out("pop", node.getDefinicion().getRetorno());// POP< sentencia_llamada_funcion.definición.retorno>
 		}
 		return null;
@@ -190,10 +187,19 @@ public class CodeSelection extends DefaultVisitor {
 
 			if (node.getDefinicion_global() != null)
 				out("pusha " + node.getDefinicion_global().getAddress());
-			else if (node.getDefinicion_parametro() != null)
-				out("pusha " + node.getDefinicion_parametro().getAddress());
-			else if (node.getDefinicion_local() != null)
-				out("pusha " + node.getDefinicion_local().getAddress());
+			else if (node.getDefinicion_parametro() != null) {
+				out ("pusha BP");
+				out("push " + node.getDefinicion_parametro().getAddress());
+				out("add");
+			} else if (node.getDefinicion_local() != null) {
+				out ("pusha BP");
+				
+				//TODO: negativos?
+				out("pusha " + Math.abs(node.getDefinicion_local().getAddress()));
+				out("sub");
+				//out("pusha " + node.getDefinicion_local().getAddress());
+				//out("add");
+			}
 		}
 		return null;
 	}
@@ -203,7 +209,7 @@ public class CodeSelection extends DefaultVisitor {
 		assert (param == CodeFunction.VALUE);
 		node.getIzquierda().accept(this, CodeFunction.VALUE);
 		node.getDerecha().accept(this, CodeFunction.VALUE);
-		out(instruccion.get(node.getOperador().getString()), node.getTipo());
+		out(instruccion.get(node.getOperador().getString()), node.getIzquierda().getTipo());
 		return null;
 	}
 
@@ -211,7 +217,7 @@ public class CodeSelection extends DefaultVisitor {
 	public Object visit(Expr_vector node, Object param) {
 		node.getFuera().accept(this, CodeFunction.ADDRESS); // address[[fuera]]
 		node.getDentro().accept(this, CodeFunction.VALUE); // value[[dentro]]
-		out("pusha " + node.getTipo().getSize()); // PUSHA {tipo.size}
+		out("push " + node.getTipo().getSize()); // PUSHA {tipo.size}
 		out("mul");// MUL
 		out("add");// ADD
 		return null;
@@ -220,7 +226,8 @@ public class CodeSelection extends DefaultVisitor {
 	// class Expr_punto { Expr izquierda; Expr derecha; }
 	public Object visit(Expr_punto node, Object param) {
 		node.getIzquierda().accept(this, CodeFunction.ADDRESS); // address[[izquierda]]
-		node.getDerecha().accept(this, CodeFunction.ADDRESS); // address[[derecha]]
+		out("push "+node.getDerecha().getTipo().getSize());
+		//node.getDerecha().accept(this, CodeFunction.ADDRESS); // address[[derecha]] //TODO Cambiado
 		out("add");// ADD
 		return null;
 	}
@@ -245,8 +252,8 @@ public class CodeSelection extends DefaultVisitor {
 
 	private void out(String instruction) {
 		writer.println(instruction);
-		System.out.println(instruction); // TODO Borrar para que no se imprima por
-		// pantalla
+		// System.out.println(instruction);
+		// TODO Comentar para que no se imprima por pantalla la generacion de codigo
 	}
 
 	private void out(String instruccion, Tipo tipo) {

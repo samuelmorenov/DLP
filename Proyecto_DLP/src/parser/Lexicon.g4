@@ -7,7 +7,7 @@ REAL_CONSTANT
 	: [0-9]+ '.' [0-9]+;
 	
 CHAR_CONSTANT
-	: '\'' [a-zA-Z] '\'';
+	: '\'' .*? '\'';
 
 IDENT
 	: [a-zA-Z_][a-zA-Z0-9_]*;

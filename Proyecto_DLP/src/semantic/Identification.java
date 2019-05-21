@@ -190,6 +190,7 @@ public class Identification extends DefaultVisitor {
 		predicado(condicion, mensajeError, node.getStart());
 	}
 
+	@SuppressWarnings("unused")
 	private void predicado(boolean condicion, String mensajeError) {
 		predicado(condicion, mensajeError, (Position) null);
 	}
