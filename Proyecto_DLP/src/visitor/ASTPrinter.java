@@ -358,6 +358,17 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
+	//	class Expr_negada { Operador operador;  Expr derecha; }
+	public Object visit(Expr_negada node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "Expr_negada", node, false);
+
+		visit(indent + 1, "operador", "Operador",node.getOperador());
+		visit(indent + 1, "derecha", "Expr",node.getDerecha());
+		return null;
+	}
+
 	//	class Expr_punto { Expr izquierda;  Expr derecha; }
 	public Object visit(Expr_punto node, Object param) {
 		int indent = ((Integer)param).intValue();
@@ -441,14 +452,15 @@ public class ASTPrinter extends DefaultVisitor {
 		write(indent, formatValue(value) + "  " + typeTag(type));
 	}
 
-//	private void print(int indent, String attName, String type, List<? extends Object> children) {
-//		write(indent, attName + "  " + typeTag(type) + " = ");
-//		if (children != null)
-//			for (Object child : children)
-//				write(indent + 1, formatValue(child));
-//		else
-//			writer.print(" " + valueTag(null));
-//	}
+	@SuppressWarnings("unused")
+	private void print(int indent, String attName, String type, List<? extends Object> children) {
+		write(indent, attName + "  " + typeTag(type) + " = ");
+		if (children != null)
+			for (Object child : children)
+				write(indent + 1, formatValue(child));
+		else
+			writer.print(" " + valueTag(null));
+	}
 
 	// Versión compacta de una linea para nodos que solo tienen un atributo String
 	private void printCompact(int indent, String nodeName, AST node, String attName, Object value) {

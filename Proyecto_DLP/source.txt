@@ -1,0 +1,14 @@
+funcion1(var1:float, var2:int, var3:float):float {
+	return var3;
+}
+main() {
+	var float1:float;
+	var float2:float;
+	var int1:int;
+	var int2:int;
+	float1 = 1.0;
+	float2 = 1.0;
+	int1 = 1;
+	int2 = 1;
+	print funcion1(float1, int1, float2);
+}

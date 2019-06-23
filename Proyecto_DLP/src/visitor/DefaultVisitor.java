@@ -189,6 +189,15 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
+	//	class Expr_negada { Operador operador;  Expr derecha; }
+	public Object visit(Expr_negada node, Object param) {
+		if (node.getOperador() != null)
+			node.getOperador().accept(this, param);
+		if (node.getDerecha() != null)
+			node.getDerecha().accept(this, param);
+		return null;
+	}
+
 	//	class Expr_punto { Expr izquierda;  Expr derecha; }
 	public Object visit(Expr_punto node, Object param) {
 		if (node.getIzquierda() != null)

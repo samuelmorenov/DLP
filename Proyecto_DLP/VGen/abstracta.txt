@@ -36,6 +36,7 @@ expr_char:expr -> string;
 expr_ident:expr -> string;
 expr_binaria:expr -> izquierda:expr operador:operador derecha:expr;
 expr_vector:expr -> fuera:expr dentro:expr;
+expr_negada:expr -> operador:operador derecha:expr;
 expr_punto:expr -> izquierda:expr derecha:expr;
 expr_parentesis:expr -> expr;
 expr_cast:expr -> tipo_convertido:tipo expr:expr;

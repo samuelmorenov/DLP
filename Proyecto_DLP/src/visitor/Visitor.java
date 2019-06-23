@@ -33,6 +33,7 @@ public interface Visitor {
 	public Object visit(Expr_ident node, Object param);
 	public Object visit(Expr_binaria node, Object param);
 	public Object visit(Expr_vector node, Object param);
+	public Object visit(Expr_negada node, Object param);
 	public Object visit(Expr_punto node, Object param);
 	public Object visit(Expr_parentesis node, Object param);
 	public Object visit(Expr_cast node, Object param);
