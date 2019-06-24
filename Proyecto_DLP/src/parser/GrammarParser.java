@@ -998,7 +998,7 @@ public class GrammarParser extends Parser {
 				((Sentencia_printContext)_localctx).expr = expr(0);
 				setState(197);
 				match(T__2);
-				 ((Sentencia_printContext)_localctx).ast =  new Sentencia_print(((Sentencia_printContext)_localctx).expr.ast); 
+				 ((Sentencia_printContext)_localctx).ast =  new Sentencia_print(((Sentencia_printContext)_localctx).expr.ast, ""); 
 				}
 				break;
 			case 2:
@@ -1010,7 +1010,7 @@ public class GrammarParser extends Parser {
 				((Sentencia_printContext)_localctx).expr = expr(0);
 				setState(202);
 				match(T__2);
-				 ((Sentencia_printContext)_localctx).ast =  new Sentencia_print(((Sentencia_printContext)_localctx).expr.ast); 
+				 ((Sentencia_printContext)_localctx).ast =  new Sentencia_print(((Sentencia_printContext)_localctx).expr.ast, "\\0"); 
 				}
 				break;
 			case 3:
@@ -1024,7 +1024,7 @@ public class GrammarParser extends Parser {
 				}
 				setState(207);
 				match(T__2);
-				 ((Sentencia_printContext)_localctx).ast =  new Sentencia_print(((Sentencia_printContext)_localctx).expr.ast); 
+				 ((Sentencia_printContext)_localctx).ast =  new Sentencia_print(((Sentencia_printContext)_localctx).expr.ast, "\\n"); 
 				}
 				break;
 			case 4:
@@ -1034,7 +1034,7 @@ public class GrammarParser extends Parser {
 				match(T__12);
 				setState(211);
 				match(T__2);
-				 ((Sentencia_printContext)_localctx).ast =  new Sentencia_print(null); 
+				 ((Sentencia_printContext)_localctx).ast =  new Sentencia_print(null, "\\n"); 
 				}
 				break;
 			}

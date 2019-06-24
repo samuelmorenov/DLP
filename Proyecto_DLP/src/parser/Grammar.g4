@@ -86,10 +86,10 @@ sentencia_asignacion returns[Sentencia_asignacion ast]
 	;
 	
 sentencia_print returns[Sentencia_print ast]
-	: 'print' expr ';'{ $ast = new Sentencia_print($expr.ast); }
-	| 'printsp' expr ';'{ $ast = new Sentencia_print($expr.ast); }
-	| 'println' (expr) ';'{ $ast = new Sentencia_print($expr.ast); }
-	| 'println' ';' { $ast = new Sentencia_print(null); }
+	: 'print' expr ';'{ $ast = new Sentencia_print($expr.ast, ""); }
+	| 'printsp' expr ';'{ $ast = new Sentencia_print($expr.ast, "\\0"); }
+	| 'println' (expr) ';'{ $ast = new Sentencia_print($expr.ast, "\\n"); }
+	| 'println' ';' { $ast = new Sentencia_print(null, "\\n"); }
 	;
 	
 sentencia_read returns[Sentencia_read ast]

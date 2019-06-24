@@ -83,6 +83,13 @@ public class CodeSelection extends DefaultVisitor {
 		super.visit(node, param); // value[[expresiones]]
 		//out("load", node.getExpresiones().getTipo()); //TODO Añadido ?
 		out("out", node.getExpresiones().getTipo()); // OUT<expresiones.tipo>
+		
+		/* TODO Diferenciar los tipos de print
+		if(!node.getFincadena().equals("")) {
+			out("pushb "+node.getFincadena()+"");
+			out("outb");
+		}
+		*/
 		return null;
 	}
 
@@ -252,7 +259,7 @@ public class CodeSelection extends DefaultVisitor {
 
 	private void out(String instruction) {
 		writer.println(instruction);
-		// System.out.println(instruction);
+		 System.out.println(instruction);
 		// TODO Comentar para que no se imprima por pantalla la generacion de codigo
 	}
 

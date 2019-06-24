@@ -16,7 +16,7 @@ definicion_variable_local -> nombre:string tipo;
 parametro -> nombre:string tipo;
 
 sentencia_asignacion:sentencia -> izquierda:expr derecha:expr;
-sentencia_print:sentencia -> expresiones:expr;
+sentencia_print:sentencia -> expresiones:expr fincadena:string;
 sentencia_read:sentencia -> expresiones:expr;
 sentencia_if:sentencia -> condicion:expr sentencias:sentencia* sino:sentencia*;
 sentencia_while:sentencia -> condicion:expr sentencias:sentencia*;

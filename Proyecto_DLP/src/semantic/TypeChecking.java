@@ -232,44 +232,6 @@ public class TypeChecking extends DefaultVisitor {
 
 	}
 
-	// class Expr_punto { Expr izquierda; Expr derecha; }
-	public Object visit(Expr_punto node, Object param) {
-		/** Reglas Semánticas */
-		// expr_punto.tipo = derecha.tipo
-		// expr_punto.modificable=true
-		/** Predicados */
-		// izquierda.tipo == tipoStruct
-		// derecha esta en izquierda.tipo.definicion.Definicion_campo_struct
-
-		super.visit(node, param);
-
-		// Valores por defecto:
-		node.setTipo(new TipoInt()); // Si no se cambia es que da otro error y no necesita dar error de tipo
-		node.setModificable(false);
-
-		if (node.getIzquierda().getTipo() instanceof TipoStruct) {
-			if (node.getDerecha() instanceof Expr_ident) {
-				Struct definicion = ((TipoStruct) node.getIzquierda().getTipo()).getDefinicion();
-				String nombreDerecha = ((Expr_ident) node.getDerecha()).getString();
-				boolean existe = false;
-				for (Definicion_campo_struct campoActual : definicion.getDefinicion_campo_struct()) {
-					if (nombreDerecha.equals(campoActual.getNombre())) {
-						node.getDerecha().setTipo(campoActual.getTipo());
-						node.setTipo(campoActual.getTipo());
-						node.setModificable(true);
-						existe = true;
-					}
-				}
-				predicado(existe, "Campo no definido", node);
-			} else {
-				predicado(false, "El campo del estuct no es un identificador", node);
-			}
-		} else {
-			predicado(false, "Se requiere tipo struct", node);
-		}
-		return null;
-	}
-
 	// class Expr_binaria { Expr izquierda; Operador operador; Expr derecha; }
 	public Object visit(Expr_binaria node, Object param) {
 		/** Reglas Semánticas */
@@ -321,20 +283,59 @@ public class TypeChecking extends DefaultVisitor {
 	// class Expr_vector { Expr fuera; Expr dentro; }
 	public Object visit(Expr_vector node, Object param) {
 		/** Reglas Semánticas */
-		// expr_vector.tipo = dentro.tipo
+		// expr_vector.tipo = vector.definicion.tipo
 		// expr_vector.modificable=true
 		/** Predicados */
 		// fuera.tipo==tipoArray
 		// dentro.tipo==tipoInt
 
-		super.visit(node, param);
 
-		node.setTipo(node.getDentro().getTipo());
+		super.visit(node, param);
+		
+		node.setTipo(((TipoArray)node.getFuera().getTipo()).getTipoElementos());
 		node.setModificable(true);
 
 		predicado(mismoTipo(node.getFuera().getTipo(), new TipoArray("", null)), "Debe ser tipo array", node);
 		predicado(mismoTipo(node.getDentro().getTipo(), new TipoInt()), "Debe ser indice entero", node);
 
+		return null;
+	}
+
+	// class Expr_punto { Expr izquierda; Expr derecha; }
+	public Object visit(Expr_punto node, Object param) {
+		/** Reglas Semánticas */
+		// expr_punto.tipo = derecha.tipo
+		// expr_punto.modificable=true
+		/** Predicados */
+		// izquierda.tipo == tipoStruct
+		// derecha esta en izquierda.tipo.definicion.Definicion_campo_struct
+
+		super.visit(node, param);
+
+		// Valores por defecto:
+		node.setTipo(new TipoInt()); // Si no se cambia es que da otro error y no necesita dar error de tipo
+		node.setModificable(false);
+
+		if (node.getIzquierda().getTipo() instanceof TipoStruct) {
+			if (node.getDerecha() instanceof Expr_ident) {
+				Struct definicion = ((TipoStruct) node.getIzquierda().getTipo()).getDefinicion();
+				String nombreDerecha = ((Expr_ident) node.getDerecha()).getString();
+				boolean existe = false;
+				for (Definicion_campo_struct campoActual : definicion.getDefinicion_campo_struct()) {
+					if (nombreDerecha.equals(campoActual.getNombre())) {
+						node.getDerecha().setTipo(campoActual.getTipo());
+						node.setTipo(campoActual.getTipo());
+						node.setModificable(true);
+						existe = true;
+					}
+				}
+				predicado(existe, "Campo no definido", node);
+			} else {
+				predicado(false, "El campo del estuct no es un identificador", node);
+			}
+		} else {
+			predicado(false, "Se requiere tipo struct", node);
+		}
 		return null;
 	}
 

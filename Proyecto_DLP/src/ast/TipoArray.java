@@ -57,7 +57,7 @@ public class TipoArray extends AbstractTipo {
 	private Tipo tipoElementos;
 
 	public String toString() {
-       return "{tamanio:" + getTamanio() + ", tipo:" + getTipoElementos() + "}";
+       return "{Tipo Array: tamanio:" + getTamanio() + ", tipo:" + getTipoElementos() + "}";
    }
 
 	@Override

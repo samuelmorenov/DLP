@@ -68,7 +68,7 @@ public class TipoStruct extends AbstractTipo {
 	private int size = -1;
 
 	public String toString() {
-		return "{nombre:" + getNombre() + "}";
+		return "{Struct: nombre:" + getNombre() + "}";
 	}
 
 	@Override
