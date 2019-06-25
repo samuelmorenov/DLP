@@ -154,8 +154,8 @@ public class CodeSelection extends DefaultVisitor {
 		for (Parametro child : node.getFuncionActual().getParametros())
 			parametrosi = localesi + child.getTipo().getSize();
 
-		line(node);// #LINE {end.line}
 		if (node.getExpresion() != null) {// si expresion != null
+			line(node);// #LINE {end.line}
 			node.getExpresion().accept(this, param);// valor[[expr]]
 		}
 		out("ret " + retorno + // RET {sentencia_return.funcion.retorno.size},

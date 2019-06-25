@@ -19,6 +19,7 @@ public class Sentencia_return extends AbstractSentencia {
        // Obtiene la linea/columna a partir de las de los hijos.
        setPositions(expresion);
 	}
+	
 
 	public Sentencia_return(Object expresion) {
 		this.expresion = (Expr) ((expresion instanceof ParserRuleContext) ? getAST(expresion) : expresion);
