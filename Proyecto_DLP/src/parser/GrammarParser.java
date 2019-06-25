@@ -1540,8 +1540,8 @@ public class GrammarParser extends Parser {
 				setState(303);
 				match(T__24);
 				setState(304);
-				((ExprContext)_localctx).expr = expr(4);
-				((ExprContext)_localctx).ast =  new Expr_negada(new Operador_logico('!'), ((ExprContext)_localctx).expr.ast);
+				((ExprContext)_localctx).expr = expr(5);
+				((ExprContext)_localctx).ast =  new Expr_negada(new Operador_logico("!"), ((ExprContext)_localctx).expr.ast);
 				}
 				break;
 			case 7:
@@ -1607,11 +1607,11 @@ public class GrammarParser extends Parser {
 						_localctx = new ExprContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(329);
-						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
+						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
 						setState(330);
 						((ExprContext)_localctx).operador = operador();
 						setState(331);
-						((ExprContext)_localctx).expr = expr(6);
+						((ExprContext)_localctx).expr = expr(5);
 						 ((ExprContext)_localctx).ast =  new Expr_binaria(_localctx.expr(0).ast, ((ExprContext)_localctx).operador.ast, _localctx.expr(1).ast); 
 						}
 						break;
@@ -1848,7 +1848,7 @@ public class GrammarParser extends Parser {
 		case 0:
 			return precpred(_ctx, 6);
 		case 1:
-			return precpred(_ctx, 5);
+			return precpred(_ctx, 4);
 		case 2:
 			return precpred(_ctx, 3);
 		}
@@ -1958,7 +1958,7 @@ public class GrammarParser extends Parser {
 		"\b\32\1\2\u0126\u0127\7*\2\2\u0127\u0145\b\32\1\2\u0128\u0129\7+\2\2\u0129"+
 		"\u0145\b\32\1\2\u012a\u012b\7,\2\2\u012b\u0145\b\32\1\2\u012c\u012d\7"+
 		"\t\2\2\u012d\u012e\5\62\32\2\u012e\u012f\7\n\2\2\u012f\u0130\b\32\1\2"+
-		"\u0130\u0145\3\2\2\2\u0131\u0132\7\33\2\2\u0132\u0133\5\62\32\6\u0133"+
+		"\u0130\u0145\3\2\2\2\u0131\u0132\7\33\2\2\u0132\u0133\5\62\32\7\u0133"+
 		"\u0134\b\32\1\2\u0134\u0145\3\2\2\2\u0135\u0136\7\34\2\2\u0136\u0137\7"+
 		"\35\2\2\u0137\u0138\5.\30\2\u0138\u0139\7\36\2\2\u0139\u013a\7\t\2\2\u013a"+
 		"\u013b\5\62\32\2\u013b\u013c\7\n\2\2\u013c\u013d\b\32\1\2\u013d\u0145"+
@@ -1968,7 +1968,7 @@ public class GrammarParser extends Parser {
 		"\u012c\3\2\2\2\u0144\u0131\3\2\2\2\u0144\u0135\3\2\2\2\u0144\u013e\3\2"+
 		"\2\2\u0145\u0159\3\2\2\2\u0146\u0147\f\b\2\2\u0147\u0148\7\32\2\2\u0148"+
 		"\u0149\5\62\32\t\u0149\u014a\b\32\1\2\u014a\u0158\3\2\2\2\u014b\u014c"+
-		"\f\7\2\2\u014c\u014d\5\66\34\2\u014d\u014e\5\62\32\b\u014e\u014f\b\32"+
+		"\f\6\2\2\u014c\u014d\5\66\34\2\u014d\u014e\5\62\32\7\u014e\u014f\b\32"+
 		"\1\2\u014f\u0158\3\2\2\2\u0150\u0151\f\5\2\2\u0151\u0152\7\30\2\2\u0152"+
 		"\u0153\5\62\32\2\u0153\u0154\7\31\2\2\u0154\u0155\3\2\2\2\u0155\u0156"+
 		"\b\32\1\2\u0156\u0158\3\2\2\2\u0157\u0146\3\2\2\2\u0157\u014b\3\2\2\2"+
