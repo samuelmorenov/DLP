@@ -80,17 +80,15 @@ public class CodeSelection extends DefaultVisitor {
 
 	public Object visit(Sentencia_print node, Object param) {
 		line(node);// #LINE {end.line}
-		super.visit(node, param); // value[[expresiones]]
+		super.visit(node, CodeFunction.VALUE); // value[[expresiones]]
 		out("out", node.getExpresiones().getTipo()); // OUT<expresiones.tipo>
 		if (node.getFincadena().equals("sp")) {
 			out("pushb 32");
 			out("outb");
-			System.out.println("espacio");
 		}
 		if (node.getFincadena().equals("ln")) {
 			out("pushb 10");
 			out("outb");
-			System.out.println("salto");
 		}
 		return null;
 	}
@@ -98,7 +96,7 @@ public class CodeSelection extends DefaultVisitor {
 	// class Sentencia_read { Expr expresiones; }
 	public Object visit(Sentencia_read node, Object param) {
 		line(node);// #LINE {end.line}
-		super.visit(node, param);// value[[expresiones]]
+		super.visit(node, CodeFunction.VALUE);// value[[expresiones]]
 		out("in", node.getExpresiones().getTipo());// IN<expresiones.tipo>
 		return null;
 	}
@@ -183,7 +181,7 @@ public class CodeSelection extends DefaultVisitor {
 	// class Expr_char { String string; }
 	public Object visit(Expr_char node, Object param) {
 		assert (param == CodeFunction.VALUE);
-		out("pushb " + (int)node.getString().charAt(1));// PUSHB {value}
+		out("pushb " + (int) node.getString().charAt(1));// PUSHB {value}
 		return null;
 	}
 
@@ -232,14 +230,18 @@ public class CodeSelection extends DefaultVisitor {
 		out("push " + node.getTipo().getSize()); // PUSHA {tipo.size}
 		out("mul");// MUL
 		out("add");// ADD
+		
+		if (((CodeFunction) param) == CodeFunction.VALUE) {
+			out("load", node.getTipo()); // LOAD< expr_ident.type>
+		}
 		return null;
 	}
 
 	// class Expr_negada { Operador operador; Expr derecha; }
 	public Object visit(Expr_negada node, Object param) {
 		assert (param == CodeFunction.VALUE);
-		node.getDerecha().accept(this, CodeFunction.VALUE);//value[[derecha]]
-		out(instruccion.get(node.getOperador().getString()), node.getDerecha().getTipo());//{operador.instruccion}
+		node.getDerecha().accept(this, CodeFunction.VALUE);// value[[derecha]]
+		out(instruccion.get(node.getOperador().getString()), node.getDerecha().getTipo());// {operador.instruccion}
 		return null;
 	}
 
@@ -247,15 +249,17 @@ public class CodeSelection extends DefaultVisitor {
 	public Object visit(Expr_punto node, Object param) {
 		node.getIzquierda().accept(this, CodeFunction.ADDRESS); // address[[izquierda]]
 		out("push " + node.getDerecha().getTipo().getSize());
-		// node.getDerecha().accept(this, CodeFunction.ADDRESS); // address[[derecha]]
-		// //TODO Generacion de codigo - cambiado
 		out("add");// ADD
+		
+		if (((CodeFunction) param) == CodeFunction.VALUE) {
+			out("load", node.getTipo()); // LOAD< expr_ident.type>
+		}
 		return null;
 	}
-	
-	//	class Expr_parentesis { Expr expr; }
+
+	// class Expr_parentesis { Expr expr; }
 	public Object visit(Expr_parentesis node, Object param) {
-		node.getExpr().accept(this, CodeFunction.VALUE); //value[[expr]]
+		node.getExpr().accept(this, CodeFunction.VALUE); // value[[expr]]
 		return null;
 	}
 
@@ -279,7 +283,7 @@ public class CodeSelection extends DefaultVisitor {
 
 	private void out(String instruction) {
 		writer.println(instruction);
-		//System.out.println(instruction);
+		System.out.println(instruction);
 		// TODO - Comentar para que no se imprima por pantalla la generacion de codigo
 	}
 
