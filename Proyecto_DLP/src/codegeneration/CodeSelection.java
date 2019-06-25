@@ -82,13 +82,16 @@ public class CodeSelection extends DefaultVisitor {
 		line(node);// #LINE {end.line}
 		super.visit(node, param); // value[[expresiones]]
 		out("out", node.getExpresiones().getTipo()); // OUT<expresiones.tipo>
-
-		// TODO Generacion de codigo - Diferenciar los tipos de print
-		if (!node.getFincadena().equals("")) {
-			out("pushb " + node.getFincadena() + "");
+		if (node.getFincadena().equals("sp")) {
+			out("pushb 32");
 			out("outb");
+			System.out.println("espacio");
 		}
-
+		if (node.getFincadena().equals("ln")) {
+			out("pushb 10");
+			out("outb");
+			System.out.println("salto");
+		}
 		return null;
 	}
 
@@ -180,7 +183,7 @@ public class CodeSelection extends DefaultVisitor {
 	// class Expr_char { String string; }
 	public Object visit(Expr_char node, Object param) {
 		assert (param == CodeFunction.VALUE);
-		out("pushb " + node.getString());// PUSHB {value}
+		out("pushb " + (int)node.getString().charAt(1));// PUSHB {value}
 		return null;
 	}
 
@@ -276,7 +279,7 @@ public class CodeSelection extends DefaultVisitor {
 
 	private void out(String instruction) {
 		writer.println(instruction);
-		System.out.println(instruction);
+		//System.out.println(instruction);
 		// TODO - Comentar para que no se imprima por pantalla la generacion de codigo
 	}
 

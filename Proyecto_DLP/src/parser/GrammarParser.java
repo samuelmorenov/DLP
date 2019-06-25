@@ -1010,7 +1010,7 @@ public class GrammarParser extends Parser {
 				((Sentencia_printContext)_localctx).expr = expr(0);
 				setState(202);
 				match(T__2);
-				 ((Sentencia_printContext)_localctx).ast =  new Sentencia_print(((Sentencia_printContext)_localctx).expr.ast, "\\0"); 
+				 ((Sentencia_printContext)_localctx).ast =  new Sentencia_print(((Sentencia_printContext)_localctx).expr.ast, "sp"); 
 				}
 				break;
 			case 3:
@@ -1024,7 +1024,7 @@ public class GrammarParser extends Parser {
 				}
 				setState(207);
 				match(T__2);
-				 ((Sentencia_printContext)_localctx).ast =  new Sentencia_print(((Sentencia_printContext)_localctx).expr.ast, "\\n"); 
+				 ((Sentencia_printContext)_localctx).ast =  new Sentencia_print(((Sentencia_printContext)_localctx).expr.ast, "ln"); 
 				}
 				break;
 			case 4:
@@ -1450,7 +1450,6 @@ public class GrammarParser extends Parser {
 		public Token CHAR_CONSTANT;
 		public Token IDENT;
 		public ExprContext expr;
-		public Token op;
 		public TipoContext tipo;
 		public Parametros_llamadaContext parametros_llamada;
 		public OperadorContext operador;
@@ -1539,10 +1538,10 @@ public class GrammarParser extends Parser {
 			case 6:
 				{
 				setState(303);
-				((ExprContext)_localctx).op = match(T__24);
+				match(T__24);
 				setState(304);
 				((ExprContext)_localctx).expr = expr(4);
-				((ExprContext)_localctx).ast =  new Expr_negada(new Operador_logico((((ExprContext)_localctx).op!=null?((ExprContext)_localctx).op.getText():null)), ((ExprContext)_localctx).expr.ast);
+				((ExprContext)_localctx).ast =  new Expr_negada(new Operador_logico('!'), ((ExprContext)_localctx).expr.ast);
 				}
 				break;
 			case 7:
