@@ -269,14 +269,16 @@ public class TypeChecking extends DefaultVisitor {
 		}
 
 		predicado(mismoTipo(node.getIzquierda().getTipo(), node.getDerecha().getTipo()),
-				"Operacion con distintos tipos "
-				// + "\n"
-				// + node.getIzquierda()
-				// + node.getIzquierda().getTipo()
-				// + "\n"
-				// + node.getDerecha()
-				// + node.getDerecha().getTipo()
-				, node);
+				"Operacion con distintos tipos ", node);
+		return null;
+	}
+
+	// class Expr_negada { Operador operador; Expr derecha; }
+	public Object visit(Expr_negada node, Object param) {
+		super.visit(node, param);
+		node.setTipo(node.getDerecha().getTipo());
+		node.setModificable(false);
+		predicado(node.getDerecha().getTipo().getClass().equals(new TipoInt().getClass()), "Deben ser entero", node);
 		return null;
 	}
 
@@ -289,10 +291,9 @@ public class TypeChecking extends DefaultVisitor {
 		// fuera.tipo==tipoArray
 		// dentro.tipo==tipoInt
 
-
 		super.visit(node, param);
-		
-		node.setTipo(((TipoArray)node.getFuera().getTipo()).getTipoElementos());
+
+		node.setTipo(((TipoArray) node.getFuera().getTipo()).getTipoElementos());
 		node.setModificable(true);
 
 		predicado(mismoTipo(node.getFuera().getTipo(), new TipoArray("", null)), "Debe ser tipo array", node);

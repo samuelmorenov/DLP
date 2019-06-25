@@ -136,18 +136,15 @@ expr returns[Expr ast]
 	| '(' expr ')'{ $ast = new Expr_parentesis($expr.ast); }
 	| expr '.' expr{ $ast = new Expr_punto($ctx.expr(0).ast, $ctx.expr(1).ast); }
 	| expr operador expr{ $ast = new Expr_binaria($ctx.expr(0).ast, $operador.ast, $ctx.expr(1).ast); }
-	| op='!' expr {$ast = new Expr_negada(new Operador_logico($op.text), $expr.ast);}
+	| '!' expr {$ast = new Expr_negada(new Operador_logico('!'), $expr.ast);}
 	| expr ('['expr']'){ $ast = new Expr_vector($ctx.expr(0).ast, $ctx.expr(1).ast); }
 	| 'cast' '<' tipo '>' '(' expr ')'{ $ast = new Expr_cast($tipo.ast, $expr.ast); }
 	| IDENT '(' parametros_llamada ')'{ $ast = new Expr_llamada_funcion($IDENT, $parametros_llamada.ast); }
 	;
 	
-	
-//TODO ERROR AQUI:	
+		
 parametros_llamada returns[List<Expr> ast = new ArrayList<Expr>()]
 	: (expr { int iterador = 0; $ast.add($ctx.expr(iterador).ast); } (',' expr{ iterador++; $ast.add($ctx.expr(iterador).ast); })*)?
-	//: (expr { $ast.add($ctx.expr(0).ast); } (',' expr{ $ast.add($ctx.expr(1).ast); })*)?
-	//: (expr (',' expr)*)?
 	;
 	
 ////////////// Operadores //////////////

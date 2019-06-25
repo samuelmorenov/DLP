@@ -40,7 +40,7 @@ public class Main {
 		@SuppressWarnings("unused")
 		PrintMemoryAllocation pma = new PrintMemoryAllocation();
 		// ast.accept(pma, null);
-		// TODO Comentar para que no se imprima por pantalla la asignacion de memoria
+		// TODO - Comentar para que no se imprima por pantalla la asignacion de memoria
 
 	}
 
