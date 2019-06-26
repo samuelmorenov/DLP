@@ -83,12 +83,12 @@ public class CodeSelection extends DefaultVisitor {
 		super.visit(node, CodeFunction.VALUE); // value[[expresiones]]
 		out("out", node.getExpresiones().getTipo()); // OUT<expresiones.tipo>
 		if (node.getFincadena().equals("sp")) {
-			out("pushb 32");
-			out("outb");
+			out("pushb 32"); //PUSHB [[finCadena]]
+			out("outb"); //OUTB
 		}
 		if (node.getFincadena().equals("ln")) {
-			out("pushb 10");
-			out("outb");
+			out("pushb 10");//PUSHB [[finCadena]]
+			out("outb");//OUTB
 		}
 		return null;
 	}
@@ -106,7 +106,6 @@ public class CodeSelection extends DefaultVisitor {
 	public Object visit(Sentencia_if node, Object param) {
 		line(node);// #LINE {end.line}
 		String contadorIf = String.valueOf(++contadorGeneralIF);// {contadorIF = ++contadorGeneralIF}
-		// out("if" + contadorIf +":");// if{contadorIf}:
 		node.getCondicion().accept(this, param);// valor[[condicion]]
 		out("jz else" + contadorIf);// jz else{contadorIf}
 		visitChildren(node.getSentencias(), param);// ejecuta[[sentenciasi]]
@@ -217,8 +216,8 @@ public class CodeSelection extends DefaultVisitor {
 	// class Expr_binaria { Expr izquierda; Operador operador; Expr derecha; }
 	public Object visit(Expr_binaria node, Object param) {
 		assert (param == CodeFunction.VALUE);
-		node.getIzquierda().accept(this, CodeFunction.VALUE);
-		node.getDerecha().accept(this, CodeFunction.VALUE);
+		node.getIzquierda().accept(this, CodeFunction.VALUE);//value[[izquierda]]
+		node.getDerecha().accept(this, CodeFunction.VALUE);//value[[derecha]]
 		out(instruccion.get(node.getOperador().getString()), node.getIzquierda().getTipo());
 		return null;
 	}
@@ -232,7 +231,7 @@ public class CodeSelection extends DefaultVisitor {
 		out("add");// ADD
 		
 		if (((CodeFunction) param) == CodeFunction.VALUE) {
-			out("load", node.getTipo()); // LOAD< expr_ident.type>
+			out("load", node.getTipo()); // LOAD{tipo.size}
 		}
 		return null;
 	}
@@ -248,7 +247,7 @@ public class CodeSelection extends DefaultVisitor {
 	// class Expr_punto { Expr izquierda; Expr derecha; }
 	public Object visit(Expr_punto node, Object param) {
 		node.getIzquierda().accept(this, CodeFunction.ADDRESS); // address[[izquierda]]
-		out("push " + node.getDerecha().getTipo().getSize());
+		out("push " + node.getDerecha().getTipo().getSize()); //PUSH {derecha.tipo.size}
 		out("add");// ADD
 		
 		if (((CodeFunction) param) == CodeFunction.VALUE) {

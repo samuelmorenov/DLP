@@ -20,8 +20,6 @@ public class TypeChecking extends DefaultVisitor {
 		// tipoSimple(parametroi)
 		/** Reglas Semánticas */
 		// sentenciasi.funcionActual = defFuncion
-		// si retorno == null
-		// retorno = tipoVoid
 
 		for (int i = 0; i < node.getSentencias().size(); i++) {
 			node.getSentencias().get(i).setFuncionActual(node);
@@ -240,9 +238,9 @@ public class TypeChecking extends DefaultVisitor {
 		/** Predicados */
 		// si(operador es aritmético)
 		// tipoSimple(izquierda.tipo)
-		// si(operador es lógico)
-		// tipoSimple(izquierda.tipo)
 		// si(operador es booleano)
+		// tipoSimple(izquierda.tipo)
+		// si(operador es lógico)
 		// izquierda.tipo==tipoInt
 		// mismoTipo(izquierda, derecha)
 
@@ -275,6 +273,11 @@ public class TypeChecking extends DefaultVisitor {
 
 	// class Expr_negada { Operador operador; Expr derecha; }
 	public Object visit(Expr_negada node, Object param) {
+		/** Reglas Semánticas */
+		// expr_binaria.tipo=derecha.tipo
+		// expr_binaria.modificable=false
+		/** Predicados */
+		// derecha.tipo==tipoInt
 		super.visit(node, param);
 		node.setTipo(node.getDerecha().getTipo());
 		node.setModificable(false);
