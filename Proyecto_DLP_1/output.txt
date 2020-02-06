@@ -1,0 +1,45 @@
+#source "source.txt"
+call main
+halt
+main:
+enter 0
+
+#line 3
+pusha 0
+push 0
+push 6
+mul
+add
+push 0
+push 2
+mul
+add
+push 1
+store
+
+#line 4
+pusha 0
+push 0
+push 6
+mul
+add
+push 1
+push 2
+mul
+add
+push 2
+store
+
+#line 6
+pusha 0
+push 0
+push 6
+mul
+add
+push 2
+push 2
+mul
+add
+load
+out
+ret 0, 0, 0
