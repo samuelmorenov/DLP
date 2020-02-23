@@ -2,7 +2,7 @@
 .recommenders
 */bin
 */.vscode
-Proyecto_DLP_1
+../Proyecto_DLP_1
 *source*
 *output*
 *AST.html
