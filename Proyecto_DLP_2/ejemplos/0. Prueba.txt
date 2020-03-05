@@ -1,0 +1,7 @@
+var fibonacci:[8][3]int;
+main() {
+  fibonacci[0][0] = 1;
+  fibonacci[0][1] = 2;
+  fibonacci[0][2] = fibonacci[0][0] + fibonacci[0][1];
+  print(fibonacci[0][2]);
+}
