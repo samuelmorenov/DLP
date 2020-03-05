@@ -123,12 +123,18 @@ expr 									returns[Expr ast]
 	| IDENT								{ $ast = new Expr_ident($IDENT); }
 	| '(' expr ')'						{ $ast = $expr.ast; }
 	| '!' expr 							{ $ast = new Expr_negada(new Operador_logico("!"), $expr.ast);}
-	| expr operador expr				{ $ast = new Expr_binaria($ctx.expr(0).ast, $operador.ast, $ctx.expr(1).ast); }
+	| expr op=('*'|'/') expr				{ $ast = new Expr_binaria($ctx.expr(0).ast, new Operador_aritmetico($op.text), $ctx.expr(1).ast); }
+	| expr op=('+'|'-') expr				{ $ast = new Expr_binaria($ctx.expr(0).ast, new Operador_aritmetico($op.text), $ctx.expr(1).ast); }
+	| expr op=('=='|'!=') expr				{ $ast = new Expr_binaria($ctx.expr(0).ast, new Operador_comparacion($op.text), $ctx.expr(1).ast); }
+	| expr op=('<'|'>'|'>='|'<=') expr		{ $ast = new Expr_binaria($ctx.expr(0).ast, new Operador_comparacion($op.text), $ctx.expr(1).ast); }
+	| expr op='&&' expr						{ $ast = new Expr_binaria($ctx.expr(0).ast, new Operador_logico($op.text), $ctx.expr(1).ast); }
+	| expr op='||' expr						{ $ast = new Expr_binaria($ctx.expr(0).ast, new Operador_logico($op.text), $ctx.expr(1).ast); }
 	| 'cast' '<' tipo '>' '(' expr ')'	{ $ast = new Expr_cast($tipo.ast, $expr.ast); }
 	| expr '['expr']'					{ $ast = new Expr_acceso_vector($ctx.expr(0).ast, $ctx.expr(1).ast); }
 	| expr '.' expr						{ $ast = new Expr_acceso_struct($ctx.expr(0).ast, $ctx.expr(1).ast); }
 	| IDENT '(' parametros_llamada ')'	{ $ast = new Expr_llamada_funcion($IDENT, $parametros_llamada.ast); }
 	;
+	
 	
 parametros_llamada 						returns[List<Expr> ast = new ArrayList<Expr>()]
 	: (expr 							{ int iterador = 0; $ast.add($ctx.expr(iterador).ast); } 
@@ -143,14 +149,4 @@ tipo								returns[Tipo ast]
 	| 'char'						{ $ast = new Tipo_Char(); }
 	| IDENT							{ $ast = new Tipo_Struct($IDENT); }
 	| '[' INT_CONSTANT ']' tipo		{ $ast = new Tipo_Array($INT_CONSTANT, $tipo.ast); }
-	;
-	
-//////////////////////	Operadores			//////////////////////
-operador 						returns[Operador ast]
-	: op=('*'|'/') 				{ $ast = new Operador_aritmetico($op.text); }
-	| op=('+'|'-') 				{ $ast = new Operador_aritmetico($op.text); }
-	| op=('=='|'!=') 			{ $ast = new Operador_comparacion($op.text); }
-	| op=('<'|'>'|'>='|'<=') 	{ $ast = new Operador_comparacion($op.text); }
-	| op='&&' 					{ $ast = new Operador_logico($op.text); }
-	| op='||' 					{ $ast = new Operador_logico($op.text); }
 	;

@@ -15,6 +15,7 @@ import visitor.*;
 import parser.*;
 import semantic.*;
 import codegeneration.*;
+import myVisitors.PrintVisitor;
 
 /**
  * Clase que inicia el compilador e invoca a todas sus fases.
@@ -36,6 +37,10 @@ public class Main {
 			System.out.println("El programa se ha compilado correctamente.");
 
 		ASTPrinter.toHtml(program, ast, "AST"); // Utilidad generada por VGen (opcional)
+		
+		
+		PrintVisitor pv = new PrintVisitor();
+		ast.accept(pv, null);
 	}
 
 	/**
