@@ -5,39 +5,27 @@ import visitor.DefaultVisitor;
 
 public class PrintVisitor extends DefaultVisitor {
 
+	String tab = "   ";
+
 	// class Program { List<Definicion> definicion; }
 	public Object visit(Program node, Object param) {
-
-		// super.visit(node, param);
-
-		if (node.getDefinicion() != null)
-			for (Definicion child : node.getDefinicion())
-				child.accept(this, param);
-
+		super.visit(node, param);
 		return null;
 	}
 
 	// class Definicion_variable_global { String nombre; Tipo tipo; }
 	public Object visit(Definicion_variable_global node, Object param) {
-
 		System.out.print("var " + node.getNombre() + ":");
-
 		super.visit(node, param);
-
 		System.out.println(";");
-
 		return null;
 	}
 
 	// class Definicion_struct { String nombre; List<Campo_struct> campo_struct; }
 	public Object visit(Definicion_struct node, Object param) {
-
 		System.out.println("struct " + node.getNombre() + "{");
-
 		super.visit(node, param);
-
-		System.out.print("}");
-
+		System.out.println("};");
 		return null;
 	}
 
@@ -45,12 +33,10 @@ public class PrintVisitor extends DefaultVisitor {
 	// retorno; List<Variable_local> locales; List<Sentencia> sentencias; }
 	public Object visit(Definicion_funcion node, Object param) {
 
-		System.out.print(node.getNombre()+"(");
-		
+		System.out.print(node.getNombre() + "(");
 		if (node.getParametros() != null)
 			for (Parametro child : node.getParametros())
 				child.accept(this, param);
-		
 		System.out.print(")");
 
 		if (node.getRetorno() != null) {
@@ -60,13 +46,15 @@ public class PrintVisitor extends DefaultVisitor {
 		System.out.println(" {");
 
 		if (node.getLocales() != null)
-			for (Variable_local child : node.getLocales())
+			for (Variable_local child : node.getLocales()) {
+				System.out.print(tab);
 				child.accept(this, param);
-
+			}
 		if (node.getSentencias() != null)
-			for (Sentencia child : node.getSentencias())
+			for (Sentencia child : node.getSentencias()) {
+				System.out.print(tab);
 				child.accept(this, param);
-		
+			}
 		System.out.println("}");
 
 		return null;
@@ -75,10 +63,8 @@ public class PrintVisitor extends DefaultVisitor {
 	// class Campo_struct { String nombre; Tipo tipo; }
 	public Object visit(Campo_struct node, Object param) {
 
-		System.out.print(node.getNombre() + ":");
-
+		System.out.print(tab + node.getNombre() + ":");
 		super.visit(node, param);
-
 		System.out.println(";");
 
 		return null;
@@ -87,14 +73,9 @@ public class PrintVisitor extends DefaultVisitor {
 	// class Variable_local { String nombre; Tipo tipo; }
 	public Object visit(Variable_local node, Object param) {
 
-		System.out.print("var "+node.getNombre()+":");
-		
+		System.out.print("var " + node.getNombre() + ":");
 		super.visit(node, param);
-		
 		System.out.println(";");
-		
-//		if (node.getTipo() != null)
-//			node.getTipo().accept(this, param);
 
 		return null;
 	}
@@ -102,71 +83,60 @@ public class PrintVisitor extends DefaultVisitor {
 	// class Parametro { String nombre; Tipo tipo; }
 	public Object visit(Parametro node, Object param) {
 
-		System.out.print("var "+node.getNombre()+":");
-		
+		System.out.print("var " + node.getNombre() + ":");
 		super.visit(node, param);
-		
-		System.out.println(";");
-
-//		if (node.getTipo() != null)
-//			node.getTipo().accept(this, param);
 
 		return null;
 	}
 
 	// class Sentencia_asignacion { Expr izquierda; Expr derecha; }
 	public Object visit(Sentencia_asignacion node, Object param) {
-
-		super.visit(node, param);
-
-//		if (node.getIzquierda() != null)
-//			node.getIzquierda().accept(this, param);
-//
-//		if (node.getDerecha() != null)
-//			node.getDerecha().accept(this, param);
-
+		if (node.getIzquierda() != null)
+			node.getIzquierda().accept(this, param);
+		System.out.print(" = ");
+		if (node.getDerecha() != null)
+			node.getDerecha().accept(this, param);
+		System.out.println(";");
 		return null;
 	}
 
 	// class Sentencia_print { Expr expresiones; String fincadena; }
 	public Object visit(Sentencia_print node, Object param) {
-
-		// super.visit(node, param);
-
-		if (node.getExpresiones() != null)
-			node.getExpresiones().accept(this, param);
-
+		System.out.print("print ");
+		super.visit(node, param);
+		System.out.print(";");
 		return null;
 	}
 
 	// class Sentencia_read { Expr expresiones; }
 	public Object visit(Sentencia_read node, Object param) {
-
-		// super.visit(node, param);
-
-		if (node.getExpresiones() != null)
-			node.getExpresiones().accept(this, param);
-
+		System.out.print("read ");
+		super.visit(node, param);
+		System.out.println(";");
 		return null;
 	}
 
 	// class Sentencia_if { Expr condicion; List<Sentencia> sentencias;
 	// List<Sentencia> sino; }
 	public Object visit(Sentencia_if node, Object param) {
-
-		// super.visit(node, param);
-
+		System.out.print("if(");
 		if (node.getCondicion() != null)
 			node.getCondicion().accept(this, param);
-
+		System.out.println(") {");
 		if (node.getSentencias() != null)
-			for (Sentencia child : node.getSentencias())
+			for (Sentencia child : node.getSentencias()) {
+				System.out.print(tab + tab);
 				child.accept(this, param);
-
-		if (node.getSino() != null)
-			for (Sentencia child : node.getSino())
+			}
+		System.out.println(tab + "}");
+		if (node.getSino() != null && !node.getSino().isEmpty()) {
+			System.out.println(tab + "else {");
+			for (Sentencia child : node.getSino()) {
+				System.out.print(tab + tab);
 				child.accept(this, param);
-
+			}
+			System.out.println(tab + "}");
+		}
 		return null;
 	}
 
@@ -174,37 +144,38 @@ public class PrintVisitor extends DefaultVisitor {
 	public Object visit(Sentencia_while node, Object param) {
 
 		// super.visit(node, param);
-
+		System.out.print("while(");
 		if (node.getCondicion() != null)
 			node.getCondicion().accept(this, param);
-
+		System.out.println(") {");
 		if (node.getSentencias() != null)
-			for (Sentencia child : node.getSentencias())
+			for (Sentencia child : node.getSentencias()) {
+				System.out.print(tab + tab);
 				child.accept(this, param);
+			}
+		System.out.println(tab + "}");
 
 		return null;
 	}
 
 	// class Sentencia_llamada_funcion { String nombre; List<Expr> parametros; }
 	public Object visit(Sentencia_llamada_funcion node, Object param) {
-
-		// super.visit(node, param);
-
-		if (node.getParametros() != null)
-			for (Expr child : node.getParametros())
-				child.accept(this, param);
-
+		System.out.print(node.getNombre() + "(");
+		super.visit(node, param);
+		System.out.println(");");
 		return null;
 	}
 
 	// class Sentencia_return { Expr expresion; }
 	public Object visit(Sentencia_return node, Object param) {
+		System.out.print("return");
 
-		// super.visit(node, param);
-
-		if (node.getExpresion() != null)
+		if (node.getExpresion() != null) {
+			System.out.print("(");
 			node.getExpresion().accept(this, param);
-
+			System.out.print(")");
+		}
+		System.out.println(";");
 		return null;
 	}
 
@@ -228,16 +199,19 @@ public class PrintVisitor extends DefaultVisitor {
 
 	// class Tipo_Void { }
 	public Object visit(Tipo_Void node, Object param) {
+		System.out.print("void");
 		return null;
 	}
 
 	// class Tipo_Struct { String nombre; }
 	public Object visit(Tipo_Struct node, Object param) {
+		System.out.print(node.getNombre());
 		return null;
 	}
 
 	// class Tipo_Array { String tamanio; Tipo tipoElementos; }
 	public Object visit(Tipo_Array node, Object param) {
+		System.out.print("[" + node.getTamanio() + "]");
 
 		// super.visit(node, param);
 
@@ -249,51 +223,40 @@ public class PrintVisitor extends DefaultVisitor {
 
 	// class Expr_int { String string; }
 	public Object visit(Expr_int node, Object param) {
+		System.out.print(node.getString());
 		return null;
 	}
 
 	// class Expr_real { String string; }
 	public Object visit(Expr_real node, Object param) {
+		System.out.print(node.getString());
 		return null;
 	}
 
 	// class Expr_char { String string; }
 	public Object visit(Expr_char node, Object param) {
+		System.out.print(node.getString());
 		return null;
 	}
 
 	// class Expr_ident { String string; }
 	public Object visit(Expr_ident node, Object param) {
+		System.out.print(node.getString());
 		return null;
 	}
 
 	// class Expr_binaria { Expr izquierda; Operador operador; Expr derecha; }
 	public Object visit(Expr_binaria node, Object param) {
-
-		// super.visit(node, param);
-
-		if (node.getIzquierda() != null)
-			node.getIzquierda().accept(this, param);
-
-		if (node.getOperador() != null)
-			node.getOperador().accept(this, param);
-
-		if (node.getDerecha() != null)
-			node.getDerecha().accept(this, param);
-
+		System.out.print("(");
+		super.visit(node, param);
+		System.out.print(")");
 		return null;
 	}
 
 	// class Expr_negada { Operador operador; Expr derecha; }
 	public Object visit(Expr_negada node, Object param) {
 
-		// super.visit(node, param);
-
-		if (node.getOperador() != null)
-			node.getOperador().accept(this, param);
-
-		if (node.getDerecha() != null)
-			node.getDerecha().accept(this, param);
+		super.visit(node, param);
 
 		return null;
 	}
@@ -302,10 +265,10 @@ public class PrintVisitor extends DefaultVisitor {
 	public Object visit(Expr_cast node, Object param) {
 
 		// super.visit(node, param);
-
+		System.out.print("<");
 		if (node.getTipo_convertido() != null)
 			node.getTipo_convertido().accept(this, param);
-
+		System.out.print(">");
 		if (node.getExpr() != null)
 			node.getExpr().accept(this, param);
 
@@ -319,10 +282,10 @@ public class PrintVisitor extends DefaultVisitor {
 
 		if (node.getFuera() != null)
 			node.getFuera().accept(this, param);
-
+		System.out.print("[");
 		if (node.getDentro() != null)
 			node.getDentro().accept(this, param);
-
+		System.out.print("]");
 		return null;
 	}
 
@@ -333,7 +296,7 @@ public class PrintVisitor extends DefaultVisitor {
 
 		if (node.getIzquierda() != null)
 			node.getIzquierda().accept(this, param);
-
+		System.out.print(".");
 		if (node.getDerecha() != null)
 			node.getDerecha().accept(this, param);
 
@@ -344,11 +307,11 @@ public class PrintVisitor extends DefaultVisitor {
 	public Object visit(Expr_llamada_funcion node, Object param) {
 
 		// super.visit(node, param);
-
+		System.out.print(node.getNombre() + "(");
 		if (node.getParametros() != null)
 			for (Expr child : node.getParametros())
 				child.accept(this, param);
-
+		System.out.print(")");
 		return null;
 	}
 

@@ -116,30 +116,30 @@ sentencia_return 			returns[Sentencia_return ast]
 	;
 	
 //////////////////////	Expresiones			//////////////////////
-expr 									returns[Expr ast]
-	: INT_CONSTANT						{ $ast = new Expr_int($INT_CONSTANT); }
-	| REAL_CONSTANT						{ $ast = new Expr_real($REAL_CONSTANT); }
-	| CHAR_CONSTANT						{ $ast = new Expr_char($CHAR_CONSTANT); }
-	| IDENT								{ $ast = new Expr_ident($IDENT); }
-	| '(' expr ')'						{ $ast = $expr.ast; }
-	| '!' expr 							{ $ast = new Expr_negada(new Operador_logico("!"), $expr.ast);}
+expr 										returns[Expr ast]
+	: INT_CONSTANT							{ $ast = new Expr_int($INT_CONSTANT); }
+	| REAL_CONSTANT							{ $ast = new Expr_real($REAL_CONSTANT); }
+	| CHAR_CONSTANT							{ $ast = new Expr_char($CHAR_CONSTANT); }
+	| IDENT									{ $ast = new Expr_ident($IDENT); }
+	| '(' expr ')'							{ $ast = $expr.ast; }
+	| '!' expr 								{ $ast = new Expr_negada(new Operador_logico("!"), $expr.ast);}
 	| expr op=('*'|'/') expr				{ $ast = new Expr_binaria($ctx.expr(0).ast, new Operador_aritmetico($op.text), $ctx.expr(1).ast); }
 	| expr op=('+'|'-') expr				{ $ast = new Expr_binaria($ctx.expr(0).ast, new Operador_aritmetico($op.text), $ctx.expr(1).ast); }
 	| expr op=('=='|'!=') expr				{ $ast = new Expr_binaria($ctx.expr(0).ast, new Operador_comparacion($op.text), $ctx.expr(1).ast); }
 	| expr op=('<'|'>'|'>='|'<=') expr		{ $ast = new Expr_binaria($ctx.expr(0).ast, new Operador_comparacion($op.text), $ctx.expr(1).ast); }
 	| expr op='&&' expr						{ $ast = new Expr_binaria($ctx.expr(0).ast, new Operador_logico($op.text), $ctx.expr(1).ast); }
 	| expr op='||' expr						{ $ast = new Expr_binaria($ctx.expr(0).ast, new Operador_logico($op.text), $ctx.expr(1).ast); }
-	| 'cast' '<' tipo '>' '(' expr ')'	{ $ast = new Expr_cast($tipo.ast, $expr.ast); }
-	| expr '['expr']'					{ $ast = new Expr_acceso_vector($ctx.expr(0).ast, $ctx.expr(1).ast); }
-	| expr '.' expr						{ $ast = new Expr_acceso_struct($ctx.expr(0).ast, $ctx.expr(1).ast); }
-	| IDENT '(' parametros_llamada ')'	{ $ast = new Expr_llamada_funcion($IDENT, $parametros_llamada.ast); }
+	| 'cast' '<' tipo '>' '(' expr ')'		{ $ast = new Expr_cast($tipo.ast, $expr.ast); }
+	| expr '['expr']'						{ $ast = new Expr_acceso_vector($ctx.expr(0).ast, $ctx.expr(1).ast); }
+	| expr '.' expr							{ $ast = new Expr_acceso_struct($ctx.expr(0).ast, $ctx.expr(1).ast); }
+	| IDENT '(' parametros_llamada ')'		{ $ast = new Expr_llamada_funcion($IDENT, $parametros_llamada.ast); }
 	;
 	
 	
-parametros_llamada 						returns[List<Expr> ast = new ArrayList<Expr>()]
-	: (expr 							{ int iterador = 0; $ast.add($ctx.expr(iterador).ast); } 
-	       (',' expr					{ iterador++; $ast.add($ctx.expr(iterador).ast);
-	                 })*)?
+parametros_llamada		returns[List<Expr> ast = new ArrayList<Expr>()]
+	: (expr 			{ int iterador = 0; $ast.add($ctx.expr(iterador).ast); } 
+	  (',' expr			{ iterador++; $ast.add($ctx.expr(iterador).ast); }
+	  )*)?
 	;
 	
 //////////////////////	Tipo				//////////////////////
