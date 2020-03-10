@@ -8,11 +8,11 @@ import org.antlr.v4.runtime.*;
 
 import visitor.*;
 
-//	parametro -> nombre:String  tipo:tipo
+//	variable -> nombre:String  tipo:tipo
 
-public class Parametro extends AbstractAST  {
+public class Variable extends AbstractAST  {
 
-	public Parametro(String nombre, Tipo tipo) {
+	public Variable(String nombre, Tipo tipo) {
 		this.nombre = nombre;
 		this.tipo = tipo;
 
@@ -21,7 +21,7 @@ public class Parametro extends AbstractAST  {
        setPositions(tipo);
 	}
 
-	public Parametro(Object nombre, Object tipo) {
+	public Variable(Object nombre, Object tipo) {
 		this.nombre = (nombre instanceof Token) ? ((Token)nombre).getText() : (String) nombre;
 		this.tipo = (Tipo) getAST(tipo);
 

@@ -104,14 +104,13 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Definicion_variable_global { String nombre;  Tipo tipo; }
+	//	class Definicion_variable_global { Variable variable; }
 	public Object visit(Definicion_variable_global node, Object param) {
 		int indent = ((Integer)param).intValue();
 
 		printName(indent, "Definicion_variable_global", node, false);
 
-		print(indent + 1, "nombre", "String", node.getNombre());
-		visit(indent + 1, "tipo", "Tipo",node.getTipo());
+		visit(indent + 1, "variable", "Variable",node.getVariable());
 		return null;
 	}
 
@@ -126,17 +125,28 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Definicion_funcion { String nombre;  List<Parametro> parametros;  Tipo retorno;  List<Variable_local> locales;  List<Sentencia> sentencias; }
+	//	class Definicion_funcion { String nombre;  List<Variable> parametros;  Tipo retorno;  List<Variable> locales;  List<Sentencia> sentencias; }
 	public Object visit(Definicion_funcion node, Object param) {
 		int indent = ((Integer)param).intValue();
 
 		printName(indent, "Definicion_funcion", node, false);
 
 		print(indent + 1, "nombre", "String", node.getNombre());
-		visit(indent + 1, "parametros", "List<Parametro>",node.getParametros());
+		visit(indent + 1, "parametros", "List<Variable>",node.getParametros());
 		visit(indent + 1, "retorno", "Tipo",node.getRetorno());
-		visit(indent + 1, "locales", "List<Variable_local>",node.getLocales());
+		visit(indent + 1, "locales", "List<Variable>",node.getLocales());
 		visit(indent + 1, "sentencias", "List<Sentencia>",node.getSentencias());
+		return null;
+	}
+
+	//	class Variable { String nombre;  Tipo tipo; }
+	public Object visit(Variable node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "Variable", node, false);
+
+		print(indent + 1, "nombre", "String", node.getNombre());
+		visit(indent + 1, "tipo", "Tipo",node.getTipo());
 		return null;
 	}
 
@@ -145,28 +155,6 @@ public class ASTPrinter extends DefaultVisitor {
 		int indent = ((Integer)param).intValue();
 
 		printName(indent, "Campo_struct", node, false);
-
-		print(indent + 1, "nombre", "String", node.getNombre());
-		visit(indent + 1, "tipo", "Tipo",node.getTipo());
-		return null;
-	}
-
-	//	class Variable_local { String nombre;  Tipo tipo; }
-	public Object visit(Variable_local node, Object param) {
-		int indent = ((Integer)param).intValue();
-
-		printName(indent, "Variable_local", node, false);
-
-		print(indent + 1, "nombre", "String", node.getNombre());
-		visit(indent + 1, "tipo", "Tipo",node.getTipo());
-		return null;
-	}
-
-	//	class Parametro { String nombre;  Tipo tipo; }
-	public Object visit(Parametro node, Object param) {
-		int indent = ((Integer)param).intValue();
-
-		printName(indent, "Parametro", node, false);
 
 		print(indent + 1, "nombre", "String", node.getNombre());
 		visit(indent + 1, "tipo", "Tipo",node.getTipo());

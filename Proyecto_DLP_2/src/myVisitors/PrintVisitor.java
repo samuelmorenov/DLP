@@ -13,9 +13,9 @@ public class PrintVisitor extends DefaultVisitor {
 		return null;
 	}
 
-	// class Definicion_variable_global { String nombre; Tipo tipo; }
+	// class Definicion_variable_global { Variable variable; }
 	public Object visit(Definicion_variable_global node, Object param) {
-		System.out.print("var " + node.getNombre() + ":");
+		System.out.print("var ");
 		super.visit(node, param);
 		System.out.println(";");
 		return null;
@@ -35,7 +35,7 @@ public class PrintVisitor extends DefaultVisitor {
 
 		System.out.print(node.getNombre() + "(");
 		if (node.getParametros() != null)
-			for (Parametro child : node.getParametros())
+			for (Variable child : node.getParametros())
 				child.accept(this, param);
 		System.out.print(")");
 
@@ -46,9 +46,11 @@ public class PrintVisitor extends DefaultVisitor {
 		System.out.println(" {");
 
 		if (node.getLocales() != null)
-			for (Variable_local child : node.getLocales()) {
+			for (Variable child : node.getLocales()) {
 				System.out.print(tab);
+				System.out.print("var ");
 				child.accept(this, param);
+				System.out.println(";");
 			}
 		if (node.getSentencias() != null)
 			for (Sentencia child : node.getSentencias()) {
@@ -60,31 +62,19 @@ public class PrintVisitor extends DefaultVisitor {
 		return null;
 	}
 
+	// class Variable { String nombre; Tipo tipo; }
+	public Object visit(Variable node, Object param) {
+		System.out.print(node.getNombre() + ":");
+		super.visit(node, param);
+		return null;
+	}
+
 	// class Campo_struct { String nombre; Tipo tipo; }
 	public Object visit(Campo_struct node, Object param) {
 
 		System.out.print(tab + node.getNombre() + ":");
 		super.visit(node, param);
 		System.out.println(";");
-
-		return null;
-	}
-
-	// class Variable_local { String nombre; Tipo tipo; }
-	public Object visit(Variable_local node, Object param) {
-
-		System.out.print("var " + node.getNombre() + ":");
-		super.visit(node, param);
-		System.out.println(";");
-
-		return null;
-	}
-
-	// class Parametro { String nombre; Tipo tipo; }
-	public Object visit(Parametro node, Object param) {
-
-		System.out.print("var " + node.getNombre() + ":");
-		super.visit(node, param);
 
 		return null;
 	}

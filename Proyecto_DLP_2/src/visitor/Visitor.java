@@ -11,9 +11,8 @@ public interface Visitor {
 	public Object visit(Definicion_variable_global node, Object param);
 	public Object visit(Definicion_struct node, Object param);
 	public Object visit(Definicion_funcion node, Object param);
+	public Object visit(Variable node, Object param);
 	public Object visit(Campo_struct node, Object param);
-	public Object visit(Variable_local node, Object param);
-	public Object visit(Parametro node, Object param);
 	public Object visit(Sentencia_asignacion node, Object param);
 	public Object visit(Sentencia_print node, Object param);
 	public Object visit(Sentencia_read node, Object param);

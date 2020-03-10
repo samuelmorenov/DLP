@@ -4,15 +4,14 @@ definicion, tipo, sentencia, expr, operador
 NODES
 program -> definicion*;
 
-definicion_variable_global:definicion -> nombre:string tipo;
+
+definicion_variable_global:definicion -> variable;
 definicion_struct:definicion -> nombre:string campo_struct*;
-definicion_funcion:definicion -> nombre:string parametros:parametro* retorno:tipo locales:variable_local* sentencias:sentencia*;
+definicion_funcion:definicion -> nombre:string parametros:variable* retorno:tipo locales:variable* sentencias:sentencia*;
+
+variable -> nombre:string tipo;
 
 campo_struct -> nombre:string tipo;
-
-variable_local -> nombre:string tipo;
-
-parametro -> nombre:string tipo;
 
 sentencia_asignacion:sentencia -> izquierda:expr derecha:expr;
 sentencia_print:sentencia -> expresiones:expr fincadena:string;

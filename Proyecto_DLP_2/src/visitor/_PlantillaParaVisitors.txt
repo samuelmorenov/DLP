@@ -50,13 +50,13 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Definicion_variable_global { String nombre;  Tipo tipo; }
+	//	class Definicion_variable_global { Variable variable; }
 	public Object visit(Definicion_variable_global node, Object param) {
 
 		// super.visit(node, param);
 
-		if (node.getTipo() != null)
-			node.getTipo().accept(this, param);
+		if (node.getVariable() != null)
+			node.getVariable().accept(this, param);
 
 		return null;
 	}
@@ -73,20 +73,20 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Definicion_funcion { String nombre;  List<Parametro> parametros;  Tipo retorno;  List<Variable_local> locales;  List<Sentencia> sentencias; }
+	//	class Definicion_funcion { String nombre;  List<Variable> parametros;  Tipo retorno;  List<Variable> locales;  List<Sentencia> sentencias; }
 	public Object visit(Definicion_funcion node, Object param) {
 
 		// super.visit(node, param);
 
 		if (node.getParametros() != null)
-			for (Parametro child : node.getParametros())
+			for (Variable child : node.getParametros())
 				child.accept(this, param);
 
 		if (node.getRetorno() != null)
 			node.getRetorno().accept(this, param);
 
 		if (node.getLocales() != null)
-			for (Variable_local child : node.getLocales())
+			for (Variable child : node.getLocales())
 				child.accept(this, param);
 
 		if (node.getSentencias() != null)
@@ -96,30 +96,19 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
+	//	class Variable { String nombre;  Tipo tipo; }
+	public Object visit(Variable node, Object param) {
+
+		// super.visit(node, param);
+
+		if (node.getTipo() != null)
+			node.getTipo().accept(this, param);
+
+		return null;
+	}
+
 	//	class Campo_struct { String nombre;  Tipo tipo; }
 	public Object visit(Campo_struct node, Object param) {
-
-		// super.visit(node, param);
-
-		if (node.getTipo() != null)
-			node.getTipo().accept(this, param);
-
-		return null;
-	}
-
-	//	class Variable_local { String nombre;  Tipo tipo; }
-	public Object visit(Variable_local node, Object param) {
-
-		// super.visit(node, param);
-
-		if (node.getTipo() != null)
-			node.getTipo().accept(this, param);
-
-		return null;
-	}
-
-	//	class Parametro { String nombre;  Tipo tipo; }
-	public Object visit(Parametro node, Object param) {
 
 		// super.visit(node, param);
 

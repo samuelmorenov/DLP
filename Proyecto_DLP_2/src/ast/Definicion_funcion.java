@@ -9,11 +9,11 @@ import org.antlr.v4.runtime.*;
 
 import visitor.*;
 
-//	definicion_funcion:definicion -> nombre:String  parametros:parametro*  retorno:tipo  locales:variable_local*  sentencias:sentencia*
+//	definicion_funcion:definicion -> nombre:String  parametros:variable*  retorno:tipo  locales:variable*  sentencias:sentencia*
 
 public class Definicion_funcion extends AbstractDefinicion {
 
-	public Definicion_funcion(String nombre, List<Parametro> parametros, Tipo retorno, List<Variable_local> locales, List<Sentencia> sentencias) {
+	public Definicion_funcion(String nombre, List<Variable> parametros, Tipo retorno, List<Variable> locales, List<Sentencia> sentencias) {
 		this.nombre = nombre;
 		this.parametros = parametros;
 		this.retorno = retorno;
@@ -27,9 +27,9 @@ public class Definicion_funcion extends AbstractDefinicion {
 
 	public Definicion_funcion(Object nombre, Object parametros, Object retorno, Object locales, Object sentencias) {
 		this.nombre = (nombre instanceof Token) ? ((Token)nombre).getText() : (String) nombre;
-		this.parametros = this.<Parametro>getAstFromContexts(parametros);
+		this.parametros = this.<Variable>getAstFromContexts(parametros);
 		this.retorno = (Tipo) getAST(retorno);
-		this.locales = this.<Variable_local>getAstFromContexts(locales);
+		this.locales = this.<Variable>getAstFromContexts(locales);
 		this.sentencias = this.<Sentencia>getAstFromContexts(sentencias);
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
@@ -44,10 +44,10 @@ public class Definicion_funcion extends AbstractDefinicion {
 		this.nombre = nombre;
 	}
 
-	public List<Parametro> getParametros() {
+	public List<Variable> getParametros() {
 		return parametros;
 	}
-	public void setParametros(List<Parametro> parametros) {
+	public void setParametros(List<Variable> parametros) {
 		this.parametros = parametros;
 	}
 
@@ -58,10 +58,10 @@ public class Definicion_funcion extends AbstractDefinicion {
 		this.retorno = retorno;
 	}
 
-	public List<Variable_local> getLocales() {
+	public List<Variable> getLocales() {
 		return locales;
 	}
-	public void setLocales(List<Variable_local> locales) {
+	public void setLocales(List<Variable> locales) {
 		this.locales = locales;
 	}
 
@@ -78,9 +78,9 @@ public class Definicion_funcion extends AbstractDefinicion {
 	}
 
 	private String nombre;
-	private List<Parametro> parametros;
+	private List<Variable> parametros;
 	private Tipo retorno;
-	private List<Variable_local> locales;
+	private List<Variable> locales;
 	private List<Sentencia> sentencias;
 
 	public String toString() {

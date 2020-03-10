@@ -20,10 +20,10 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Definicion_variable_global { String nombre;  Tipo tipo; }
+	//	class Definicion_variable_global { Variable variable; }
 	public Object visit(Definicion_variable_global node, Object param) {
-		if (node.getTipo() != null)
-			node.getTipo().accept(this, param);
+		if (node.getVariable() != null)
+			node.getVariable().accept(this, param);
 		return null;
 	}
 
@@ -33,7 +33,7 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Definicion_funcion { String nombre;  List<Parametro> parametros;  Tipo retorno;  List<Variable_local> locales;  List<Sentencia> sentencias; }
+	//	class Definicion_funcion { String nombre;  List<Variable> parametros;  Tipo retorno;  List<Variable> locales;  List<Sentencia> sentencias; }
 	public Object visit(Definicion_funcion node, Object param) {
 		visitChildren(node.getParametros(), param);
 		if (node.getRetorno() != null)
@@ -43,22 +43,15 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
+	//	class Variable { String nombre;  Tipo tipo; }
+	public Object visit(Variable node, Object param) {
+		if (node.getTipo() != null)
+			node.getTipo().accept(this, param);
+		return null;
+	}
+
 	//	class Campo_struct { String nombre;  Tipo tipo; }
 	public Object visit(Campo_struct node, Object param) {
-		if (node.getTipo() != null)
-			node.getTipo().accept(this, param);
-		return null;
-	}
-
-	//	class Variable_local { String nombre;  Tipo tipo; }
-	public Object visit(Variable_local node, Object param) {
-		if (node.getTipo() != null)
-			node.getTipo().accept(this, param);
-		return null;
-	}
-
-	//	class Parametro { String nombre;  Tipo tipo; }
-	public Object visit(Parametro node, Object param) {
 		if (node.getTipo() != null)
 			node.getTipo().accept(this, param);
 		return null;

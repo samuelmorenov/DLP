@@ -8,40 +8,31 @@ import org.antlr.v4.runtime.*;
 
 import visitor.*;
 
-//	definicion_variable_global:definicion -> nombre:String  tipo:tipo
+//	definicion_variable_global:definicion -> variable:variable
 
 public class Definicion_variable_global extends AbstractDefinicion {
 
-	public Definicion_variable_global(String nombre, Tipo tipo) {
-		this.nombre = nombre;
-		this.tipo = tipo;
+	public Definicion_variable_global(Variable variable) {
+		this.variable = variable;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(tipo);
+       setPositions(variable);
 	}
 
-	public Definicion_variable_global(Object nombre, Object tipo) {
-		this.nombre = (nombre instanceof Token) ? ((Token)nombre).getText() : (String) nombre;
-		this.tipo = (Tipo) getAST(tipo);
+	public Definicion_variable_global(Object variable) {
+		this.variable = (Variable) getAST(variable);
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(nombre, tipo);
+       setPositions(variable);
 	}
 
-	public String getNombre() {
-		return nombre;
+	public Variable getVariable() {
+		return variable;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public Tipo getTipo() {
-		return tipo;
-	}
-	public void setTipo(Tipo tipo) {
-		this.tipo = tipo;
+	public void setVariable(Variable variable) {
+		this.variable = variable;
 	}
 
 	@Override
@@ -49,10 +40,9 @@ public class Definicion_variable_global extends AbstractDefinicion {
 		return v.visit(this, param);
 	}
 
-	private String nombre;
-	private Tipo tipo;
+	private Variable variable;
 
 	public String toString() {
-       return "{nombre:" + getNombre() + ", tipo:" + getTipo() + "}";
+       return "{variable:" + getVariable() + "}";
    }
 }
