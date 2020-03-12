@@ -5,9 +5,9 @@ NODES
 program -> definicion*;
 
 
-variable:definicion -> nombre:string tipo ambito:Ambito;
+definicion_variable:definicion -> nombre:string tipo ambito:Ambito;
 definicion_struct:definicion -> nombre:string campo_struct*;
-definicion_funcion:definicion -> nombre:string parametros:variable* retorno:tipo locales:variable* sentencias:sentencia*;
+definicion_funcion:definicion -> nombre:string parametros:definicion_variable* retorno:tipo locales:definicion_variable* sentencias:sentencia*;
 
 campo_struct -> nombre:string tipo;
 

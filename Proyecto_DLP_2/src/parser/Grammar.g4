@@ -3,6 +3,7 @@ import Lexicon;
 
 @parser::header {
     import ast.*;
+    import ast_aux.*;
 }
 
 //////////////////////	Programa			//////////////////////
@@ -20,11 +21,9 @@ definicion 								returns[Definicion ast]
 	| definicion_funcion				{ $ast = $definicion_funcion.ast; }
 	;
 	
-	
-	
 ////////////// 			Variables globales 	//////////////
-definicion_variable_global 			returns[Variable ast]
-	:'var' IDENT ':' tipo ';'		{ $ast = new Variable($IDENT, $tipo.ast, Ambito.GLOBAL); }
+definicion_variable_global 			returns[Definicion_variable ast]
+	:'var' IDENT ':' tipo ';'		{ $ast = new Definicion_variable($IDENT, $tipo.ast, Ambito.GLOBAL); }
 	;
 	
 
@@ -47,14 +46,14 @@ definicion_funcion 																returns[Definicion_funcion ast]
 	: IDENT '(' parametros ')' retorno '{' variables_locales sentencias '}'		{ $ast = new Definicion_funcion($IDENT, $parametros.ast, $retorno.ast, $variables_locales.ast, $sentencias.ast); }
 	;
 	
-parametros  			returns[List<Variable> ast = new ArrayList<Variable>()]
+parametros  			returns[List<Definicion_variable> ast = new ArrayList<Definicion_variable>()]
 	: (parametro 		{ $ast.add($parametro.ast); }
 	(',' parametro 		{ $ast.add($parametro.ast); }
 	)*)?
 	;
 	
-parametro  				returns[Variable ast]
-	: IDENT ':' tipo 	{ $ast = new Variable($IDENT, $tipo.ast, Ambito.PARAMETRO); }
+parametro  				returns[Definicion_variable ast]
+	: IDENT ':' tipo 	{ $ast = new Definicion_variable($IDENT, $tipo.ast, Ambito.LOCAL); }
 	;
 	
 retorno 			returns[Tipo ast]
@@ -62,12 +61,12 @@ retorno 			returns[Tipo ast]
 	| 				{ $ast = new Tipo_Void(); }
 	;
 	
-variables_locales							returns[List<Variable> ast = new ArrayList<Variable>()]
+variables_locales							returns[List<Definicion_variable> ast = new ArrayList<Definicion_variable>()]
 	: ( definicion_variable_local			{ $ast.add($definicion_variable_local.ast); })*
 	;	
 	
-definicion_variable_local 		returns[Variable ast]
-	:'var' IDENT ':' tipo ';'	{ $ast = new Variable($IDENT, $tipo.ast, Ambito.LOCAL); }
+definicion_variable_local 		returns[Definicion_variable ast]
+	:'var' IDENT ':' tipo ';'	{ $ast = new Definicion_variable($IDENT, $tipo.ast, Ambito.LOCAL); }
 	;
 	
 //////////////////////	Sentencias			//////////////////////

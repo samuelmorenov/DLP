@@ -2,6 +2,7 @@
 package parser;
 
     import ast.*;
+    import ast_aux.*;
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -272,7 +273,7 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class Definicion_variable_globalContext extends ParserRuleContext {
-		public Variable ast;
+		public Definicion_variable ast;
 		public Token IDENT;
 		public TipoContext tipo;
 		public TerminalNode IDENT() { return getToken(GrammarParser.IDENT, 0); }
@@ -301,7 +302,7 @@ public class GrammarParser extends Parser {
 			((Definicion_variable_globalContext)_localctx).tipo = tipo();
 			setState(77);
 			match(T__2);
-			 ((Definicion_variable_globalContext)_localctx).ast =  new Variable(((Definicion_variable_globalContext)_localctx).IDENT, ((Definicion_variable_globalContext)_localctx).tipo.ast, Ambito.GLOBAL); 
+			 ((Definicion_variable_globalContext)_localctx).ast =  new Definicion_variable(((Definicion_variable_globalContext)_localctx).IDENT, ((Definicion_variable_globalContext)_localctx).tipo.ast, Ambito.GLOBAL); 
 			}
 		}
 		catch (RecognitionException re) {
@@ -518,7 +519,7 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class ParametrosContext extends ParserRuleContext {
-		public List<Variable> ast = new ArrayList<Variable>();
+		public List<Definicion_variable> ast = new ArrayList<Definicion_variable>();
 		public ParametroContext parametro;
 		public List<ParametroContext> parametro() {
 			return getRuleContexts(ParametroContext.class);
@@ -581,7 +582,7 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class ParametroContext extends ParserRuleContext {
-		public Variable ast;
+		public Definicion_variable ast;
 		public Token IDENT;
 		public TipoContext tipo;
 		public TerminalNode IDENT() { return getToken(GrammarParser.IDENT, 0); }
@@ -606,7 +607,7 @@ public class GrammarParser extends Parser {
 			match(T__1);
 			setState(128);
 			((ParametroContext)_localctx).tipo = tipo();
-			 ((ParametroContext)_localctx).ast =  new Variable(((ParametroContext)_localctx).IDENT, ((ParametroContext)_localctx).tipo.ast, Ambito.PARAMETRO); 
+			 ((ParametroContext)_localctx).ast =  new Definicion_variable(((ParametroContext)_localctx).IDENT, ((ParametroContext)_localctx).tipo.ast, Ambito.LOCAL); 
 			}
 		}
 		catch (RecognitionException re) {
@@ -673,7 +674,7 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class Variables_localesContext extends ParserRuleContext {
-		public List<Variable> ast = new ArrayList<Variable>();
+		public List<Definicion_variable> ast = new ArrayList<Definicion_variable>();
 		public Definicion_variable_localContext definicion_variable_local;
 		public List<Definicion_variable_localContext> definicion_variable_local() {
 			return getRuleContexts(Definicion_variable_localContext.class);
@@ -723,7 +724,7 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class Definicion_variable_localContext extends ParserRuleContext {
-		public Variable ast;
+		public Definicion_variable ast;
 		public Token IDENT;
 		public TipoContext tipo;
 		public TerminalNode IDENT() { return getToken(GrammarParser.IDENT, 0); }
@@ -752,7 +753,7 @@ public class GrammarParser extends Parser {
 			((Definicion_variable_localContext)_localctx).tipo = tipo();
 			setState(150);
 			match(T__2);
-			 ((Definicion_variable_localContext)_localctx).ast =  new Variable(((Definicion_variable_localContext)_localctx).IDENT, ((Definicion_variable_localContext)_localctx).tipo.ast, Ambito.LOCAL); 
+			 ((Definicion_variable_localContext)_localctx).ast =  new Definicion_variable(((Definicion_variable_localContext)_localctx).IDENT, ((Definicion_variable_localContext)_localctx).tipo.ast, Ambito.LOCAL); 
 			}
 		}
 		catch (RecognitionException re) {

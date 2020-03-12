@@ -6,13 +6,14 @@ package ast;
 
 import org.antlr.v4.runtime.*;
 
+import ast_aux.Ambito;
 import visitor.*;
 
-//	variable:definicion -> nombre:String  tipo:tipo  ambito:Ambito
+//	definicion_variable:definicion -> nombre:String  tipo:tipo  ambito:Ambito
 
-public class Variable extends AbstractDefinicion {
+public class Definicion_variable extends AbstractDefinicion {
 
-	public Variable(String nombre, Tipo tipo, Ambito ambito) {
+	public Definicion_variable(String nombre, Tipo tipo, Ambito ambito) {
 		this.nombre = nombre;
 		this.tipo = tipo;
 		this.ambito = ambito;
@@ -22,7 +23,7 @@ public class Variable extends AbstractDefinicion {
        setPositions(tipo);
 	}
 
-	public Variable(Object nombre, Object tipo, Object ambito) {
+	public Definicion_variable(Object nombre, Object tipo, Object ambito) {
 		this.nombre = (nombre instanceof Token) ? ((Token)nombre).getText() : (String) nombre;
 		this.tipo = (Tipo) getAST(tipo);
 		this.ambito = (Ambito) ambito;

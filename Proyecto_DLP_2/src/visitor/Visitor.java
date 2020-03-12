@@ -8,7 +8,7 @@ import ast.*;
 
 public interface Visitor {
 	public Object visit(Program node, Object param);
-	public Object visit(Variable node, Object param);
+	public Object visit(Definicion_variable node, Object param);
 	public Object visit(Definicion_struct node, Object param);
 	public Object visit(Definicion_funcion node, Object param);
 	public Object visit(Campo_struct node, Object param);

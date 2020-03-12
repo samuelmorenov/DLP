@@ -50,8 +50,8 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Variable { String nombre;  Tipo tipo;  Ambito ambito; }
-	public Object visit(Variable node, Object param) {
+	//	class Definicion_variable { String nombre;  Tipo tipo;  Ambito ambito; }
+	public Object visit(Definicion_variable node, Object param) {
 
 		// super.visit(node, param);
 
@@ -73,20 +73,20 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Definicion_funcion { String nombre;  List<Variable> parametros;  Tipo retorno;  List<Variable> locales;  List<Sentencia> sentencias; }
+	//	class Definicion_funcion { String nombre;  List<Definicion_variable> parametros;  Tipo retorno;  List<Definicion_variable> locales;  List<Sentencia> sentencias; }
 	public Object visit(Definicion_funcion node, Object param) {
 
 		// super.visit(node, param);
 
 		if (node.getParametros() != null)
-			for (Variable child : node.getParametros())
+			for (Definicion_variable child : node.getParametros())
 				child.accept(this, param);
 
 		if (node.getRetorno() != null)
 			node.getRetorno().accept(this, param);
 
 		if (node.getLocales() != null)
-			for (Variable child : node.getLocales())
+			for (Definicion_variable child : node.getLocales())
 				child.accept(this, param);
 
 		if (node.getSentencias() != null)

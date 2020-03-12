@@ -20,8 +20,8 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Variable { String nombre;  Tipo tipo;  Ambito ambito; }
-	public Object visit(Variable node, Object param) {
+	//	class Definicion_variable { String nombre;  Tipo tipo;  Ambito ambito; }
+	public Object visit(Definicion_variable node, Object param) {
 		if (node.getTipo() != null)
 			node.getTipo().accept(this, param);
 		return null;
@@ -33,7 +33,7 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Definicion_funcion { String nombre;  List<Variable> parametros;  Tipo retorno;  List<Variable> locales;  List<Sentencia> sentencias; }
+	//	class Definicion_funcion { String nombre;  List<Definicion_variable> parametros;  Tipo retorno;  List<Definicion_variable> locales;  List<Sentencia> sentencias; }
 	public Object visit(Definicion_funcion node, Object param) {
 		visitChildren(node.getParametros(), param);
 		if (node.getRetorno() != null)
