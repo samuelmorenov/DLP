@@ -5,11 +5,9 @@ NODES
 program -> definicion*;
 
 
-definicion_variable_global:definicion -> variable;
+variable:definicion -> nombre:string tipo ambito:Ambito;
 definicion_struct:definicion -> nombre:string campo_struct*;
 definicion_funcion:definicion -> nombre:string parametros:variable* retorno:tipo locales:variable* sentencias:sentencia*;
-
-variable -> nombre:string tipo;
 
 campo_struct -> nombre:string tipo;
 

@@ -22,15 +22,12 @@ definicion 								returns[Definicion ast]
 	
 	
 	
-//////////////////////	Variable	//////////////////////
-variable 							returns[Variable ast]
-	: IDENT ':' tipo				{ $ast = new Variable($IDENT, $tipo.ast); }
+////////////// 			Variables globales 	//////////////
+definicion_variable_global 			returns[Variable ast]
+	:'var' IDENT ':' tipo ';'		{ $ast = new Variable($IDENT, $tipo.ast, Ambito.GLOBAL); }
 	;
 	
-//////////////////////	Variable Global		//////////////////////
-definicion_variable_global			returns[Definicion_variable_global ast]
-	: 'var' variable ';'			{ $ast = new Definicion_variable_global($variable.ast); }
-	;
+
 	
 //////////////////////	Struct				//////////////////////
 definicion_struct 									returns[Definicion_struct ast]
@@ -51,9 +48,13 @@ definicion_funcion 																returns[Definicion_funcion ast]
 	;
 	
 parametros  			returns[List<Variable> ast = new ArrayList<Variable>()]
-	: (variable 		{ $ast.add($variable.ast); }
-	(',' variable 		{ $ast.add($variable.ast); }
+	: (parametro 		{ $ast.add($parametro.ast); }
+	(',' parametro 		{ $ast.add($parametro.ast); }
 	)*)?
+	;
+	
+parametro  				returns[Variable ast]
+	: IDENT ':' tipo 	{ $ast = new Variable($IDENT, $tipo.ast, Ambito.PARAMETRO); }
 	;
 	
 retorno 			returns[Tipo ast]
@@ -61,9 +62,13 @@ retorno 			returns[Tipo ast]
 	| 				{ $ast = new Tipo_Void(); }
 	;
 	
-variables_locales			returns[List<Variable> ast = new ArrayList<Variable>()]
-	: ('var' variable ';'	{ $ast.add($variable.ast); })*
+variables_locales							returns[List<Variable> ast = new ArrayList<Variable>()]
+	: ( definicion_variable_local			{ $ast.add($definicion_variable_local.ast); })*
 	;	
+	
+definicion_variable_local 		returns[Variable ast]
+	:'var' IDENT ':' tipo ';'	{ $ast = new Variable($IDENT, $tipo.ast, Ambito.LOCAL); }
+	;
 	
 //////////////////////	Sentencias			//////////////////////
 sentencias 			returns[List<Sentencia> ast = new ArrayList<Sentencia>()]

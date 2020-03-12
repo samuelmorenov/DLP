@@ -104,13 +104,15 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Definicion_variable_global { Variable variable; }
-	public Object visit(Definicion_variable_global node, Object param) {
+	//	class Variable { String nombre;  Tipo tipo;  Ambito ambito; }
+	public Object visit(Variable node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "Definicion_variable_global", node, false);
+		printName(indent, "Variable", node, false);
 
-		visit(indent + 1, "variable", "Variable",node.getVariable());
+		print(indent + 1, "nombre", "String", node.getNombre());
+		visit(indent + 1, "tipo", "Tipo",node.getTipo());
+		print(indent + 1, "ambito", "Ambito", node.getAmbito());
 		return null;
 	}
 
@@ -136,17 +138,6 @@ public class ASTPrinter extends DefaultVisitor {
 		visit(indent + 1, "retorno", "Tipo",node.getRetorno());
 		visit(indent + 1, "locales", "List<Variable>",node.getLocales());
 		visit(indent + 1, "sentencias", "List<Sentencia>",node.getSentencias());
-		return null;
-	}
-
-	//	class Variable { String nombre;  Tipo tipo; }
-	public Object visit(Variable node, Object param) {
-		int indent = ((Integer)param).intValue();
-
-		printName(indent, "Variable", node, false);
-
-		print(indent + 1, "nombre", "String", node.getNombre());
-		visit(indent + 1, "tipo", "Tipo",node.getTipo());
 		return null;
 	}
 

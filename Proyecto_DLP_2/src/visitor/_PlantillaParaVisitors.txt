@@ -50,13 +50,13 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Definicion_variable_global { Variable variable; }
-	public Object visit(Definicion_variable_global node, Object param) {
+	//	class Variable { String nombre;  Tipo tipo;  Ambito ambito; }
+	public Object visit(Variable node, Object param) {
 
 		// super.visit(node, param);
 
-		if (node.getVariable() != null)
-			node.getVariable().accept(this, param);
+		if (node.getTipo() != null)
+			node.getTipo().accept(this, param);
 
 		return null;
 	}
@@ -92,17 +92,6 @@ public class <nombre clase> extends DefaultVisitor {
 		if (node.getSentencias() != null)
 			for (Sentencia child : node.getSentencias())
 				child.accept(this, param);
-
-		return null;
-	}
-
-	//	class Variable { String nombre;  Tipo tipo; }
-	public Object visit(Variable node, Object param) {
-
-		// super.visit(node, param);
-
-		if (node.getTipo() != null)
-			node.getTipo().accept(this, param);
 
 		return null;
 	}

@@ -20,10 +20,10 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Definicion_variable_global { Variable variable; }
-	public Object visit(Definicion_variable_global node, Object param) {
-		if (node.getVariable() != null)
-			node.getVariable().accept(this, param);
+	//	class Variable { String nombre;  Tipo tipo;  Ambito ambito; }
+	public Object visit(Variable node, Object param) {
+		if (node.getTipo() != null)
+			node.getTipo().accept(this, param);
 		return null;
 	}
 
@@ -40,13 +40,6 @@ public class DefaultVisitor implements Visitor {
 			node.getRetorno().accept(this, param);
 		visitChildren(node.getLocales(), param);
 		visitChildren(node.getSentencias(), param);
-		return null;
-	}
-
-	//	class Variable { String nombre;  Tipo tipo; }
-	public Object visit(Variable node, Object param) {
-		if (node.getTipo() != null)
-			node.getTipo().accept(this, param);
 		return null;
 	}
 
