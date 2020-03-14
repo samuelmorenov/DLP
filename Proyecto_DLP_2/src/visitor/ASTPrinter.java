@@ -360,14 +360,14 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Expr_acceso_struct { Expr izquierda;  Expr derecha; }
+	//	class Expr_acceso_struct { Expr struct;  String campo; }
 	public Object visit(Expr_acceso_struct node, Object param) {
 		int indent = ((Integer)param).intValue();
 
 		printName(indent, "Expr_acceso_struct", node, false);
 
-		visit(indent + 1, "izquierda", "Expr",node.getIzquierda());
-		visit(indent + 1, "derecha", "Expr",node.getDerecha());
+		visit(indent + 1, "struct", "Expr",node.getStruct());
+		print(indent + 1, "campo", "String", node.getCampo());
 		return null;
 	}
 

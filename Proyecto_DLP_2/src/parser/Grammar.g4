@@ -132,7 +132,7 @@ expr 										returns[Expr ast]
 	| expr op='||' expr						{ $ast = new Expr_binaria($ctx.expr(0).ast, new Operador_logico($op.text), $ctx.expr(1).ast); }
 	| 'cast' '<' tipo '>' '(' expr ')'		{ $ast = new Expr_cast($tipo.ast, $expr.ast); }
 	| expr '['expr']'						{ $ast = new Expr_acceso_vector($ctx.expr(0).ast, $ctx.expr(1).ast); }
-	| expr '.' expr							{ $ast = new Expr_acceso_struct($ctx.expr(0).ast, $ctx.expr(1).ast); }
+	| expr '.' IDENT						{ $ast = new Expr_acceso_struct($ctx.expr(0).ast, $IDENT); }
 	| IDENT '(' parametros_llamada ')'		{ $ast = new Expr_llamada_funcion($IDENT, $parametros_llamada.ast); }
 	;
 	

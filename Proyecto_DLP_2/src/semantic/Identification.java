@@ -146,22 +146,6 @@ public class Identification extends DefaultVisitor {
 		return null;
 	}
 
-	// class Expr_acceso_struct { Expr izquierda; Expr derecha; }
-	public Object visit(Expr_acceso_struct node, Object param) {
-		//
-		// super.visit(node, param);
-
-		if (node.getIzquierda() != null)
-			node.getIzquierda().accept(this, param);
-
-		// if (node.getDerecha() != null)
-		// node.getDerecha().accept(this, param);
-		// TODO Esto esta comentado para que no de error de variable no definida, estara
-		// mal?
-
-		return null;
-	}
-
 	private void predicado(boolean condition, String errorMessage, Position position) {
 		if (!condition)
 			errorManager.notify("Identification", errorMessage, position);

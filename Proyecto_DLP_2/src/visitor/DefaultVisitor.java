@@ -193,12 +193,10 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Expr_acceso_struct { Expr izquierda;  Expr derecha; }
+	//	class Expr_acceso_struct { Expr struct;  String campo; }
 	public Object visit(Expr_acceso_struct node, Object param) {
-		if (node.getIzquierda() != null)
-			node.getIzquierda().accept(this, param);
-		if (node.getDerecha() != null)
-			node.getDerecha().accept(this, param);
+		if (node.getStruct() != null)
+			node.getStruct().accept(this, param);
 		return null;
 	}
 

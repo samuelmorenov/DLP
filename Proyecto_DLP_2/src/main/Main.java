@@ -69,7 +69,6 @@ public class Main {
 			return ast;
 
 		// 3. Fase de Generación de Código
-		//TODO descomentar para generar codigo
 //		File sourceFile = new File(sourceName);
 //		Writer out = new FileWriter(new File(sourceFile.getParent(), "output.txt"));
 //

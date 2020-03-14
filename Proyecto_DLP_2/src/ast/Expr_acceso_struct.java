@@ -8,40 +8,40 @@ import org.antlr.v4.runtime.*;
 
 import visitor.*;
 
-//	expr_acceso_struct:expr -> izquierda:expr  derecha:expr
+//	expr_acceso_struct:expr -> struct:expr  campo:String
 
 public class Expr_acceso_struct extends AbstractExpr {
 
-	public Expr_acceso_struct(Expr izquierda, Expr derecha) {
-		this.izquierda = izquierda;
-		this.derecha = derecha;
+	public Expr_acceso_struct(Expr struct, String campo) {
+		this.struct = struct;
+		this.campo = campo;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(izquierda, derecha);
+       setPositions(struct);
 	}
 
-	public Expr_acceso_struct(Object izquierda, Object derecha) {
-		this.izquierda = (Expr) getAST(izquierda);
-		this.derecha = (Expr) getAST(derecha);
+	public Expr_acceso_struct(Object struct, Object campo) {
+		this.struct = (Expr) getAST(struct);
+		this.campo = (campo instanceof Token) ? ((Token)campo).getText() : (String) campo;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(izquierda, derecha);
+       setPositions(struct, campo);
 	}
 
-	public Expr getIzquierda() {
-		return izquierda;
+	public Expr getStruct() {
+		return struct;
 	}
-	public void setIzquierda(Expr izquierda) {
-		this.izquierda = izquierda;
+	public void setStruct(Expr struct) {
+		this.struct = struct;
 	}
 
-	public Expr getDerecha() {
-		return derecha;
+	public String getCampo() {
+		return campo;
 	}
-	public void setDerecha(Expr derecha) {
-		this.derecha = derecha;
+	public void setCampo(String campo) {
+		this.campo = campo;
 	}
 
 	@Override
@@ -49,10 +49,10 @@ public class Expr_acceso_struct extends AbstractExpr {
 		return v.visit(this, param);
 	}
 
-	private Expr izquierda;
-	private Expr derecha;
+	private Expr struct;
+	private String campo;
 
 	public String toString() {
-       return "{izquierda:" + getIzquierda() + ", derecha:" + getDerecha() + "}";
+       return "{struct:" + getStruct() + ", campo:" + getCampo() + "}";
    }
 }
