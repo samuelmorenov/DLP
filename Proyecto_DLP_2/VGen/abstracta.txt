@@ -29,7 +29,7 @@ tipo_Array:tipo -> tamanio:string tipoElementos:tipo;
 expr_int:expr -> string;
 expr_real:expr -> string;
 expr_char:expr -> string;
-expr_ident:expr -> string;
+expr_uso_variable:expr -> string;
 expr_binaria:expr -> izquierda:expr operador:operador derecha:expr;
 expr_negada:expr -> operador:operador derecha:expr;
 expr_cast:expr -> tipo_convertido:tipo expr:expr;

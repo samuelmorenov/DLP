@@ -83,8 +83,8 @@ public class Identification extends DefaultVisitor {
 		return null;
 	}
 
-	// class Expr_ident { String string; }
-	public Object visit(Expr_ident node, Object param) {
+	// class Expr_uso_variable { String string; }
+	public Object visit(Expr_uso_variable node, Object param) {
 		// Predicado: variables.busca(nombre) != null
 		Definicion_variable definicion = variables.getFromAny(node.getString());
 		predicado(definicion != null, "Variable no definida: " + node.getString(), node);

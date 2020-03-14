@@ -69,12 +69,13 @@ public class Main {
 			return ast;
 
 		// 3. Fase de Generación de Código
-		File sourceFile = new File(sourceName);
-		Writer out = new FileWriter(new File(sourceFile.getParent(), "output.txt"));
-
-		CodeGeneration generator = new CodeGeneration();
-		generator.generate(sourceFile.getName(), ast, out);
-		out.close();
+		//TODO descomentar para generar codigo
+//		File sourceFile = new File(sourceName);
+//		Writer out = new FileWriter(new File(sourceFile.getParent(), "output.txt"));
+//
+//		CodeGeneration generator = new CodeGeneration();
+//		generator.generate(sourceFile.getName(), ast, out);
+//		out.close();
 
 		return ast;
 	}

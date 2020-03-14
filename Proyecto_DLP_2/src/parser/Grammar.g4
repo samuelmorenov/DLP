@@ -121,7 +121,7 @@ expr 										returns[Expr ast]
 	: INT_CONSTANT							{ $ast = new Expr_int($INT_CONSTANT); }
 	| REAL_CONSTANT							{ $ast = new Expr_real($REAL_CONSTANT); }
 	| CHAR_CONSTANT							{ $ast = new Expr_char($CHAR_CONSTANT); }
-	| IDENT									{ $ast = new Expr_ident($IDENT); }
+	| IDENT									{ $ast = new Expr_uso_variable($IDENT); }
 	| '(' expr ')'							{ $ast = $expr.ast; }
 	| '!' expr 								{ $ast = new Expr_negada(new Operador_logico("!"), $expr.ast);}
 	| expr op=('*'|'/') expr				{ $ast = new Expr_binaria($ctx.expr(0).ast, new Operador_aritmetico($op.text), $ctx.expr(1).ast); }

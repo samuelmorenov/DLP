@@ -150,8 +150,8 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Expr_ident { String string; }
-	public Object visit(Expr_ident node, Object param) {
+	//	class Expr_uso_variable { String string; }
+	public Object visit(Expr_uso_variable node, Object param) {
 		return null;
 	}
 

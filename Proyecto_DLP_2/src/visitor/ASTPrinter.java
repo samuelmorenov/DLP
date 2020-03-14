@@ -307,11 +307,11 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Expr_ident { String string; }
-	public Object visit(Expr_ident node, Object param) {
+	//	class Expr_uso_variable { String string; }
+	public Object visit(Expr_uso_variable node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printCompact(indent, "Expr_ident", node, "string", node.getString());
+		printCompact(indent, "Expr_uso_variable", node, "string", node.getString());
 		return null;
 	}
 

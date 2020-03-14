@@ -1401,7 +1401,7 @@ public class GrammarParser extends Parser {
 				{
 				setState(272);
 				((ExprContext)_localctx).IDENT = match(IDENT);
-				 ((ExprContext)_localctx).ast =  new Expr_ident(((ExprContext)_localctx).IDENT); 
+				 ((ExprContext)_localctx).ast =  new Expr_uso_variable(((ExprContext)_localctx).IDENT); 
 				}
 				break;
 			case 5:
