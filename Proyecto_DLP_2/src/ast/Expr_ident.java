@@ -11,6 +11,8 @@ import visitor.*;
 //	expr_ident:expr -> string:String
 
 public class Expr_ident extends AbstractExpr {
+	
+	private Definicion_variable definicion;
 
 	public Expr_ident(String string) {
 		this.string = string;
@@ -29,6 +31,16 @@ public class Expr_ident extends AbstractExpr {
 	}
 	public void setString(String string) {
 		this.string = string;
+	}
+	
+	
+
+//	public Definicion_variable getDefinicion() {
+//		return definicion;
+//	}
+
+	public void setDefinicion(Definicion_variable definicion) {
+		this.definicion = definicion;
 	}
 
 	@Override

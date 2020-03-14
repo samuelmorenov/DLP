@@ -12,6 +12,8 @@ import visitor.*;
 //	expr_llamada_funcion:expr -> nombre:String  parametros:expr*
 
 public class Expr_llamada_funcion extends AbstractExpr {
+	
+	private Definicion_funcion definicion;
 
 	public Expr_llamada_funcion(String nombre, List<Expr> parametros) {
 		this.nombre = nombre;
@@ -43,6 +45,16 @@ public class Expr_llamada_funcion extends AbstractExpr {
 	}
 	public void setParametros(List<Expr> parametros) {
 		this.parametros = parametros;
+	}
+	
+	
+
+//	public Definicion_funcion getDefinicion() {
+//		return definicion;
+//	}
+
+	public void setDefinicion(Definicion_funcion definicion) {
+		this.definicion = definicion;
 	}
 
 	@Override

@@ -2,7 +2,6 @@
 package parser;
 
     import ast.*;
-    import ast_aux.*;
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;

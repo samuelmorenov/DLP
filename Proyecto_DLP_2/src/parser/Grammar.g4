@@ -3,7 +3,6 @@ import Lexicon;
 
 @parser::header {
     import ast.*;
-    import ast_aux.*;
 }
 
 //////////////////////	Programa			//////////////////////
