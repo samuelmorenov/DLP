@@ -155,8 +155,8 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Expr_binaria { Expr izquierda;  Operador operador;  Expr derecha; }
-	public Object visit(Expr_binaria node, Object param) {
+	//	class Expr_operacion { Expr izquierda;  Operador operador;  Expr derecha; }
+	public Object visit(Expr_operacion node, Object param) {
 		if (node.getIzquierda() != null)
 			node.getIzquierda().accept(this, param);
 		if (node.getOperador() != null)

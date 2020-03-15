@@ -30,7 +30,7 @@ expr_int:expr -> string;
 expr_real:expr -> string;
 expr_char:expr -> string;
 expr_uso_variable:expr -> string;
-expr_binaria:expr -> izquierda:expr operador:operador derecha:expr;
+expr_operacion:expr -> izquierda:expr operador:operador derecha:expr;
 expr_negada:expr -> operador:operador derecha:expr;
 expr_cast:expr -> tipo_convertido:tipo expr:expr;
 expr_acceso_vector:expr -> fuera:expr dentro:expr;

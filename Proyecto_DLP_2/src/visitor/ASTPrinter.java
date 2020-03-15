@@ -315,11 +315,11 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Expr_binaria { Expr izquierda;  Operador operador;  Expr derecha; }
-	public Object visit(Expr_binaria node, Object param) {
+	//	class Expr_operacion { Expr izquierda;  Operador operador;  Expr derecha; }
+	public Object visit(Expr_operacion node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "Expr_binaria", node, false);
+		printName(indent, "Expr_operacion", node, false);
 
 		visit(indent + 1, "izquierda", "Expr",node.getIzquierda());
 		visit(indent + 1, "operador", "Operador",node.getOperador());

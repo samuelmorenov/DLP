@@ -8,11 +8,11 @@ import org.antlr.v4.runtime.*;
 
 import visitor.*;
 
-//	expr_binaria:expr -> izquierda:expr  operador:operador  derecha:expr
+//	expr_operacion:expr -> izquierda:expr  operador:operador  derecha:expr
 
-public class Expr_binaria extends AbstractExpr {
+public class Expr_operacion extends AbstractExpr {
 
-	public Expr_binaria(Expr izquierda, Operador operador, Expr derecha) {
+	public Expr_operacion(Expr izquierda, Operador operador, Expr derecha) {
 		this.izquierda = izquierda;
 		this.operador = operador;
 		this.derecha = derecha;
@@ -22,7 +22,7 @@ public class Expr_binaria extends AbstractExpr {
        setPositions(izquierda, operador, derecha);
 	}
 
-	public Expr_binaria(Object izquierda, Object operador, Object derecha) {
+	public Expr_operacion(Object izquierda, Object operador, Object derecha) {
 		this.izquierda = (Expr) getAST(izquierda);
 		this.operador = (Operador) getAST(operador);
 		this.derecha = (Expr) getAST(derecha);

@@ -256,8 +256,8 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Expr_binaria { Expr izquierda;  Operador operador;  Expr derecha; }
-	public Object visit(Expr_binaria node, Object param) {
+	//	class Expr_operacion { Expr izquierda;  Operador operador;  Expr derecha; }
+	public Object visit(Expr_operacion node, Object param) {
 
 		// super.visit(node, param);
 

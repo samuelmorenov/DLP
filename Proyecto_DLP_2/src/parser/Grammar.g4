@@ -124,12 +124,12 @@ expr 										returns[Expr ast]
 	| IDENT									{ $ast = new Expr_uso_variable($IDENT); }
 	| '(' expr ')'							{ $ast = $expr.ast; }
 	| '!' expr 								{ $ast = new Expr_negada(new Operador_logico("!"), $expr.ast);}
-	| expr op=('*'|'/') expr				{ $ast = new Expr_binaria($ctx.expr(0).ast, new Operador_aritmetico($op.text), $ctx.expr(1).ast); }
-	| expr op=('+'|'-') expr				{ $ast = new Expr_binaria($ctx.expr(0).ast, new Operador_aritmetico($op.text), $ctx.expr(1).ast); }
-	| expr op=('=='|'!=') expr				{ $ast = new Expr_binaria($ctx.expr(0).ast, new Operador_comparacion($op.text), $ctx.expr(1).ast); }
-	| expr op=('<'|'>'|'>='|'<=') expr		{ $ast = new Expr_binaria($ctx.expr(0).ast, new Operador_comparacion($op.text), $ctx.expr(1).ast); }
-	| expr op='&&' expr						{ $ast = new Expr_binaria($ctx.expr(0).ast, new Operador_logico($op.text), $ctx.expr(1).ast); }
-	| expr op='||' expr						{ $ast = new Expr_binaria($ctx.expr(0).ast, new Operador_logico($op.text), $ctx.expr(1).ast); }
+	| expr op=('*'|'/') expr				{ $ast = new Expr_operacion($ctx.expr(0).ast, new Operador_aritmetico($op.text), $ctx.expr(1).ast); }
+	| expr op=('+'|'-') expr				{ $ast = new Expr_operacion($ctx.expr(0).ast, new Operador_aritmetico($op.text), $ctx.expr(1).ast); }
+	| expr op=('=='|'!=') expr				{ $ast = new Expr_operacion($ctx.expr(0).ast, new Operador_comparacion($op.text), $ctx.expr(1).ast); }
+	| expr op=('<'|'>'|'>='|'<=') expr		{ $ast = new Expr_operacion($ctx.expr(0).ast, new Operador_comparacion($op.text), $ctx.expr(1).ast); }
+	| expr op='&&' expr						{ $ast = new Expr_operacion($ctx.expr(0).ast, new Operador_logico($op.text), $ctx.expr(1).ast); }
+	| expr op='||' expr						{ $ast = new Expr_operacion($ctx.expr(0).ast, new Operador_logico($op.text), $ctx.expr(1).ast); }
 	| 'cast' '<' tipo '>' '(' expr ')'		{ $ast = new Expr_cast($tipo.ast, $expr.ast); }
 	| expr '['expr']'						{ $ast = new Expr_acceso_vector($ctx.expr(0).ast, $ctx.expr(1).ast); }
 	| expr '.' IDENT						{ $ast = new Expr_acceso_struct($ctx.expr(0).ast, $IDENT); }

@@ -29,7 +29,7 @@ public interface Visitor {
 	public Object visit(Expr_real node, Object param);
 	public Object visit(Expr_char node, Object param);
 	public Object visit(Expr_uso_variable node, Object param);
-	public Object visit(Expr_binaria node, Object param);
+	public Object visit(Expr_operacion node, Object param);
 	public Object visit(Expr_negada node, Object param);
 	public Object visit(Expr_cast node, Object param);
 	public Object visit(Expr_acceso_vector node, Object param);

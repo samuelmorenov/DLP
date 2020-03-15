@@ -1488,7 +1488,7 @@ public class GrammarParser extends Parser {
 						}
 						setState(302);
 						((ExprContext)_localctx).expr = expr(11);
-						 ((ExprContext)_localctx).ast =  new Expr_binaria(_localctx.expr(0).ast, new Operador_aritmetico((((ExprContext)_localctx).op!=null?((ExprContext)_localctx).op.getText():null)), _localctx.expr(1).ast); 
+						 ((ExprContext)_localctx).ast =  new Expr_operacion(_localctx.expr(0).ast, new Operador_aritmetico((((ExprContext)_localctx).op!=null?((ExprContext)_localctx).op.getText():null)), _localctx.expr(1).ast); 
 						}
 						break;
 					case 2:
@@ -1510,7 +1510,7 @@ public class GrammarParser extends Parser {
 						}
 						setState(307);
 						((ExprContext)_localctx).expr = expr(10);
-						 ((ExprContext)_localctx).ast =  new Expr_binaria(_localctx.expr(0).ast, new Operador_aritmetico((((ExprContext)_localctx).op!=null?((ExprContext)_localctx).op.getText():null)), _localctx.expr(1).ast); 
+						 ((ExprContext)_localctx).ast =  new Expr_operacion(_localctx.expr(0).ast, new Operador_aritmetico((((ExprContext)_localctx).op!=null?((ExprContext)_localctx).op.getText():null)), _localctx.expr(1).ast); 
 						}
 						break;
 					case 3:
@@ -1532,7 +1532,7 @@ public class GrammarParser extends Parser {
 						}
 						setState(312);
 						((ExprContext)_localctx).expr = expr(9);
-						 ((ExprContext)_localctx).ast =  new Expr_binaria(_localctx.expr(0).ast, new Operador_comparacion((((ExprContext)_localctx).op!=null?((ExprContext)_localctx).op.getText():null)), _localctx.expr(1).ast); 
+						 ((ExprContext)_localctx).ast =  new Expr_operacion(_localctx.expr(0).ast, new Operador_comparacion((((ExprContext)_localctx).op!=null?((ExprContext)_localctx).op.getText():null)), _localctx.expr(1).ast); 
 						}
 						break;
 					case 4:
@@ -1554,7 +1554,7 @@ public class GrammarParser extends Parser {
 						}
 						setState(317);
 						((ExprContext)_localctx).expr = expr(8);
-						 ((ExprContext)_localctx).ast =  new Expr_binaria(_localctx.expr(0).ast, new Operador_comparacion((((ExprContext)_localctx).op!=null?((ExprContext)_localctx).op.getText():null)), _localctx.expr(1).ast); 
+						 ((ExprContext)_localctx).ast =  new Expr_operacion(_localctx.expr(0).ast, new Operador_comparacion((((ExprContext)_localctx).op!=null?((ExprContext)_localctx).op.getText():null)), _localctx.expr(1).ast); 
 						}
 						break;
 					case 5:
@@ -1567,7 +1567,7 @@ public class GrammarParser extends Parser {
 						((ExprContext)_localctx).op = match(T__29);
 						setState(322);
 						((ExprContext)_localctx).expr = expr(7);
-						 ((ExprContext)_localctx).ast =  new Expr_binaria(_localctx.expr(0).ast, new Operador_logico((((ExprContext)_localctx).op!=null?((ExprContext)_localctx).op.getText():null)), _localctx.expr(1).ast); 
+						 ((ExprContext)_localctx).ast =  new Expr_operacion(_localctx.expr(0).ast, new Operador_logico((((ExprContext)_localctx).op!=null?((ExprContext)_localctx).op.getText():null)), _localctx.expr(1).ast); 
 						}
 						break;
 					case 6:
@@ -1580,7 +1580,7 @@ public class GrammarParser extends Parser {
 						((ExprContext)_localctx).op = match(T__30);
 						setState(327);
 						((ExprContext)_localctx).expr = expr(6);
-						 ((ExprContext)_localctx).ast =  new Expr_binaria(_localctx.expr(0).ast, new Operador_logico((((ExprContext)_localctx).op!=null?((ExprContext)_localctx).op.getText():null)), _localctx.expr(1).ast); 
+						 ((ExprContext)_localctx).ast =  new Expr_operacion(_localctx.expr(0).ast, new Operador_logico((((ExprContext)_localctx).op!=null?((ExprContext)_localctx).op.getText():null)), _localctx.expr(1).ast); 
 						}
 						break;
 					case 7:
