@@ -6,4 +6,8 @@ package ast;
 
 public interface Sentencia extends AST {
 
+	public void setFuncionActual(Definicion_funcion node);
+
+	public Definicion_funcion getFuncionActual();
+
 }

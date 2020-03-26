@@ -34,9 +34,9 @@ public class Expr_uso_variable extends AbstractExpr {
 		this.string = string;
 	}
 
-//	public Definicion_variable getDefinicion() {
-//		return definicion;
-//	}
+	public Definicion_variable getDefinicion() {
+		return definicion;
+	}
 
 	public void setDefinicion(Definicion_variable definicion) {
 		this.definicion = definicion;

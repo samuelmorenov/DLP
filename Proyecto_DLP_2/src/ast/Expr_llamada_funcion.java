@@ -49,9 +49,9 @@ public class Expr_llamada_funcion extends AbstractExpr {
 	
 	
 
-//	public Definicion_funcion getDefinicion() {
-//		return definicion;
-//	}
+	public Definicion_funcion getDefinicion() {
+		return definicion;
+	}
 
 	public void setDefinicion(Definicion_funcion definicion) {
 		this.definicion = definicion;
@@ -68,4 +68,6 @@ public class Expr_llamada_funcion extends AbstractExpr {
 	public String toString() {
        return "{nombre:" + getNombre() + ", parametros:" + getParametros() + "}";
    }
+
+
 }
