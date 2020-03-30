@@ -49,9 +49,9 @@ public class Sentencia_llamada_funcion extends AbstractSentencia {
 		this.parametros = parametros;
 	}
 
-//	public Definicion_funcion getDefinicion() {
-//		return definicion;
-//	}
+	public Definicion_funcion getDefinicion() {
+		return definicion;
+	}
 
 	public void setDefinicion(Definicion_funcion definicion) {
 		this.definicion = definicion;

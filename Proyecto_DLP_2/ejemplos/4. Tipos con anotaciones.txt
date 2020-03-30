@@ -1,5 +1,5 @@
 /*
-Test para probar la Fase de Comprobación de Tipos
+Test para probar la Fase de Comprobaciï¿½n de Tipos
 
 COMPROBACION: El compilador del alumno debe detectar todos los errores indicados en los comentarios.
 
@@ -9,8 +9,8 @@ Por ejemplo:
 
 	print juan + anton;	// suma de dos estructuras 
 
-Lo anterior produce el error de que se están sumando dos expresiones de tipos no simples y además
-puede producir el error de que la expresión a imprimir tampoco es de tipo simple (al no quedar
+Lo anterior produce el error de que se estï¿½n sumando dos expresiones de tipos no simples y ademï¿½s
+puede producir el error de que la expresiï¿½n a imprimir tampoco es de tipo simple (al no quedar
 un tipo simple asociado a la suma al no haberse podido calcular su tipo).
 Estos errores derivados son normales y no es necesario intentar suprimirlos. 
 
@@ -39,7 +39,7 @@ h():int {
 }
 
 j(a:int, b:float):float {		// [41:1] Los return deben tener un valor de retorno
-	h(2);						// [42:2] Numero de argumentos incorrecto
+	h(2);						// [42:2] Numero de argumentos incorrecto: 1 en vez de 0
 	return;
 }
 
@@ -55,7 +55,7 @@ main() {
 	while (i) {}
 	
 	5 = 6; 						// [57:2] Valor de la izquierda no modificable
-	i = f; 						// [58:2] Valores de distinto tipo
+	i = f; 						// [58:2] Valores asignados de distinto tipo
 	juan = anton; 				// [59:2] Valor de la izquierda debe ser simple
 
 	read juan;					// [61:7] Debe ser un tipo simple
@@ -67,28 +67,28 @@ main() {
 	
 	j(12, 12.5);
 	j(12, 12); 					// [69:2] Tipo de los parametros no coincide
-	j(12);						// [70:2] Numero de argumentos incorrecto
-	j(12, 12.5, 4); 			// [71:2] Numero de argumentos incorrecto
+	j(12);						// [70:2] Numero de argumentos incorrecto: 1 en vez de 2
+	j(12, 12.5, 4); 			// [71:2] Numero de argumentos incorrecto: 3 en vez de 2
 	
 	print main();				// [73:8] No tiene tipo de retorno
 	print j(12, 12.5);
 	print j(12, 12); 			// [75:8] Tipo de los parametros no coincide
-	print j(12);				// [76:8] Numero de argumentos incorrecto
-	print j(12, 12.5, 4); 		// [77:8] Numero de argumentos incorrecto
+	print j(12);				// [76:8] Numero de argumentos incorrecto: 1 en vez de 2
+	print j(12, 12.5, 4); 		// [77:8] Numero de argumentos incorrecto: 3 en vez de 2
 
-	print juan + anton;			// [79:8] Deben ser tipos simples [79:8] Solo se pueden imprimir tipos simples
-	print 2.5 * 2;				// [80:8] Valores de distinto tipo
+	print juan + anton;			// [79:8] Deben ser tipos simples
+	print 2.5 * 2;				// [80:8] Operacion con distintos tipos 
 	print i - 2;
 
 	print 2.5 && f;				// [83:8] Deben ser entero
 	print 2 || i;
 	
-	print juan > anton;			// [86:8] Deben ser tipos simples [86:8] Solo se pueden imprimir tipos simples
-	print 2.5 < 2;				// [87:8] Valores de distinto tipo
+	print juan > anton;			// [86:8] Deben ser tipos simples
+	print 2.5 < 2;				// [87:8] Operacion con distintos tipos 
 	print i == 2;
 	
 	print cast<int>(2.5) + i;
-	print cast<Persona>(2.5);	// [91:13] Solo se pueden imprimir tipos simples
+	print cast<Persona>(2.5);	// [91:13] Se debe convertira a un tipo simple
 	print cast<int>(juan);		// [92:18] Se debe convertira un tipo simple
 	print cast<float>(2.5);		// [93:20] No se pueden convertir si son del mismo tipo
 	

@@ -1,0 +1,16 @@
+struct EstructPequenio {
+	matriz:[3][3]int;
+};
+
+struct EstructGrande {
+	ep:EstructPequenio;
+};
+
+var eg:EstructGrande;
+
+main() {
+  eg.ep.matriz[0][0] = 1;
+  eg.ep.matriz[0][1] = 2;
+  eg.ep.matriz[0][2] = eg.ep.matriz[0][0] + eg.ep.matriz[0][1];
+  print(eg.ep.matriz[0][2]); 
+}

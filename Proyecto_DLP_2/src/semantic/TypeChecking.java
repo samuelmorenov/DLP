@@ -71,7 +71,8 @@ public class TypeChecking extends DefaultVisitor {
 		super.visit(node, param);
 
 		predicado(tipoSimple(node.getExpresiones().getTipo()), "Solo se pueden imprimir tipos simples ", node);
-
+		//TODO se debe imprimir este predicado si la sentencia devuelve un tipo_void?
+		
 		return null;
 	}
 
@@ -137,17 +138,19 @@ public class TypeChecking extends DefaultVisitor {
 
 		super.visit(node, param);
 
-		boolean mismoNumParametros = node.getParametros().size() == node.getFuncionActual().getParametros().size();
-		predicado(mismoNumParametros, "Numero de argumentos incorrecto", node);
-		if (!mismoNumParametros) {
+		int numParLlamada = node.getParametros().size();
+		int numParDefinicion = node.getDefinicion().getParametros().size();
+
+		predicado(numParLlamada == numParDefinicion,
+				"Numero de argumentos incorrecto: " + numParLlamada + " en vez de " + numParDefinicion, node);
+		if (!(numParLlamada == numParDefinicion)) {
 			return null;
 		}
 
 		for (int i = 0; i < node.getParametros().size(); i++) {
-			predicado(
-					mismoTipo(node.getParametros().get(i).getTipo(),
-							node.getFuncionActual().getParametros().get(i).getTipo()),
-					"Tipo de los parametros no coincide", node);
+			Tipo tipoLlamada = node.getParametros().get(i).getTipo();
+			Tipo tipoDefinicion = node.getDefinicion().getParametros().get(i).getTipo();
+			predicado(mismoTipo(tipoLlamada, tipoDefinicion), "Tipo de los parametros no coincide", node);
 		}
 
 		return null;
@@ -178,10 +181,10 @@ public class TypeChecking extends DefaultVisitor {
 	// class Expr_int { String string; }
 	public Object visit(Expr_int node, Object param) {
 		/** Reglas Semanticas */
-		// expr_real.tipo = tipoFloat
+		// expr_real.tipo = Tipo_Int
 		// expr_real.modificable=false
 
-		node.setTipo(new Tipo_Float());
+		node.setTipo(new Tipo_Int());
 		node.setModificable(false);
 
 		return null;
@@ -190,10 +193,10 @@ public class TypeChecking extends DefaultVisitor {
 	// class Expr_real { String string; }
 	public Object visit(Expr_real node, Object param) {
 		/** Reglas Semanticas */
-		// expr_int.tipo = tipoInt
+		// expr_int.tipo = Tipo_Float
 		// expr_int.modificable = false
 
-		node.setTipo(new Tipo_Int());
+		node.setTipo(new Tipo_Float());
 		node.setModificable(false);
 		return null;
 	}
@@ -313,11 +316,18 @@ public class TypeChecking extends DefaultVisitor {
 
 		super.visit(node, param);
 
-		node.setTipo(((Tipo_Array) node.getFuera().getTipo()).getTipoElementos());
+		node.setTipo(new Tipo_Int()); // Valor por defecto
 		node.setModificable(true);
 
-		predicado(mismoTipo(node.getFuera().getTipo(), new Tipo_Array("", null)), "Debe ser tipo array", node);
 		predicado(mismoTipo(node.getDentro().getTipo(), new Tipo_Int()), "Debe ser indice entero", node);
+
+		if (!mismoTipo(node.getFuera().getTipo(), new Tipo_Array("", null))) {
+			// TODO se puede hacer diferente?
+			predicado(false, "Debe ser tipo array", node);
+			return null;
+		} else {
+			node.setTipo(((Tipo_Array) node.getFuera().getTipo()).getTipoElementos());
+		}
 
 		return null;
 
@@ -325,12 +335,37 @@ public class TypeChecking extends DefaultVisitor {
 
 	// class Expr_acceso_struct { Expr struct; String campo; }
 	public Object visit(Expr_acceso_struct node, Object param) {
-		//TODO
+		/** Reglas Semanticas */
+		// expr_acceso_struct.tipo = tipoStruct
+		// expr_acceso_struct.modificable=true
+		/** Predicados */
+		// struct.tipo.def.campos[nombre == campo]
 
-		// super.visit(node, param);
+		super.visit(node, param);
 
-		if (node.getStruct() != null)
-			node.getStruct().accept(this, param);
+		node.setTipo(new Tipo_Int()); // TODO Valor por defecto
+		node.setModificable(true);
+
+		if (!mismoTipo(node.getStruct().getTipo(), new Tipo_Struct(""))) {
+			// TODO se puede hacer diferente?
+			predicado(false, "Debe ser tipo struct", node);
+			return null;
+		}
+		Definicion_struct def = ((Tipo_Struct) node.getStruct().getTipo()).getDefinicion();
+
+		Campo_struct campo = null;
+		for (Campo_struct cs : def.getCampo_struct()) {
+			if (cs.getNombre().equals(node.getCampo())) {
+				campo = cs;
+			}
+		}
+
+		if (campo == null) {
+			predicado(false, "Campo no definido", node);
+			return null;
+		} else {
+			node.setTipo(campo.getTipo());
+		}
 
 		return null;
 	}
@@ -352,17 +387,19 @@ public class TypeChecking extends DefaultVisitor {
 
 		super.visit(node, param);
 
-		boolean mismoNumParametros = node.getParametros().size() == node.getDefinicion().getParametros().size();
-		predicado(mismoNumParametros, "Numero de argumentos incorrecto", node);
-		if (!mismoNumParametros) {
+		int numParLlamada = node.getParametros().size();
+		int numParFuncion = node.getDefinicion().getParametros().size();
+
+		predicado(numParLlamada == numParFuncion,
+				"Numero de argumentos incorrecto: " + numParLlamada + " en vez de " + numParFuncion, node);
+		if (!(numParLlamada == numParFuncion)) {
 			return null;
 		}
 
 		for (int i = 0; i < node.getParametros().size(); i++) {
-			predicado(
-					mismoTipo(node.getParametros().get(i).getTipo(),
-							node.getDefinicion().getParametros().get(i).getTipo()),
-					"Tipo de los parametros no coincide", node);
+			Tipo tipoLlamada = node.getParametros().get(i).getTipo();
+			Tipo tipoDefinicion = node.getDefinicion().getParametros().get(i).getTipo();
+			predicado(mismoTipo(tipoLlamada, tipoDefinicion), "Tipo de los parametros no coincide", node);
 		}
 
 		predicado(!mismoTipo(node.getDefinicion().getRetorno(), new Tipo_Void()), "No tiene retorno", node);
@@ -371,7 +408,7 @@ public class TypeChecking extends DefaultVisitor {
 	}
 
 	// # --------------------------------------------
-	// Métodos auxiliares recomendados  -------------
+	// Métodos auxiliares recomendados -------------
 
 	private boolean tipoSimple(Tipo tipo) {
 		return tipo instanceof Tipo_Int || tipo instanceof Tipo_Float || tipo instanceof Tipo_Char;

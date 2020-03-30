@@ -34,9 +34,9 @@ public class Tipo_Struct extends AbstractTipo {
 		this.nombre = nombre;
 	}
 
-//	public Definicion_struct getDefinicion() {
-//		return definicion;
-//	}
+	public Definicion_struct getDefinicion() {
+		return definicion;
+	}
 
 	public void setDefinicion(Definicion_struct definicion) {
 		this.definicion = definicion;
