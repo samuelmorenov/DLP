@@ -56,7 +56,9 @@ public class TypeChecking extends DefaultVisitor {
 		super.visit(node, param);
 
 		predicado(mismoTipo(node.getIzquierda().getTipo(), node.getDerecha().getTipo()),
-				"Valores asignados de distinto tipo", node);
+				"Valores asignados de distinto tipo: " + node.getIzquierda().getTipo() + " y "
+						+ node.getDerecha().getTipo(),
+				node);
 		predicado(tipoSimple(node.getIzquierda().getTipo()), "Valor de la izquierda debe ser simple", node);
 		predicado(node.getIzquierda().isModificable() == true, "Valor de la izquierda no modificable", node);
 
@@ -71,8 +73,8 @@ public class TypeChecking extends DefaultVisitor {
 		super.visit(node, param);
 
 		predicado(tipoSimple(node.getExpresiones().getTipo()), "Solo se pueden imprimir tipos simples ", node);
-		//TODO se debe imprimir este predicado si la sentencia devuelve un tipo_void?
-		
+		// TODO se debe imprimir este predicado si la sentencia devuelve un tipo_void?
+
 		return null;
 	}
 
@@ -263,7 +265,8 @@ public class TypeChecking extends DefaultVisitor {
 		}
 
 		predicado(mismoTipo(node.getIzquierda().getTipo(), node.getDerecha().getTipo()),
-				"Operacion con distintos tipos ", node);
+				"Operacion con distintos tipos: " + node.getIzquierda().getTipo() + " y " + node.getDerecha().getTipo(),
+				node);
 
 		return null;
 	}
@@ -308,7 +311,7 @@ public class TypeChecking extends DefaultVisitor {
 	// class Expr_acceso_vector { Expr fuera; Expr dentro; }
 	public Object visit(Expr_acceso_vector node, Object param) {
 		/** Reglas Semanticas */
-		// expr_acceso_vector.tipo = vector.definicion.tipo
+		// expr_acceso_vector.tipo = dentro.tipo
 		// expr_acceso_vector.modificable=true
 		/** Predicados */
 		// fuera.tipo==tipoArray
@@ -316,14 +319,13 @@ public class TypeChecking extends DefaultVisitor {
 
 		super.visit(node, param);
 
-		node.setTipo(new Tipo_Int()); // Valor por defecto
+		node.setTipo(new Tipo_Void()); // TODO Valor por defecto
 		node.setModificable(true);
 
 		predicado(mismoTipo(node.getDentro().getTipo(), new Tipo_Int()), "Debe ser indice entero", node);
 
 		if (!mismoTipo(node.getFuera().getTipo(), new Tipo_Array("", null))) {
-			// TODO se puede hacer diferente?
-			predicado(false, "Debe ser tipo array", node);
+			predicado(false, node + "Debe ser tipo array en vez de " + node.getFuera().getTipo(), node);
 			return null;
 		} else {
 			node.setTipo(((Tipo_Array) node.getFuera().getTipo()).getTipoElementos());
@@ -336,18 +338,18 @@ public class TypeChecking extends DefaultVisitor {
 	// class Expr_acceso_struct { Expr struct; String campo; }
 	public Object visit(Expr_acceso_struct node, Object param) {
 		/** Reglas Semanticas */
-		// expr_acceso_struct.tipo = tipoStruct
+		// expr_acceso_struct.tipo = struct.tipo.def.campos[nombre == campo].tipo
 		// expr_acceso_struct.modificable=true
 		/** Predicados */
+		// struct.tipo == tipoStruct
 		// struct.tipo.def.campos[nombre == campo]
 
 		super.visit(node, param);
 
-		node.setTipo(new Tipo_Int()); // TODO Valor por defecto
+		node.setTipo(new Tipo_Void()); // TODO Valor por defecto
 		node.setModificable(true);
 
 		if (!mismoTipo(node.getStruct().getTipo(), new Tipo_Struct(""))) {
-			// TODO se puede hacer diferente?
 			predicado(false, "Debe ser tipo struct", node);
 			return null;
 		}
