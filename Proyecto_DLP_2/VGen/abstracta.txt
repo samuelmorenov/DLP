@@ -25,6 +25,7 @@ tipo_Char:tipo -> ;
 tipo_Void:tipo -> ;
 tipo_Struct:tipo -> nombre:string;
 tipo_Array:tipo -> tamanio:string tipoElementos:tipo;
+tipo_Error:tipo -> ;
 
 expr_int:expr -> string;
 expr_real:expr -> string;

@@ -9,6 +9,10 @@ import visitor.*;
 //	tipo_Float:tipo -> 
 
 public class Tipo_Float extends AbstractTipo {
+	
+	public int getSize() {
+		return 4;
+	}
 
 	@Override
 	public Object accept(Visitor v, Object param) { 

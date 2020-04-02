@@ -43,11 +43,29 @@ public class Tipo_Struct extends AbstractTipo {
 	}
 
 	@Override
+	public int getSize() {
+		if (this.size == -1) {
+			this.calcularSize();
+		}
+		return this.size;
+	}
+
+	private void calcularSize() {
+		this.size = 0;
+		for (int i = 0; i < definicion.getCampo_struct().size(); i++) {
+			Campo_struct def = this.definicion.getCampo_struct().get(i);
+			def.setAddress(this.size);
+			this.size += def.getTipo().getSize();
+		}
+	}
+
+	@Override
 	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
 	}
 
 	private String nombre;
+	private int size = -1;
 
 	public String toString() {
 		return "{nombre:" + getNombre() + "}";

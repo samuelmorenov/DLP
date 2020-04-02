@@ -56,6 +56,14 @@ public class Definicion_variable extends AbstractDefinicion {
 		this.ambito = ambito;
 	}
 
+	public int getAddress() {
+		return address;
+	}
+
+	public void setAddress(int address) {
+		this.address = address;
+	}
+
 	@Override
 	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
@@ -64,6 +72,7 @@ public class Definicion_variable extends AbstractDefinicion {
 	private String nombre;
 	private Tipo tipo;
 	private Ambito ambito;
+	private int address;
 
 	public String toString() {
 		return "{nombre:" + getNombre() + ", tipo:" + getTipo() + ", ambito:" + getAmbito() + "}";

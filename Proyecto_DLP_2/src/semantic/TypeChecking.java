@@ -73,7 +73,6 @@ public class TypeChecking extends DefaultVisitor {
 		super.visit(node, param);
 
 		predicado(tipoSimple(node.getExpresiones().getTipo()), "Solo se pueden imprimir tipos simples ", node);
-		// TODO se debe imprimir este predicado si la sentencia devuelve un tipo_void?
 
 		return null;
 	}
@@ -319,13 +318,13 @@ public class TypeChecking extends DefaultVisitor {
 
 		super.visit(node, param);
 
-		node.setTipo(new Tipo_Void()); // TODO Valor por defecto
 		node.setModificable(true);
 
 		predicado(mismoTipo(node.getDentro().getTipo(), new Tipo_Int()), "Debe ser indice entero", node);
 
 		if (!mismoTipo(node.getFuera().getTipo(), new Tipo_Array("", null))) {
 			predicado(false, node + "Debe ser tipo array en vez de " + node.getFuera().getTipo(), node);
+			node.setTipo(new Tipo_Error());
 			return null;
 		} else {
 			node.setTipo(((Tipo_Array) node.getFuera().getTipo()).getTipoElementos());
@@ -346,7 +345,6 @@ public class TypeChecking extends DefaultVisitor {
 
 		super.visit(node, param);
 
-		node.setTipo(new Tipo_Void()); // TODO Valor por defecto
 		node.setModificable(true);
 
 		if (!mismoTipo(node.getStruct().getTipo(), new Tipo_Struct(""))) {
@@ -364,6 +362,7 @@ public class TypeChecking extends DefaultVisitor {
 
 		if (campo == null) {
 			predicado(false, "Campo no definido", node);
+			node.setTipo(new Tipo_Error());
 			return null;
 		} else {
 			node.setTipo(campo.getTipo());

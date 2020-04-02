@@ -113,6 +113,8 @@ public class ASTPrinter extends DefaultVisitor {
 		print(indent + 1, "nombre", "String", node.getNombre());
 		visit(indent + 1, "tipo", "Tipo",node.getTipo());
 		print(indent + 1, "ambito", "Ambito", node.getAmbito());
+        // ESTA LINEA ES NUEVA <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        print(indent + 1, "address", "int", node.getAddress());
 		return null;
 	}
 
@@ -149,6 +151,8 @@ public class ASTPrinter extends DefaultVisitor {
 
 		print(indent + 1, "nombre", "String", node.getNombre());
 		visit(indent + 1, "tipo", "Tipo",node.getTipo());
+        // ESTA LINEA ES NUEVA <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        print(indent + 1, "address", "int", node.getAddress());
 		return null;
 	}
 
@@ -280,6 +284,15 @@ public class ASTPrinter extends DefaultVisitor {
 
 		print(indent + 1, "tamanio", "String", node.getTamanio());
 		visit(indent + 1, "tipoElementos", "Tipo",node.getTipoElementos());
+		return null;
+	}
+
+	//	class Tipo_Error {  }
+	public Object visit(Tipo_Error node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "Tipo_Error", node, true);
+
 		return null;
 	}
 

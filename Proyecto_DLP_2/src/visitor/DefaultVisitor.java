@@ -135,6 +135,11 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
+	//	class Tipo_Error {  }
+	public Object visit(Tipo_Error node, Object param) {
+		return null;
+	}
+
 	//	class Expr_int { String string; }
 	public Object visit(Expr_int node, Object param) {
 		return null;

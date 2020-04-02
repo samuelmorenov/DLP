@@ -6,20 +6,22 @@ package ast;
 
 import visitor.*;
 
-//	tipo_Char:tipo -> 
+//	tipo_Error:tipo -> 
 
-public class Tipo_Char extends AbstractTipo {
-
-	public int getSize() {
-		return 1;
-	}
+public class Tipo_Error extends AbstractTipo {
 
 	@Override
 	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
 	}
 
-	public String toString() {
-		return "{Tipo_Char}";
+	@Override
+	public int getSize() {
+		return 0;
 	}
+
+	public String toString() {
+		return "{Tipo_Error}";
+	}
+
 }

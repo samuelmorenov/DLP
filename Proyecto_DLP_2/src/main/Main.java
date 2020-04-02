@@ -15,6 +15,7 @@ import visitor.*;
 import parser.*;
 import semantic.*;
 import codegeneration.*;
+import myVisitors.PrintMemoryAllocation;
 
 /**
  * Clase que inicia el compilador e invoca a todas sus fases.
@@ -69,12 +70,15 @@ public class Main {
 			return ast;
 
 		// 3. Fase de Generación de Código
-//		File sourceFile = new File(sourceName);
-//		Writer out = new FileWriter(new File(sourceFile.getParent(), "output.txt"));
-//
-//		CodeGeneration generator = new CodeGeneration();
-//		generator.generate(sourceFile.getName(), ast, out);
-//		out.close();
+		File sourceFile = new File(sourceName);
+		Writer out = new FileWriter(new File(sourceFile.getParent(), "output.txt"));
+
+		CodeGeneration generator = new CodeGeneration();
+		generator.generate(sourceFile.getName(), ast, out);
+		out.close();
+		
+		PrintMemoryAllocation pma = new PrintMemoryAllocation();
+		ast.accept(pma, null);
 
 		return ast;
 	}
