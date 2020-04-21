@@ -1,5 +1,5 @@
 /**
- * @generated VGen (for ANTLR) 1.4.0
+ * @generated VGen (for ANTLR) 1.7.0
  */
 
 package ast;
@@ -7,34 +7,31 @@ package ast;
 import java.util.*;
 import visitor.*;
 
-//import org.antlr.v4.runtime.*;
-
-//	program -> bloque:bloque*
+//	program -> definicion:definicion*
 
 public class Program extends AbstractAST  {
 
-	public Program(List<Bloque> bloque) {
-		this.bloque = bloque;
+	public Program(List<Definicion> definicion) {
+		this.definicion = definicion;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(bloque);
+       setPositions(definicion);
 	}
 
-	@SuppressWarnings("unchecked")
-	public Program(Object bloque) {
-		this.bloque = (List<Bloque>) bloque;
+	public Program(Object definicion) {
+		this.definicion = this.<Definicion>getAstFromContexts(definicion);
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(bloque);
+       setPositions(definicion);
 	}
 
-	public List<Bloque> getBloque() {
-		return bloque;
+	public List<Definicion> getDefinicion() {
+		return definicion;
 	}
-	public void setBloque(List<Bloque> bloque) {
-		this.bloque = bloque;
+	public void setDefinicion(List<Definicion> definicion) {
+		this.definicion = definicion;
 	}
 
 	@Override
@@ -42,9 +39,9 @@ public class Program extends AbstractAST  {
 		return v.visit(this, param);
 	}
 
-	private List<Bloque> bloque;
+	private List<Definicion> definicion;
 
 	public String toString() {
-       return "{bloque:" + getBloque() + "}";
+       return "{definicion:" + getDefinicion() + "}";
    }
 }

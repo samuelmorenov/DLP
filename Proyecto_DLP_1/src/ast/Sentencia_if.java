@@ -1,13 +1,13 @@
 /**
- * @generated VGen (for ANTLR) 1.4.0
+ * @generated VGen (for ANTLR) 1.7.0
  */
 
 package ast;
 
 import java.util.*;
-import visitor.*;
-
 import org.antlr.v4.runtime.*;
+
+import visitor.*;
 
 //	sentencia_if:sentencia -> condicion:expr  sentencias:sentencia*  sino:sentencia*
 
@@ -23,11 +23,10 @@ public class Sentencia_if extends AbstractSentencia {
        setPositions(condicion, sentencias, sino);
 	}
 
-	@SuppressWarnings("unchecked")
 	public Sentencia_if(Object condicion, Object sentencias, Object sino) {
-		this.condicion = (Expr) ((condicion instanceof ParserRuleContext) ? getAST(condicion) : condicion);
-		this.sentencias = (List<Sentencia>) sentencias;
-		this.sino = (List<Sentencia>) sino;
+		this.condicion = (Expr) getAST(condicion);
+		this.sentencias = this.<Sentencia>getAstFromContexts(sentencias);
+		this.sino = this.<Sentencia>getAstFromContexts(sino);
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
@@ -67,6 +66,4 @@ public class Sentencia_if extends AbstractSentencia {
 	public String toString() {
        return "{condicion:" + getCondicion() + ", sentencias:" + getSentencias() + ", sino:" + getSino() + "}";
    }
-
-
 }

@@ -1,10 +1,13 @@
 /**
- * @generated VGen (for ANTLR) 1.4.0
+ * @generated VGen (for ANTLR) 1.7.0
  */
 
 package ast;
 
 public interface Tipo extends AST {
-	public int getSize();
-    char getSuffix();
+
+	int getSize();
+
+	char getSuffix();
+
 }

@@ -1,5 +1,5 @@
 /**
- * @generated VGen (for ANTLR) 1.4.0
+ * @generated VGen (for ANTLR) 1.7.0
  */
 
 package visitor;
@@ -14,34 +14,27 @@ DefaultVisitor. Implementación base del visitor para ser derivada por nuevos vi
 */
 public class DefaultVisitor implements Visitor {
 
-	//	class Program { List<Bloque> bloque; }
+	//	class Program { List<Definicion> definicion; }
 	public Object visit(Program node, Object param) {
-		visitChildren(node.getBloque(), param);
+		visitChildren(node.getDefinicion(), param);
 		return null;
 	}
 
-	//	class Definicion_variable_global { String nombre;  Tipo tipo; }
-	public Object visit(Definicion_variable_global node, Object param) {
+	//	class Definicion_variable { String nombre;  Tipo tipo;  Ambito ambito; }
+	public Object visit(Definicion_variable node, Object param) {
 		if (node.getTipo() != null)
 			node.getTipo().accept(this, param);
 		return null;
 	}
 
-	//	class Struct { String nombre;  List<Definicion_campo_struct> definicion_campo_struct; }
-	public Object visit(Struct node, Object param) {
-		visitChildren(node.getDefinicion_campo_struct(), param);
+	//	class Definicion_struct { String nombre;  List<Campo_struct> campo_struct; }
+	public Object visit(Definicion_struct node, Object param) {
+		visitChildren(node.getCampo_struct(), param);
 		return null;
 	}
 
-	//	class Definicion_campo_struct { String nombre;  Tipo tipo; }
-	public Object visit(Definicion_campo_struct node, Object param) {
-		if (node.getTipo() != null)
-			node.getTipo().accept(this, param);
-		return null;
-	}
-
-	//	class Funcion { String nombre;  List<Parametro> parametros;  Tipo retorno;  List<Definicion_variable_local> locales;  List<Sentencia> sentencias; }
-	public Object visit(Funcion node, Object param) {
+	//	class Definicion_funcion { String nombre;  List<Definicion_variable> parametros;  Tipo retorno;  List<Definicion_variable> locales;  List<Sentencia> sentencias; }
+	public Object visit(Definicion_funcion node, Object param) {
 		visitChildren(node.getParametros(), param);
 		if (node.getRetorno() != null)
 			node.getRetorno().accept(this, param);
@@ -50,15 +43,8 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Definicion_variable_local { String nombre;  Tipo tipo; }
-	public Object visit(Definicion_variable_local node, Object param) {
-		if (node.getTipo() != null)
-			node.getTipo().accept(this, param);
-		return null;
-	}
-
-	//	class Parametro { String nombre;  Tipo tipo; }
-	public Object visit(Parametro node, Object param) {
+	//	class Campo_struct { String nombre;  Tipo tipo; }
+	public Object visit(Campo_struct node, Object param) {
 		if (node.getTipo() != null)
 			node.getTipo().accept(this, param);
 		return null;
@@ -73,7 +59,7 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Sentencia_print { Expr expresiones; }
+	//	class Sentencia_print { Expr expresiones;  String fincadena; }
 	public Object visit(Sentencia_print node, Object param) {
 		if (node.getExpresiones() != null)
 			node.getExpresiones().accept(this, param);
@@ -117,35 +103,40 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class TipoInt {  }
-	public Object visit(TipoInt node, Object param) {
+	//	class Tipo_Int {  }
+	public Object visit(Tipo_Int node, Object param) {
 		return null;
 	}
 
-	//	class TipoFloat {  }
-	public Object visit(TipoFloat node, Object param) {
+	//	class Tipo_Float {  }
+	public Object visit(Tipo_Float node, Object param) {
 		return null;
 	}
 
-	//	class TipoChar {  }
-	public Object visit(TipoChar node, Object param) {
+	//	class Tipo_Char {  }
+	public Object visit(Tipo_Char node, Object param) {
 		return null;
 	}
 
-	//	class TipoStruct { String nombre; }
-	public Object visit(TipoStruct node, Object param) {
+	//	class Tipo_Void {  }
+	public Object visit(Tipo_Void node, Object param) {
 		return null;
 	}
 
-	//	class TipoArray { String tamanio;  Tipo tipoElementos; }
-	public Object visit(TipoArray node, Object param) {
+	//	class Tipo_Struct { String nombre; }
+	public Object visit(Tipo_Struct node, Object param) {
+		return null;
+	}
+
+	//	class Tipo_Array { String tamanio;  Tipo tipoElementos; }
+	public Object visit(Tipo_Array node, Object param) {
 		if (node.getTipoElementos() != null)
 			node.getTipoElementos().accept(this, param);
 		return null;
 	}
 
-	//	class TipoVoid {  }
-	public Object visit(TipoVoid node, Object param) {
+	//	class Tipo_Error {  }
+	public Object visit(Tipo_Error node, Object param) {
 		return null;
 	}
 
@@ -164,28 +155,19 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Expr_ident { String string; }
-	public Object visit(Expr_ident node, Object param) {
+	//	class Expr_uso_variable { String string; }
+	public Object visit(Expr_uso_variable node, Object param) {
 		return null;
 	}
 
-	//	class Expr_binaria { Expr izquierda;  Operador operador;  Expr derecha; }
-	public Object visit(Expr_binaria node, Object param) {
+	//	class Expr_operacion { Expr izquierda;  Operador operador;  Expr derecha; }
+	public Object visit(Expr_operacion node, Object param) {
 		if (node.getIzquierda() != null)
 			node.getIzquierda().accept(this, param);
 		if (node.getOperador() != null)
 			node.getOperador().accept(this, param);
 		if (node.getDerecha() != null)
 			node.getDerecha().accept(this, param);
-		return null;
-	}
-
-	//	class Expr_vector { Expr fuera;  Expr dentro; }
-	public Object visit(Expr_vector node, Object param) {
-		if (node.getFuera() != null)
-			node.getFuera().accept(this, param);
-		if (node.getDentro() != null)
-			node.getDentro().accept(this, param);
 		return null;
 	}
 
@@ -198,28 +180,28 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Expr_punto { Expr izquierda;  Expr derecha; }
-	public Object visit(Expr_punto node, Object param) {
-		if (node.getIzquierda() != null)
-			node.getIzquierda().accept(this, param);
-		if (node.getDerecha() != null)
-			node.getDerecha().accept(this, param);
-		return null;
-	}
-
-	//	class Expr_parentesis { Expr expr; }
-	public Object visit(Expr_parentesis node, Object param) {
-		if (node.getExpr() != null)
-			node.getExpr().accept(this, param);
-		return null;
-	}
-
 	//	class Expr_cast { Tipo tipo_convertido;  Expr expr; }
 	public Object visit(Expr_cast node, Object param) {
 		if (node.getTipo_convertido() != null)
 			node.getTipo_convertido().accept(this, param);
 		if (node.getExpr() != null)
 			node.getExpr().accept(this, param);
+		return null;
+	}
+
+	//	class Expr_acceso_vector { Expr fuera;  Expr dentro; }
+	public Object visit(Expr_acceso_vector node, Object param) {
+		if (node.getFuera() != null)
+			node.getFuera().accept(this, param);
+		if (node.getDentro() != null)
+			node.getDentro().accept(this, param);
+		return null;
+	}
+
+	//	class Expr_acceso_struct { Expr struct;  String campo; }
+	public Object visit(Expr_acceso_struct node, Object param) {
+		if (node.getStruct() != null)
+			node.getStruct().accept(this, param);
 		return null;
 	}
 

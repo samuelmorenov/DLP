@@ -1,14 +1,14 @@
 /**
- * @generated VGen (for ANTLR) 1.4.0
+ * @generated VGen (for ANTLR) 1.7.0
  */
 
 package ast;
 
-import visitor.*;
-
 import org.antlr.v4.runtime.*;
 
-//	operador_booleano:operador -> string:String
+import visitor.*;
+
+//	operador_comparacion:operador -> string:String
 
 public class Operador_comparacion extends AbstractOperador {
 

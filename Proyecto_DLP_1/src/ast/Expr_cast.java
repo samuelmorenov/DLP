@@ -1,12 +1,12 @@
 /**
- * @generated VGen (for ANTLR) 1.4.0
+ * @generated VGen (for ANTLR) 1.7.0
  */
 
 package ast;
 
-import visitor.*;
-
 import org.antlr.v4.runtime.*;
+
+import visitor.*;
 
 //	expr_cast:expr -> tipo_convertido:tipo  expr:expr
 
@@ -22,8 +22,8 @@ public class Expr_cast extends AbstractExpr {
 	}
 
 	public Expr_cast(Object tipo_convertido, Object expr) {
-		this.tipo_convertido = (Tipo) ((tipo_convertido instanceof ParserRuleContext) ? getAST(tipo_convertido) : tipo_convertido);
-		this.expr = (Expr) ((expr instanceof ParserRuleContext) ? getAST(expr) : expr);
+		this.tipo_convertido = (Tipo) getAST(tipo_convertido);
+		this.expr = (Expr) getAST(expr);
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.

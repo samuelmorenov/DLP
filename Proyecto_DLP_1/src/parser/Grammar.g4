@@ -5,154 +5,152 @@ import Lexicon;
     import ast.*;
 }
 
-////////////// Program //////////////
-start returns[Program ast]
-	: bloques { $ast = new Program($bloques.ast); }
+//////////////////////	Programa			//////////////////////
+start 					returns[Program ast]
+	: definiciones EOF 	{ $ast = new Program($definiciones.ast); }
 	;
+	
+definiciones 		returns[List<Definicion> ast = new ArrayList<Definicion>()]
+	: (definicion	{ $ast.add($definicion.ast); })*
+	;
+	
+definicion 								returns[Definicion ast]
+	: definicion_variable_global 		{ $ast = $definicion_variable_global.ast; }
+	| definicion_struct 				{ $ast = $definicion_struct.ast; }
+	| definicion_funcion				{ $ast = $definicion_funcion.ast; }
+	;
+	
+////////////// 			Variables globales 	//////////////
+definicion_variable_global 			returns[Definicion_variable ast]
+	:'var' IDENT ':' tipo ';'		{ $ast = new Definicion_variable($IDENT, $tipo.ast, Ambito.GLOBAL); }
+	;
+	
 
-bloques returns[List<Bloque> ast = new ArrayList<Bloque>()]
-	: (bloque { $ast.add($bloque.ast); })* EOF
-	;
-
-bloque  returns[Bloque ast]
-	: definicion_variable_global { $ast = $definicion_variable_global.ast; }
-	| struct { $ast = $struct.ast; }
-	| funcion { $ast = $funcion.ast; }
+	
+//////////////////////	Struct				//////////////////////
+definicion_struct 									returns[Definicion_struct ast]
+	: 'struct' IDENT '{' campos_struct '}' ';'		{ $ast = new Definicion_struct($IDENT, $campos_struct.ast); }
 	;
 	
-////////////// Variables globales //////////////
-definicion_variable_global returns[Definicion_variable_global ast]
-	:'var' IDENT ':' tipo ';'{ $ast = new Definicion_variable_global($IDENT, $tipo.ast); }
-	;
-	
-////////////// Struct //////////////
-struct returns[Struct ast]
-	: 'struct' IDENT '{' definiciones '}' ';'{ $ast = new Struct($IDENT, $definiciones.ast); }
-	;
-	
-definiciones returns[List<Definicion_campo_struct> ast = new ArrayList<Definicion_campo_struct>()]
-	: (definicion_campo_struct { $ast.add($definicion_campo_struct.ast); })* 
+campos_struct		returns[List<Campo_struct> ast = new ArrayList<Campo_struct>()]
+	:(campo_struct 	{ $ast.add($campo_struct.ast); })* 
 	;	
 	
-definicion_campo_struct returns[Definicion_campo_struct ast]
-	: IDENT ':' tipo ';'{ $ast = new Definicion_campo_struct($IDENT, $tipo.ast); }
+campo_struct				returns[Campo_struct ast]
+	: IDENT ':' tipo ';' 	{ $ast = new Campo_struct($IDENT, $tipo.ast); }
 	;
 	
-////////////// Funcion //////////////
-funcion  returns[Funcion ast]
-	: IDENT '(' parametros ')' retorno '{' locales sentencias '}' { $ast = new Funcion($IDENT, $parametros.ast, $retorno.ast, $locales.ast, $sentencias.ast); }
+//////////////////////	Funcion				//////////////////////
+definicion_funcion 																returns[Definicion_funcion ast]
+	: IDENT '(' parametros ')' retorno '{' variables_locales sentencias '}'		{ $ast = new Definicion_funcion($IDENT, $parametros.ast, $retorno.ast, $variables_locales.ast, $sentencias.ast); }
 	;
 	
-parametros  returns[List<Parametro> ast = new ArrayList<Parametro>()]
-	: (parametro { $ast.add($parametro.ast); } (',' parametro { $ast.add($parametro.ast); })*)?
-	//:(parametro (',' parametro)*)?
+parametros  			returns[List<Definicion_variable> ast = new ArrayList<Definicion_variable>()]
+	: (parametro 		{ $ast.add($parametro.ast); }
+	(',' parametro 		{ $ast.add($parametro.ast); }
+	)*)?
 	;
 	
-parametro  returns[Parametro ast]
-	: IDENT ':' tipo { $ast = new Parametro($IDENT, $tipo.ast); }
+parametro  				returns[Definicion_variable ast]
+	: IDENT ':' tipo 	{ $ast = new Definicion_variable($IDENT, $tipo.ast, Ambito.LOCAL); }
 	;
 	
-retorno returns[Tipo ast]
-	: (':' tipo { $ast = $tipo.ast; })
-	| { $ast = new TipoVoid(); }
+retorno 			returns[Tipo ast]
+	: (':' tipo		{ $ast = $tipo.ast; })
+	| 				{ $ast = new Tipo_Void(); }
 	;
-
-////////////// Variables locales //////////////
-locales returns[List<Definicion_variable_local> ast = new ArrayList<Definicion_variable_local>()]
-	: (definicion_variable_local{ $ast.add($definicion_variable_local.ast); }	)*
+	
+variables_locales							returns[List<Definicion_variable> ast = new ArrayList<Definicion_variable>()]
+	: ( definicion_variable_local			{ $ast.add($definicion_variable_local.ast); })*
 	;	
-
-definicion_variable_local returns[Definicion_variable_local ast]
-	:'var' IDENT ':' tipo ';'{ $ast = new Definicion_variable_local($IDENT, $tipo.ast); }
+	
+definicion_variable_local 		returns[Definicion_variable ast]
+	:'var' IDENT ':' tipo ';'	{ $ast = new Definicion_variable($IDENT, $tipo.ast, Ambito.LOCAL); }
 	;
-
-////////////// Sentencias //////////////
-sentencias returns[List<Sentencia> ast = new ArrayList<Sentencia>()]
-	: (sentencia{ $ast.add($sentencia.ast); }	)*
+	
+//////////////////////	Sentencias			//////////////////////
+sentencias 			returns[List<Sentencia> ast = new ArrayList<Sentencia>()]
+	: (sentencia	{ $ast.add($sentencia.ast); }	)*
 	;	
 		
-sentencia returns[Sentencia ast]
-	: sentencia_asignacion{ $ast = $sentencia_asignacion.ast; }
-	| sentencia_print{ $ast = $sentencia_print.ast; }
-	| sentencia_read{ $ast = $sentencia_read.ast; }
-	| sentencia_if{ $ast = $sentencia_if.ast; }
-	| sentencia_while{ $ast = $sentencia_while.ast; }
-	| sentencia_llamada_funcion { $ast = $sentencia_llamada_funcion.ast; }
-	| sentencia_return{ $ast = $sentencia_return.ast; }
+sentencia 							returns[Sentencia ast]
+	: sentencia_asignacion			{ $ast = $sentencia_asignacion.ast; }
+	| sentencia_print				{ $ast = $sentencia_print.ast; }
+	| sentencia_read				{ $ast = $sentencia_read.ast; }
+	| sentencia_if					{ $ast = $sentencia_if.ast; }
+	| sentencia_while				{ $ast = $sentencia_while.ast; }
+	| sentencia_llamada_funcion 	{ $ast = $sentencia_llamada_funcion.ast; }
+	| sentencia_return				{ $ast = $sentencia_return.ast; }
 	;
 	
-sentencia_asignacion returns[Sentencia_asignacion ast]
-	: expr '=' expr ';'{ $ast = new Sentencia_asignacion($ctx.expr(0).ast, $ctx.expr(1).ast); }
+sentencia_asignacion 		returns[Sentencia_asignacion ast]
+	: expr '=' expr ';'		{ $ast = new Sentencia_asignacion($ctx.expr(0).ast, $ctx.expr(1).ast); }
 	;
 	
-sentencia_print returns[Sentencia_print ast]
-	: 'print' expr ';'{ $ast = new Sentencia_print($expr.ast, ""); }
-	| 'printsp' expr ';'{ $ast = new Sentencia_print($expr.ast, "sp"); }
-	| 'println' (expr) ';'{ $ast = new Sentencia_print($expr.ast, "ln"); }
-	| 'println' ';' { $ast = new Sentencia_print(null, "\\n"); }
+sentencia_print 			returns[Sentencia_print ast]
+	: 'print' expr ';'		{ $ast = new Sentencia_print($expr.ast, ""); }
+	| 'printsp' expr ';'	{ $ast = new Sentencia_print($expr.ast, "sp"); }
+	| 'println' (expr) ';'	{ $ast = new Sentencia_print($expr.ast, "ln"); }
+	| 'println' ';' 		{ $ast = new Sentencia_print(null, "\\n"); }
 	;
 	
-sentencia_read returns[Sentencia_read ast]
-	: 'read' expr ';'{ $ast = new Sentencia_read($expr.ast); }
+sentencia_read 			returns[Sentencia_read ast]
+	: 'read' expr ';'	{ $ast = new Sentencia_read($expr.ast); }
 	;
 	
-sentencia_if returns[Sentencia_if ast]
-	: 'if' '(' expr ')' '{' sentencias '}'{ $ast = new Sentencia_if($expr.ast, $sentencias.ast, new ArrayList<Sentencia>()); }
-	| 'if' '(' expr ')' '{' sentencias '}' 'else' '{' sentencias '}' { $ast = new Sentencia_if($expr.ast, $ctx.sentencias(0).ast, $ctx.sentencias(1).ast); }
+sentencia_if 															returns[Sentencia_if ast]
+	: 'if' '(' expr ')' '{' sentencias '}'								{ $ast = new Sentencia_if($expr.ast, $sentencias.ast, new ArrayList<Sentencia>()); }
+	| 'if' '(' expr ')' '{' sentencias '}' 'else' '{' sentencias '}' 	{ $ast = new Sentencia_if($expr.ast, $ctx.sentencias(0).ast, $ctx.sentencias(1).ast); }
 	;	
 
-sentencia_while returns[Sentencia_while ast]
-	: 'while' '(' expr ')' '{' sentencias '}'{ $ast = new Sentencia_while($expr.ast, $sentencias.ast); }
+sentencia_while 								returns[Sentencia_while ast]
+	: 'while' '(' expr ')' '{' sentencias '}'	{ $ast = new Sentencia_while($expr.ast, $sentencias.ast); }
 	;
 	
-sentencia_llamada_funcion returns[Sentencia_llamada_funcion ast]
-	: IDENT '(' parametros_llamada ')' ';' { $ast = new Sentencia_llamada_funcion($IDENT, $parametros_llamada.ast); }
+sentencia_llamada_funcion 					returns[Sentencia_llamada_funcion ast]
+	: IDENT '(' parametros_llamada ')' ';' 	{ $ast = new Sentencia_llamada_funcion($IDENT, $parametros_llamada.ast); }
 	;
 	
-sentencia_return returns[Sentencia_return ast]
-	: 'return'(expr) ';'{ $ast = new Sentencia_return($expr.ast); }
-	| 'return' ';'{ $ast = new Sentencia_return(null); }
+sentencia_return 			returns[Sentencia_return ast]
+	: 'return'(expr) ';'	{ $ast = new Sentencia_return($expr.ast); }
+	| 'return' ';'			{ $ast = new Sentencia_return(null); }
 	;
 	
-////////////// Tipos //////////////
-tipo  returns[Tipo ast]
-	: 'int'{ $ast = new TipoInt(); }
-	| 'float' { $ast = new TipoFloat(); }
-	| 'char' { $ast = new TipoChar(); }
-	| IDENT { $ast = new TipoStruct($IDENT); }
-	| array	{ $ast = $array.ast; }
+//////////////////////	Expresiones			//////////////////////
+expr 										returns[Expr ast]
+	: INT_CONSTANT							{ $ast = new Expr_int($INT_CONSTANT); }
+	| REAL_CONSTANT							{ $ast = new Expr_real($REAL_CONSTANT); }
+	| CHAR_CONSTANT							{ $ast = new Expr_char($CHAR_CONSTANT); }
+	| IDENT									{ $ast = new Expr_uso_variable($IDENT); }
+	
+	| '(' expr ')'							{ $ast = $expr.ast; }
+	| 'cast' '<' tipo '>' '(' expr ')'		{ $ast = new Expr_cast($tipo.ast, $expr.ast); }
+	
+	| IDENT '(' parametros_llamada ')'		{ $ast = new Expr_llamada_funcion($IDENT, $parametros_llamada.ast); }
+	| expr '['expr']'						{ $ast = new Expr_acceso_vector($ctx.expr(0).ast, $ctx.expr(1).ast); }
+	| expr '.' IDENT						{ $ast = new Expr_acceso_struct($ctx.expr(0).ast, $IDENT); }
+
+	| '!' expr 								{ $ast = new Expr_negada(new Operador_logico("!"), $expr.ast);}
+	| expr op=('*'|'/') expr				{ $ast = new Expr_operacion($ctx.expr(0).ast, new Operador_aritmetico($op.text), $ctx.expr(1).ast); }
+	| expr op=('+'|'-') expr				{ $ast = new Expr_operacion($ctx.expr(0).ast, new Operador_aritmetico($op.text), $ctx.expr(1).ast); }
+	| expr op=('=='|'!=') expr				{ $ast = new Expr_operacion($ctx.expr(0).ast, new Operador_comparacion($op.text), $ctx.expr(1).ast); }
+	| expr op=('<'|'>'|'>='|'<=') expr		{ $ast = new Expr_operacion($ctx.expr(0).ast, new Operador_comparacion($op.text), $ctx.expr(1).ast); }
+	| expr op='&&' expr						{ $ast = new Expr_operacion($ctx.expr(0).ast, new Operador_logico($op.text), $ctx.expr(1).ast); }
+	| expr op='||' expr						{ $ast = new Expr_operacion($ctx.expr(0).ast, new Operador_logico($op.text), $ctx.expr(1).ast); }
 	;
 	
-array returns[TipoArray ast]
-	: '[' INT_CONSTANT ']' tipo{ $ast = new TipoArray($INT_CONSTANT, $tipo.ast); }
+	
+parametros_llamada		returns[List<Expr> ast = new ArrayList<Expr>()]
+	: (expr 			{ int iterador = 0; $ast.add($ctx.expr(iterador).ast); } 
+	  (',' expr			{ iterador++; $ast.add($ctx.expr(iterador).ast); }
+	  )*)?
 	;
 	
-////////////// Expresiones //////////////
-expr returns[Expr ast]
-	: INT_CONSTANT{ $ast = new Expr_int($INT_CONSTANT); }
-	| REAL_CONSTANT{ $ast = new Expr_real($REAL_CONSTANT); }
-	| CHAR_CONSTANT{ $ast = new Expr_char($CHAR_CONSTANT); }
-	| IDENT{ $ast = new Expr_ident($IDENT); }
-	| '(' expr ')'{ $ast = new Expr_parentesis($expr.ast); }
-	| expr '.' expr{ $ast = new Expr_punto($ctx.expr(0).ast, $ctx.expr(1).ast); }
-	| '!' expr {$ast = new Expr_negada(new Operador_logico("!"), $expr.ast);}
-	| expr operador expr{ $ast = new Expr_binaria($ctx.expr(0).ast, $operador.ast, $ctx.expr(1).ast); }
-	| expr ('['expr']'){ $ast = new Expr_vector($ctx.expr(0).ast, $ctx.expr(1).ast); }
-	| 'cast' '<' tipo '>' '(' expr ')'{ $ast = new Expr_cast($tipo.ast, $expr.ast); }
-	| IDENT '(' parametros_llamada ')'{ $ast = new Expr_llamada_funcion($IDENT, $parametros_llamada.ast); }
-	;
-	
-		
-parametros_llamada returns[List<Expr> ast = new ArrayList<Expr>()]
-	: (expr { int iterador = 0; $ast.add($ctx.expr(iterador).ast); } (',' expr{ iterador++; $ast.add($ctx.expr(iterador).ast); })*)?
-	;
-	
-////////////// Operadores //////////////
-operador returns[Operador ast]
-	: op=('*'|'/') { $ast = new Operador_aritmetico($op.text); }
-	| op=('+'|'-') { $ast = new Operador_aritmetico($op.text); }
-	| op=('=='|'!=') { $ast = new Operador_comparacion($op.text); }
-	| op=('<'|'>'|'>='|'<=') { $ast = new Operador_comparacion($op.text); }
-	| op='&&' { $ast = new Operador_logico($op.text); }
-	| op='||' { $ast = new Operador_logico($op.text); }
+//////////////////////	Tipo				//////////////////////
+tipo								returns[Tipo ast]
+	: 'int'							{ $ast = new Tipo_Int(); }
+	| 'float'						{ $ast = new Tipo_Float(); }
+	| 'char'						{ $ast = new Tipo_Char(); }
+	| IDENT							{ $ast = new Tipo_Struct($IDENT); }
+	| '[' INT_CONSTANT ']' tipo		{ $ast = new Tipo_Array($INT_CONSTANT, $tipo.ast); }
 	;

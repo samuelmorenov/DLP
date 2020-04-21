@@ -1,12 +1,12 @@
 /**
- * @generated VGen (for ANTLR) 1.4.0
+ * @generated VGen (for ANTLR) 1.7.0
  */
 
 package ast;
 
-import visitor.*;
-
 import org.antlr.v4.runtime.*;
+
+import visitor.*;
 
 //	operador_logico:operador -> string:String
 

@@ -1,13 +1,13 @@
 /**
- * @generated VGen (for ANTLR) 1.4.0
+ * @generated VGen (for ANTLR) 1.7.0
  */
 
 package ast;
 
 import java.util.*;
-import visitor.*;
-
 import org.antlr.v4.runtime.*;
+
+import visitor.*;
 
 //	sentencia_while:sentencia -> condicion:expr  sentencias:sentencia*
 
@@ -22,10 +22,9 @@ public class Sentencia_while extends AbstractSentencia {
        setPositions(condicion, sentencias);
 	}
 
-	@SuppressWarnings("unchecked")
 	public Sentencia_while(Object condicion, Object sentencias) {
-		this.condicion = (Expr) ((condicion instanceof ParserRuleContext) ? getAST(condicion) : condicion);
-		this.sentencias = (List<Sentencia>) sentencias;
+		this.condicion = (Expr) getAST(condicion);
+		this.sentencias = this.<Sentencia>getAstFromContexts(sentencias);
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.

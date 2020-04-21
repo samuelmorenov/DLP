@@ -22,42 +22,56 @@
 <body><pre>
 [ASTPrinter] -------------------------------- line:col  line:col
 
-<span class="dots"></span>Program &rarr;                                                   <span class="pos">1:5  6:22    </span><span class="sourceText">var </span><span class="posText">fibonacci:[8][3]int;</span><span class="sourceText"> ... </span><span class="posText">print(fibonacci[0][2</span><span class="sourceText">]);</span>
-<span class="dots">.  </span>bloque  <span class="type">List&lt;Bloque&gt;</span> = 
-<span class="dots">.  .  </span>Definicion_variable_global &rarr;                          <span class="pos">1:5  1:19    </span><span class="sourceText">var </span><span class="posText">fibonacci:[8][3</span><span class="sourceText">]int;</span>
-<span class="dots">.  .  |  </span>"<span class="value">fibonacci</span>"  
-<span class="dots">.  .  |  </span>TipoArray &rarr;                                        <span class="pos">1:16  1:19   </span><span class="sourceText">var fibonacci:[</span><span class="posText">8][3</span><span class="sourceText">]int;</span>
-<span class="dots">.  .  |  .  </span>"<span class="value">8</span>"  
-<span class="dots">.  .  |  .  </span>TipoArray &rarr;                                     <span class="pos">1:19  1:19   </span><span class="sourceText">var fibonacci:[8][</span><span class="posText">3</span><span class="sourceText">]int;</span>
-<span class="dots">.  .  |  .  |  </span>"<span class="value">3</span>"  
-<span class="dots">.  .  |  .  |  </span><span class="value">TipoInt</span> &rarr;                                    <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
-<span class="dots">.  .  </span>Funcion &rarr;                                             <span class="pos">2:1  6:22    </span><span class="sourceText"></span><span class="posText">main() {</span><span class="sourceText"> ... </span><span class="posText">print(fibonacci[0][2</span><span class="sourceText">]);</span>
+<span class="dots"></span>Program &rarr;                                                   <span class="pos">14:5  31:8   </span><span class="sourceText">var </span><span class="posText">a:int;</span><span class="sourceText"> ... </span><span class="posText">print a</span><span class="sourceText">;		// 1111</span>
+<span class="dots">.  </span>definicion  <span class="type">List&lt;Definicion&gt;</span> = 
+<span class="dots">.  .  </span>Definicion_variable &rarr;                                 <span class="pos">14:5  14:5   </span><span class="sourceText">var </span><span class="posText">a</span><span class="sourceText">:int;</span>
+<span class="dots">.  .  |  </span>"<span class="value">a</span>"  
+<span class="dots">.  .  |  </span><span class="value">Tipo_Int</span> &rarr;                                         <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  </span><span class="value">GLOBAL</span>  <span class="type">Ambito</span>
+<span class="dots">.  .  |  </span><span class="value">0</span>  <span class="type">int</span>
+<span class="dots">.  .  </span>Definicion_variable &rarr;                                 <span class="pos">15:5  15:5   </span><span class="sourceText">var </span><span class="posText">b</span><span class="sourceText">:float;</span>
+<span class="dots">.  .  |  </span>"<span class="value">b</span>"  
+<span class="dots">.  .  |  </span><span class="value">Tipo_Float</span> &rarr;                                       <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  </span><span class="value">GLOBAL</span>  <span class="type">Ambito</span>
+<span class="dots">.  .  |  </span><span class="value">2</span>  <span class="type">int</span>
+<span class="dots">.  .  </span>Definicion_struct &rarr;                                   <span class="pos">17:8  19:2   </span><span class="sourceText">struct </span><span class="posText">Punto {</span><span class="sourceText"> ... </span><span class="posText">y</span><span class="sourceText">:float;</span>
+<span class="dots">.  .  |  </span>"<span class="value">Punto</span>"  
+<span class="dots">.  .  |  </span>campo_struct  <span class="type">List&lt;Campo_struct&gt;</span> = 
+<span class="dots">.  .  |  .  </span>Campo_struct &rarr;                                  <span class="pos">18:2  18:2   </span><span class="sourceText"></span><span class="posText">x</span><span class="sourceText">:float;</span>
+<span class="dots">.  .  |  .  |  </span>"<span class="value">x</span>"  
+<span class="dots">.  .  |  .  |  </span><span class="value">Tipo_Float</span> &rarr;                                 <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  .  |  </span><span class="value">0</span>  <span class="type">int</span>
+<span class="dots">.  .  |  .  </span>Campo_struct &rarr;                                  <span class="pos">19:2  19:2   </span><span class="sourceText"></span><span class="posText">y</span><span class="sourceText">:float;</span>
+<span class="dots">.  .  |  .  |  </span>"<span class="value">y</span>"  
+<span class="dots">.  .  |  .  |  </span><span class="value">Tipo_Float</span> &rarr;                                 <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  .  |  </span><span class="value">4</span>  <span class="type">int</span>
+<span class="dots">.  .  </span>Definicion_variable &rarr;                                 <span class="pos">22:5  22:8   </span><span class="sourceText">var </span><span class="posText">v:[5</span><span class="sourceText">]int;</span>
+<span class="dots">.  .  |  </span>"<span class="value">v</span>"  
+<span class="dots">.  .  |  </span>Tipo_Array &rarr;                                       <span class="pos">22:8  22:8   </span><span class="sourceText">var v:[</span><span class="posText">5</span><span class="sourceText">]int;</span>
+<span class="dots">.  .  |  .  </span>"<span class="value">5</span>"  
+<span class="dots">.  .  |  .  </span><span class="value">Tipo_Int</span> &rarr;                                      <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  </span><span class="value">GLOBAL</span>  <span class="type">Ambito</span>
+<span class="dots">.  .  |  </span><span class="value">6</span>  <span class="type">int</span>
+<span class="dots">.  .  </span>Definicion_variable &rarr;                                 <span class="pos">23:5  23:11  </span><span class="sourceText">var </span><span class="posText">p:Punto</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  </span>"<span class="value">p</span>"  
+<span class="dots">.  .  |  </span>"Punto"  <span class="type">Tipo_Struct.nombre</span>                        <span class="pos">23:7  23:11  </span><span class="sourceText">var p:</span><span class="posText">Punto</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  </span><span class="value">GLOBAL</span>  <span class="type">Ambito</span>
+<span class="dots">.  .  |  </span><span class="value">16</span>  <span class="type">int</span>
+<span class="dots">.  .  </span>Definicion_funcion &rarr;                                  <span class="pos">25:1  31:8   </span><span class="sourceText"></span><span class="posText">main() {</span><span class="sourceText"> ... </span><span class="posText">print a</span><span class="sourceText">;		// 1111</span>
 <span class="dots">.  .  |  </span>"<span class="value">main</span>"  
-<span class="dots">.  .  |  </span>parametros  <span class="type">List&lt;Parametro&gt;</span> = 
-<span class="dots">.  .  |  </span><span class="value">TipoVoid</span> &rarr;                                         <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
-<span class="dots">.  .  |  </span>locales  <span class="type">List&lt;Definicion_variable_local&gt;</span> = 
+<span class="dots">.  .  |  </span>parametros  <span class="type">List&lt;Definicion_variable&gt;</span> = 
+<span class="dots">.  .  |  </span><span class="value">Tipo_Void</span> &rarr;                                        <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  </span>locales  <span class="type">List&lt;Definicion_variable&gt;</span> = 
 <span class="dots">.  .  |  </span>sentencias  <span class="type">List&lt;Sentencia&gt;</span> = 
-<span class="dots">.  .  |  .  </span>Sentencia_asignacion &rarr;                          <span class="pos">3:3  3:21    </span><span class="sourceText"></span><span class="posText">fibonacci[0][0] = 1</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span>Expr_vector &rarr;                                <span class="pos">3:3  3:16    </span><span class="sourceText"></span><span class="posText">fibonacci[0][0</span><span class="sourceText">] = 1;</span>
-<span class="dots">.  .  |  .  |  .  </span>Expr_vector &rarr;                             <span class="pos">3:3  3:13    </span><span class="sourceText"></span><span class="posText">fibonacci[0</span><span class="sourceText">][0] = 1;</span>
-<span class="dots">.  .  |  .  |  .  |  </span>"fibonacci"  <span class="type">Expr_ident.string</span>         <span class="pos">3:3  3:11    </span><span class="sourceText"></span><span class="posText">fibonacci</span><span class="sourceText">[0][0] = 1;</span>
-<span class="dots">.  .  |  .  |  .  |  </span>"0"  <span class="type">Expr_int.string</span>                   <span class="pos">3:13  3:13   </span><span class="sourceText">fibonacci[</span><span class="posText">0</span><span class="sourceText">][0] = 1;</span>
-<span class="dots">.  .  |  .  |  .  </span>"0"  <span class="type">Expr_int.string</span>                      <span class="pos">3:16  3:16   </span><span class="sourceText">fibonacci[0][</span><span class="posText">0</span><span class="sourceText">] = 1;</span>
-<span class="dots">.  .  |  .  |  </span>"1"  <span class="type">Expr_int.string</span>                         <span class="pos">3:21  3:21   </span><span class="sourceText">fibonacci[0][0] = </span><span class="posText">1</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  </span>Sentencia_asignacion &rarr;                          <span class="pos">4:3  4:21    </span><span class="sourceText"></span><span class="posText">fibonacci[0][1] = 2</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span>Expr_vector &rarr;                                <span class="pos">4:3  4:16    </span><span class="sourceText"></span><span class="posText">fibonacci[0][1</span><span class="sourceText">] = 2;</span>
-<span class="dots">.  .  |  .  |  .  </span>Expr_vector &rarr;                             <span class="pos">4:3  4:13    </span><span class="sourceText"></span><span class="posText">fibonacci[0</span><span class="sourceText">][1] = 2;</span>
-<span class="dots">.  .  |  .  |  .  |  </span>"fibonacci"  <span class="type">Expr_ident.string</span>         <span class="pos">4:3  4:11    </span><span class="sourceText"></span><span class="posText">fibonacci</span><span class="sourceText">[0][1] = 2;</span>
-<span class="dots">.  .  |  .  |  .  |  </span>"0"  <span class="type">Expr_int.string</span>                   <span class="pos">4:13  4:13   </span><span class="sourceText">fibonacci[</span><span class="posText">0</span><span class="sourceText">][1] = 2;</span>
-<span class="dots">.  .  |  .  |  .  </span>"1"  <span class="type">Expr_int.string</span>                      <span class="pos">4:16  4:16   </span><span class="sourceText">fibonacci[0][</span><span class="posText">1</span><span class="sourceText">] = 2;</span>
-<span class="dots">.  .  |  .  |  </span>"2"  <span class="type">Expr_int.string</span>                         <span class="pos">4:21  4:21   </span><span class="sourceText">fibonacci[0][1] = </span><span class="posText">2</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  </span>Sentencia_print &rarr;                               <span class="pos">6:9  6:22    </span><span class="sourceText">print(</span><span class="posText">fibonacci[0][2</span><span class="sourceText">]);</span>
-<span class="dots">.  .  |  .  |  </span>Expr_parentesis &rarr;                            <span class="pos">6:9  6:22    </span><span class="sourceText">print(</span><span class="posText">fibonacci[0][2</span><span class="sourceText">]);</span>
-<span class="dots">.  .  |  .  |  .  </span>Expr_vector &rarr;                             <span class="pos">6:9  6:22    </span><span class="sourceText">print(</span><span class="posText">fibonacci[0][2</span><span class="sourceText">]);</span>
-<span class="dots">.  .  |  .  |  .  |  </span>Expr_vector &rarr;                          <span class="pos">6:9  6:19    </span><span class="sourceText">print(</span><span class="posText">fibonacci[0</span><span class="sourceText">][2]);</span>
-<span class="dots">.  .  |  .  |  .  |  .  </span>"fibonacci"  <span class="type">Expr_ident.string</span>      <span class="pos">6:9  6:17    </span><span class="sourceText">print(</span><span class="posText">fibonacci</span><span class="sourceText">[0][2]);</span>
-<span class="dots">.  .  |  .  |  .  |  .  </span>"0"  <span class="type">Expr_int.string</span>                <span class="pos">6:19  6:19   </span><span class="sourceText">print(fibonacci[</span><span class="posText">0</span><span class="sourceText">][2]);</span>
-<span class="dots">.  .  |  .  |  .  |  </span>"2"  <span class="type">Expr_int.string</span>                   <span class="pos">6:22  6:22   </span><span class="sourceText">print(fibonacci[0][</span><span class="posText">2</span><span class="sourceText">]);</span>
+<span class="dots">.  .  |  .  </span>Sentencia_asignacion &rarr;                          <span class="pos">26:2  26:9   </span><span class="sourceText"></span><span class="posText">a = 1111</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  |  </span>"a"  <span class="type">Expr_uso_variable.string</span>                <span class="pos">26:2  26:2   </span><span class="sourceText"></span><span class="posText">a</span><span class="sourceText"> = 1111;</span>
+<span class="dots">.  .  |  .  |  </span>"1111"  <span class="type">Expr_int.string</span>                      <span class="pos">26:6  26:9   </span><span class="sourceText">a = </span><span class="posText">1111</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  </span>Sentencia_asignacion &rarr;                          <span class="pos">27:2  27:11  </span><span class="sourceText"></span><span class="posText">b = 2222.2</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  |  </span>"b"  <span class="type">Expr_uso_variable.string</span>                <span class="pos">27:2  27:2   </span><span class="sourceText"></span><span class="posText">b</span><span class="sourceText"> = 2222.2;</span>
+<span class="dots">.  .  |  .  |  </span>"2222.2"  <span class="type">Expr_real.string</span>                   <span class="pos">27:6  27:11  </span><span class="sourceText">b = </span><span class="posText">2222.2</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  </span>Sentencia_print &rarr;                               <span class="pos">31:8  31:8   </span><span class="sourceText">print </span><span class="posText">a</span><span class="sourceText">;		// 1111</span>
+<span class="dots">.  .  |  .  |  </span>"a"  <span class="type">Expr_uso_variable.string</span>                <span class="pos">31:8  31:8   </span><span class="sourceText">print </span><span class="posText">a</span><span class="sourceText">;		// 1111</span>
+<span class="dots">.  .  |  .  |  </span>"<span class="value"></span>"  
 
 [ASTPrinter] --------------------------------
 </pre>

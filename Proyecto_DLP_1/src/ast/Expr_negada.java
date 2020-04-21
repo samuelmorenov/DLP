@@ -1,12 +1,12 @@
 /**
- * @generated VGen (for ANTLR) 1.4.0
+ * @generated VGen (for ANTLR) 1.7.0
  */
 
 package ast;
 
-import visitor.*;
-
 import org.antlr.v4.runtime.*;
+
+import visitor.*;
 
 //	expr_negada:expr -> operador:operador  derecha:expr
 
@@ -22,8 +22,8 @@ public class Expr_negada extends AbstractExpr {
 	}
 
 	public Expr_negada(Object operador, Object derecha) {
-		this.operador = (Operador) ((operador instanceof ParserRuleContext) ? getAST(operador) : operador);
-		this.derecha = (Expr) ((derecha instanceof ParserRuleContext) ? getAST(derecha) : derecha);
+		this.operador = (Operador) getAST(operador);
+		this.derecha = (Expr) getAST(derecha);
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.

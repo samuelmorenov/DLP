@@ -1,9 +1,13 @@
+/**
+ * Tutorial de Diseño de Lenguajes de Programación
+ * @author Raúl Izquierdo
+ */
+
 package main;
 
 import java.io.*;
 
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.atn.*;
 
 import ast.*;
 import visitor.*;
@@ -16,67 +20,67 @@ import myVisitors.PrintMemoryAllocation;
 /**
  * Clase que inicia el compilador e invoca a todas sus fases.
  *
- * Normalmente, no es necesario modificar este fichero. En su lugar, modificar
- * los ficheros de cada fase (que son llamados desde aqui): - Para Analisis
- * Lexico: 'Lexico.g4'. - Para Analisis Sintactico: 'Grammar.g4'. - Para
- * Analisis Semantico: 'Identification.java' y 'TypeChecking.java'. - Para
- * Generacion de Codigo: 'MemoryAllocation.java' y 'CodeSelection.java'.
- *
- * @author Raul Izquierdo
- *
+ * Normalmente, no será necesario modificar este fichero. En su lugar, modificar
+ * los ficheros de cada fase (los cuales son llamados desde aquí): - Para
+ * Análisis Léxico: 'Lexico.g4'. - Para Análisis Sintáctico: 'Grammar.g4'. -
+ * Para Análisis Semántico: 'Identification.java' y 'TypeChecking.java'. - Para
+ * Generación de Código: 'MemoryAllocation.java' y 'CodeSelection.java'.
  */
 public class Main {
-	public static final String program = "source.txt"; // Prueba a compilar durante el desarrollo
+	public static final String program = "source.txt"; // Fichero de prueba durante el desarrollo
 
 	public static void main(String[] args) throws Exception {
 		ErrorManager errorManager = new ErrorManager();
 
-		AST ast = compile(program, errorManager); // Poner args[0] en vez de "programa" en la version final
+		AST ast = compile(program, errorManager); // Poner args[0] en vez de "program" en la versión final
 		if (errorManager.errorsCount() == 0)
 			System.out.println("El programa se ha compilado correctamente.");
 
 		ASTPrinter.toHtml(program, ast, "AST"); // Utilidad generada por VGen (opcional)
-
-		@SuppressWarnings("unused")
-		PrintMemoryAllocation pma = new PrintMemoryAllocation();
-		//ast.accept(pma, null); // TODO - Comentar para que no se imprima por pantalla la asignacion de memoria
-
+		
+		
+//		PrintVisitor pv = new PrintVisitor();
+//		ast.accept(pv, null);
 	}
 
 	/**
-	 * Metodo que coordina todas las fases del compilador
+	 * Método que coordina todas las fases del compilador
 	 */
 	public static AST compile(String sourceName, ErrorManager errorManager) throws Exception {
 
-		// 1. Fases de Analisis Lexico y Sintactico
+		// 1. Fases de Análisis Léxico y Sintáctico
 		GrammarLexer lexer = new GrammarLexer(CharStreams.fromFileName(sourceName));
-
 		GrammarParser parser = new GrammarParser(new CommonTokenStream(lexer));
-		parser.addErrorListener(new DiagnosticErrorListener()); // Notificar entradas ambiguas
-		parser.getInterpreter().setPredictionMode(PredictionMode.LL_EXACT_AMBIG_DETECTION);
 
 		AST ast = null;
 
-		// IMPORTANTE: Cuando se genere el AST, INTERCAMBIAR las dos lineas siguientes:
+		// IMPORTANTE: Cuando se genere el AST, INTERCAMBIAR las dos líneas siguientes:
 		// parser.start();
 		ast = parser.start().ast;
 
-		if (ast == null) // Hay errores o el AST no se ha implementado aun
+		if (parser.getNumberOfSyntaxErrors() > 0 || ast == null) { // Hay errores o el AST no se ha implementado aún
+			errorManager.notify("El AST no ha sido creado.");
 			return null;
+		}
 
-		// 2. Fase de Analisis Semantico
+		// 2. Fase de Análisis Semántico
 		SemanticAnalisys analyzer = new SemanticAnalisys(errorManager);
 		analyzer.analize(ast);
 		if (errorManager.errorsCount() > 0)
 			return ast;
 
-		// 3. Fase de Generacion de Codigo
+		// 3. Fase de Generación de Código
 		File sourceFile = new File(sourceName);
 		Writer out = new FileWriter(new File(sourceFile.getParent(), "output.txt"));
 
 		CodeGeneration generator = new CodeGeneration();
 		generator.generate(sourceFile.getName(), ast, out);
 		out.close();
+		
+		
+		//TODO: Comentar para no mostrar la asignacion de memoria
+		PrintMemoryAllocation pma = new PrintMemoryAllocation();
+		ast.accept(pma, null);
 
 		return ast;
 	}

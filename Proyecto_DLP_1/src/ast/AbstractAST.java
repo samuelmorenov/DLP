@@ -1,11 +1,10 @@
 /**
- * @generated VGen (for ANTLR) 1.4.0
+ * @generated VGen (for ANTLR) 1.7.0
  */
 
 package ast;
 
 import java.util.*;
-
 import org.antlr.v4.runtime.*;
 
 public abstract class AbstractAST implements AST {
@@ -20,11 +19,14 @@ public abstract class AbstractAST implements AST {
         return end;
     }
 
-    // setPositions. Establece:
-    // 1. La posicion inicial (start) a partir
-    // del PRIMER hijo que tenga posicion inicial.
-    // 2. La posicion final (end) a partir del ULTIMO
-    // hijo que tenga posicion final.
+    // setPositions. Hace que el nodo actualice sus posiciones `start` y `end` a partir de las de
+    // los nodos pasados como argumento. Es decir, establece:
+    // 1. Su posición inicial (`start`) a partir del hijo que tenga la posición `start` MENOR.
+    // 2. Su posición final (`end`) a partir del hijo que tenga su posición `end` MAYOR.
+    //
+    // Si el nodo ya tiene `start` inicializado y los argumentos tienen un `start` mayor a éste, el
+    // nodo deja su `start` como estaba. De la misma manera, el `end` sólo se modifica si los
+    // argumentos ofrecen un `end` mayor.
 
     @Override
     public void setPositions(Object... children) {
@@ -35,34 +37,77 @@ public abstract class AbstractAST implements AST {
     }
 
     // -----------------------------------------------
-    // Metodos protected para ser llamado desde los
-    // constructores de las clases AST
+    // # Métodos protected para ser llamado desde los constructores de las clases AST
 
-    // Dado un Contexto de una regla de ANTLR, extrae su campo "ast"
+    // Dado un Contexto de una regla de ANTLR, extrae su campo "ast".
     protected AST getAST(ParserRuleContext node) {
         try {
             return (AST) node.getClass().getField("ast").get(node);
         } catch (Exception e) {
-            throw new IllegalArgumentException(
-                    "El contexto pasado no tiene un atributo llamado 'ast' o no es de tipo AST");
+            throw new IllegalArgumentException("El objecto pasado no tiene un atributo público llamado 'ast'");
         }
     }
 
+    // Dado un AST o un ParserRuleContext, devuelve el AST.
+    // - Si recibe un AST, no hace nada y devuelve el mismo objeto.
+    // - Si recibe un ParserRuleContext, extrae el `AST` de su atributo `ast`.
     protected AST getAST(Object node) {
-        return getAST((ParserRuleContext) node);
+        if (node instanceof ParserRuleContext)
+            return getAST((ParserRuleContext) node);
+        if (node instanceof AST)
+            return (AST) node;
+        throw new IllegalArgumentException("El objecto pasado tiene que ser un `AST` o un `ParserRuleContext`");
+
+    }
+
+    // Recibe una List<AST> o List<ParserRuleContext> y devuelve una List<AST>.
+    // - Si recibe List<AST>, no hace nada y devuelve los mismos elementos.
+    // - Si recibe List<ParserRuleContext>, devuelve una List<AST> con el valor del atributo "ast"
+    //   de cada Context.
+    //
+    // Es el equivalente a getStringFromTokens pero para no-Terminales.
+    @SuppressWarnings("unchecked")
+    protected <T> List<T> getAstFromContexts(Object definiciones) {
+        if (definiciones == null)
+            return null;
+
+        if (!(definiciones instanceof List))
+            throw new IllegalArgumentException("El argumento debería ser una `List`");
+
+        List<T> result = new ArrayList<T>();
+        for (Object element : (List<?>) definiciones)
+            result.add((T) getAST(element));
+        return result;
+    }
+
+    // Recibe una List<String> o List<Token> y devuelve una List<String>.
+    // - Si recibe List<String>, no hace nada y devuelve los mismos elementos.
+    // - Si recibe List<Token>, devuelve una List<String> con el getText() de cada Token.
+    //
+    // Es el equivalente a getAstFromContexts pero para Terminales.
+    protected List<String> getStringFromTokens(Object objectList) {
+        if (objectList == null)
+            return null;
+
+        if (!(objectList instanceof List))
+            throw new IllegalArgumentException("El argumento debería ser una `List`");
+
+        List<String> strings = new ArrayList<String>();
+        for (Object o : (List<?>) objectList)
+            strings.add((o instanceof Token) ? ((Token) o).getText() : (String) o);
+        return strings;
     }
 
     // -----------------------------------------------
-    // Motodos privados para ser llamados SÓLO desde los metodos anteriores
+    // # Métodos privados para ser llamados SÓLO desde los métodos anteriores.
 
-    @SuppressWarnings("unchecked")
     private Position findStart(Object node) {
         if (node instanceof AST)
             return ((AST) node).getStart();
         if (node instanceof ParserRuleContext)
-            return findStart(getAST((ParserRuleContext) node));
+            return findStart(getAST(node));
         if (node instanceof List)
-            return findStart((List<Object>) node);
+            return findStart((List<?>) node);
         if (node instanceof Token) {
             Token token = (Token) node;
             return new Position(token.getLine(), token.getCharPositionInLine() + 1);
@@ -70,7 +115,7 @@ public abstract class AbstractAST implements AST {
         return null;
     }
 
-    private Position findStart(List<Object> nodes) {
+    private Position findStart(List<?> nodes) {
         Position start = null;
         for (Object node : nodes) {
             Position nodeStart = findStart(node);
@@ -82,14 +127,13 @@ public abstract class AbstractAST implements AST {
         return start;
     }
 
-    @SuppressWarnings("unchecked")
     private Position findEnd(Object node) {
         if (node instanceof AST)
             return ((AST) node).getEnd();
         if (node instanceof ParserRuleContext)
-            return findEnd(getAST((ParserRuleContext) node));
+            return findEnd(getAST(node));
         if (node instanceof List)
-            return findEnd((List<Object>) node);
+            return findEnd((List<?>) node);
         if (node instanceof Token) {
             Token token = (Token) node;
             return new Position(token.getLine(), token.getCharPositionInLine() + token.getText().length());
@@ -97,7 +141,7 @@ public abstract class AbstractAST implements AST {
         return null;
     }
 
-    private Position findEnd(List<Object> nodes) {
+    private Position findEnd(List<?> nodes) {
         Position end = null;
         for (Object node : nodes) {
             Position nodeEnd = findEnd(node);
@@ -109,7 +153,8 @@ public abstract class AbstractAST implements AST {
         return end;
     }
 
-    // Para depuracion
+    // -----------------------------------------------
+    // Para depuración. Quitar si se quiere.
     private void invariant() {
         if ((getStart() != null || getEnd() != null) && getStart().greaterThan(getEnd()))
             throw new IllegalStateException(

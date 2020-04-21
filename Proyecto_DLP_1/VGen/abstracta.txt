@@ -1,19 +1,15 @@
 CATEGORIES
-bloque, tipo, sentencia, expr, operador
+definicion, tipo, sentencia, expr, operador
 
 NODES
-program -> bloque*;
+program -> definicion*;
 
-definicion_variable_global:bloque -> nombre:string tipo;
 
-struct:bloque -> nombre:string definicion_campo_struct*;
-definicion_campo_struct -> nombre:string tipo;
+definicion_variable:definicion -> nombre:string tipo ambito:Ambito;
+definicion_struct:definicion -> nombre:string campo_struct*;
+definicion_funcion:definicion -> nombre:string parametros:definicion_variable* retorno:tipo locales:definicion_variable* sentencias:sentencia*;
 
-funcion:bloque -> nombre:string parametros:parametro* retorno:tipo locales:definicion_variable_local* sentencias:sentencia*;
-
-definicion_variable_local -> nombre:string tipo;
-
-parametro -> nombre:string tipo;
+campo_struct -> nombre:string tipo;
 
 sentencia_asignacion:sentencia -> izquierda:expr derecha:expr;
 sentencia_print:sentencia -> expresiones:expr fincadena:string;
@@ -23,25 +19,24 @@ sentencia_while:sentencia -> condicion:expr sentencias:sentencia*;
 sentencia_llamada_funcion:sentencia -> nombre:string parametros:expr*;
 sentencia_return:sentencia -> expresion:expr;
 
-tipoInt:tipo -> ;
-tipoFloat:tipo -> ;
-tipoChar:tipo -> ;
-tipoStruct:tipo -> nombre:string;
-tipoArray:tipo -> tamanio:string tipoElementos:tipo;
-tipoVoid -> ;
+tipo_Int:tipo -> ;
+tipo_Float:tipo -> ;
+tipo_Char:tipo -> ;
+tipo_Void:tipo -> ;
+tipo_Struct:tipo -> nombre:string;
+tipo_Array:tipo -> tamanio:string tipoElementos:tipo;
+tipo_Error:tipo -> ;
 
 expr_int:expr -> string;
 expr_real:expr -> string;
 expr_char:expr -> string;
-expr_ident:expr -> string;
-expr_binaria:expr -> izquierda:expr operador:operador derecha:expr;
-expr_vector:expr -> fuera:expr dentro:expr;
+expr_uso_variable:expr -> string;
+expr_operacion:expr -> izquierda:expr operador:operador derecha:expr;
 expr_negada:expr -> operador:operador derecha:expr;
-expr_punto:expr -> izquierda:expr derecha:expr;
-expr_parentesis:expr -> expr;
 expr_cast:expr -> tipo_convertido:tipo expr:expr;
+expr_acceso_vector:expr -> fuera:expr dentro:expr;
+expr_acceso_struct:expr -> struct:expr campo:string;
 expr_llamada_funcion:expr -> nombre:string parametros:expr*;
-
 
 operador_aritmetico:operador-> string;
 operador_logico:operador-> string;

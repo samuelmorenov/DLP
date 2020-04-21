@@ -1,18 +1,20 @@
+/**
+ * Tutorial de Diseño de Lenguajes de Programación
+ * @author Raúl Izquierdo
+ */
+
 package semantic;
 
 import main.*;
 import ast.*;
 
 /**
- * Esta clase coordina las dos fases del Analisis Semantico:
- *  1. Fase de Identificacion.
- *  2. Fase de Comprobacion de Tipos (Type Checking).
+ * Esta clase coordina las dos fases del Análisis Semántico:
+ *  1. Fase de Identificación.
+ *  2. Fase de Comprobación de Tipos (Type Checking).
  *
- * No es necesario modificar esta clase. En su lugar hay que modificar las clases
- * que son llamadas desde aqui: "Identification.java" y "TypeChecking.java"
- *
- * @author Raul Izquierdo
- *
+ * No es necesario modificar esta clase. En su lugar, hay que modificar las clases
+ * que son llamadas desde aquí: "Identification.java" y "TypeChecking.java"
  */
 public class SemanticAnalisys {
 

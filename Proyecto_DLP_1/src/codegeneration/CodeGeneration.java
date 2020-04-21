@@ -1,3 +1,8 @@
+/**
+ * Tutorial de Diseño de Lenguajes de Programación
+ * @author Raúl Izquierdo
+ */
+
 package codegeneration;
 
 import java.io.*;
@@ -5,15 +10,12 @@ import java.io.*;
 import ast.*;
 
 /**
- * Esta clase coordina las dos fases principales de la Generacion de Codigo:
- *  1. Gestion de Memoria (asignacion de direcciones).
- *  2. Seleccion de Codigo.
+ * Esta clase coordina las dos fases principales de la Generación de Código:
+ *  1. Gestión de Memoria (asignación de direcciones).
+ *  2. Selección de Código.
  *
- * No es necesario modificar esta clase. En su lugar hay que modificar las clases
- * que son llamadas desde aqui: "MemoryAllocation.java" y "CodeSelection.java".
- *
- * @author Raul Izquierdo
- *
+ * No es necesario modificar esta clase. En su lugar, hay que modificar las clases
+ * que son llamadas desde aquí: "MemoryAllocation.java" y "CodeSelection.java".
  */
 public class CodeGeneration {
 

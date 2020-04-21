@@ -1,12 +1,12 @@
 /**
- * @generated VGen (for ANTLR) 1.4.0
+ * @generated VGen (for ANTLR) 1.7.0
  */
 
 package ast;
 
-import visitor.*;
-
 import org.antlr.v4.runtime.*;
+
+import visitor.*;
 
 //	sentencia_print:sentencia -> expresiones:expr  fincadena:String
 
@@ -22,7 +22,7 @@ public class Sentencia_print extends AbstractSentencia {
 	}
 
 	public Sentencia_print(Object expresiones, Object fincadena) {
-		this.expresiones = (Expr) ((expresiones instanceof ParserRuleContext) ? getAST(expresiones) : expresiones);
+		this.expresiones = (Expr) getAST(expresiones);
 		this.fincadena = (fincadena instanceof Token) ? ((Token)fincadena).getText() : (String) fincadena;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.

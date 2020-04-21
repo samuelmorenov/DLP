@@ -1,12 +1,13 @@
 /**
- * @generated VGen (for ANTLR) 1.4.0
+ * @generated VGen (for ANTLR) 1.7.0
  */
 
 package ast;
 
 public interface Sentencia extends AST {
-	
-	public Funcion getFuncionActual();
-	public void setFuncionActual(Funcion funcionActual);
+
+	public void setFuncionActual(Definicion_funcion node);
+
+	public Definicion_funcion getFuncionActual();
 
 }

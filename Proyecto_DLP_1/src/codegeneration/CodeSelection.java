@@ -40,21 +40,21 @@ public class CodeSelection extends DefaultVisitor {
 		out("#source \"" + sourceFile + "\""); // #SOURCE {file}
 		out("call main");// CALL main
 		out("halt");// HALT
-		visitChildren(node.getBloque(), param);// define[[bloquei]]
+		visitChildren(node.getDefinicion(), param);// define[[bloquei]]
 
 		return null;
 	}
 
-	public Object visit(Funcion node, Object param) {
+	public Object visit(Definicion_funcion node, Object param) {
 
 		int localesSize = 0;
 		int parametrosSize = 0;
 		int retornoSize = 0;
 		retornoSize = node.getRetorno().getSize();
-		for (Definicion_variable_local e : node.getLocales()) {
+		for (Definicion_variable e : node.getLocales()) {
 			localesSize += e.getTipo().getSize();
 		}
-		for (Parametro e : node.getParametros()) {
+		for (Definicion_variable e : node.getParametros()) {
 			parametrosSize += e.getTipo().getSize();
 		}
 
@@ -62,7 +62,7 @@ public class CodeSelection extends DefaultVisitor {
 		out("enter " + localesSize);// ENTER {sumatorio localesi.tipo.size}
 		visitChildren(node.getSentencias(), param);// ejecuta[[sentenciasi]]
 
-		if (node.getRetorno() instanceof TipoVoid)// si retorno == VOID
+		if (node.getRetorno() instanceof Tipo_Void)// si retorno == VOID
 			out("ret " + retornoSize + ", " + localesSize + ", " + parametrosSize);
 		// RET {retorno.size}, {sumatorio localesi.tipo.size}, {sumatorio
 		// parametrosi.tipo.size}
@@ -83,17 +83,16 @@ public class CodeSelection extends DefaultVisitor {
 		super.visit(node, CodeFunction.VALUE); // value[[expresiones]]
 		out("out", node.getExpresiones().getTipo()); // OUT<expresiones.tipo>
 		if (node.getFincadena().equals("sp")) {
-			out("pushb 32"); //PUSHB [[finCadena]]
-			out("outb"); //OUTB
+			out("pushb 32"); // PUSHB [[finCadena]]
+			out("outb"); // OUTB
 		}
 		if (node.getFincadena().equals("ln")) {
-			out("pushb 10");//PUSHB [[finCadena]]
-			out("outb");//OUTB
+			out("pushb 10");// PUSHB [[finCadena]]
+			out("outb");// OUTB
 		}
 		return null;
 	}
 
-	// class Sentencia_read { Expr expresiones; }
 	public Object visit(Sentencia_read node, Object param) {
 		line(node);// #LINE {end.line}
 		super.visit(node, CodeFunction.VALUE);// value[[expresiones]]
@@ -101,8 +100,6 @@ public class CodeSelection extends DefaultVisitor {
 		return null;
 	}
 
-	// class Sentencia_if { Expr condicion; List<Sentencia> sentencias;
-	// List<Sentencia> sino; }
 	public Object visit(Sentencia_if node, Object param) {
 		line(node);// #LINE {end.line}
 		String contadorIf = String.valueOf(++contadorGeneralIF);// {contadorIF = ++contadorGeneralIF}
@@ -116,7 +113,6 @@ public class CodeSelection extends DefaultVisitor {
 		return null;
 	}
 
-	// class Sentencia_while { Expr condicion; List<Sentencia> sentencias; }
 	public Object visit(Sentencia_while node, Object param) {
 		line(node);// #LINE {end.line}
 		String contadorWhile = String.valueOf(++contadorGeneralWhile);// {contadorWhile = ++contadorGeneralWhile}
@@ -129,28 +125,26 @@ public class CodeSelection extends DefaultVisitor {
 		return null;
 	}
 
-	// class Sentencia_llamada_funcion { String nombre; List<Expr> parametros; }
 	public Object visit(Sentencia_llamada_funcion node, Object param) {
 		line(node);// #LINE {end.line}
 		visitChildren(node.getParametros(), param);// valor[[parametrosi]]
 		out("call " + node.getNombre());// CALL {nombre}
-		if (!(node.getDefinicion().getRetorno() instanceof TipoVoid)) {// si
+		if (!(node.getDefinicion().getRetorno() instanceof Tipo_Void)) {// si
 																		// sentencia_llamada_funcion.definicion.retorno
 																		// != tipoVoid
-			out("pop", node.getDefinicion().getRetorno());// POP< sentencia_llamada_funcion.definición.retorno>
+			out("pop", node.getDefinicion().getRetorno());// POP< sentencia_llamada_funcion.definiciï¿½n.retorno>
 		}
 		return null;
 	}
 
-	// class Sentencia_return { Expr expresion; }
 	public Object visit(Sentencia_return node, Object param) {
 		int retorno = 0;
 		int localesi = 0;
 		int parametrosi = 0;
 		retorno = node.getFuncionActual().getRetorno().getSize();
-		for (Definicion_variable_local child : node.getFuncionActual().getLocales())
+		for (Definicion_variable child : node.getFuncionActual().getLocales())
 			localesi = localesi + child.getTipo().getSize();
-		for (Parametro child : node.getFuncionActual().getParametros())
+		for (Definicion_variable child : node.getFuncionActual().getParametros())
 			parametrosi = localesi + child.getTipo().getSize();
 
 		if (node.getExpresion() != null) {// si expresion != null
@@ -163,29 +157,25 @@ public class CodeSelection extends DefaultVisitor {
 		return null;
 	}
 
-	// class Expr_int { String string; }
 	public Object visit(Expr_int node, Object param) {
 		assert (param == CodeFunction.VALUE);
 		out("push " + node.getString()); // PUSH {value}
 		return null;
 	}
 
-	// class Expr_real { String string; }
 	public Object visit(Expr_real node, Object param) {
 		assert (param == CodeFunction.VALUE);
 		out("pushf " + node.getString());// PUSHF {value}
 		return null;
 	}
 
-	// class Expr_char { String string; }
 	public Object visit(Expr_char node, Object param) {
 		assert (param == CodeFunction.VALUE);
 		out("pushb " + (int) node.getString().charAt(1));// PUSHB {value}
 		return null;
 	}
 
-	// class Expr_ident { String string; }
-	public Object visit(Expr_ident node, Object param) {
+	public Object visit(Expr_uso_variable node, Object param) {
 
 		if (((CodeFunction) param) == CodeFunction.VALUE) {
 			visit(node, CodeFunction.ADDRESS); // address [[expr_ident]]
@@ -195,48 +185,41 @@ public class CodeSelection extends DefaultVisitor {
 		else { // Funcion.DIRECCION
 			assert (param == CodeFunction.ADDRESS);
 
-			if (node.getDefinicion_global() != null)
-				out("pusha " + node.getDefinicion_global().getAddress());
+			if (node.getDefinicion().getAmbito() == Ambito.GLOBAL) {
+				out("pusha " + node.getDefinicion().getAddress());
+			}
 
-			else if (node.getDefinicion_parametro() != null) {
+			if (node.getDefinicion().getAmbito() == Ambito.LOCAL) {
 				out("pusha BP");
-				out("push " + node.getDefinicion_parametro().getAddress());
+				out("push " + node.getDefinicion().getAddress());
 				out("add");
 			}
 
-			else if (node.getDefinicion_local() != null) {
-				out("pusha BP");
-				out("pusha " + Math.abs(node.getDefinicion_local().getAddress()));
-				out("sub");
-			}
 		}
 		return null;
 	}
 
-	// class Expr_binaria { Expr izquierda; Operador operador; Expr derecha; }
-	public Object visit(Expr_binaria node, Object param) {
+	public Object visit(Expr_operacion node, Object param) {
 		assert (param == CodeFunction.VALUE);
-		node.getIzquierda().accept(this, CodeFunction.VALUE);//value[[izquierda]]
-		node.getDerecha().accept(this, CodeFunction.VALUE);//value[[derecha]]
+		node.getIzquierda().accept(this, CodeFunction.VALUE);// value[[izquierda]]
+		node.getDerecha().accept(this, CodeFunction.VALUE);// value[[derecha]]
 		out(instruccion.get(node.getOperador().getString()), node.getIzquierda().getTipo());
 		return null;
 	}
 
-	// class Expr_vector { Expr fuera; Expr dentro; }
-	public Object visit(Expr_vector node, Object param) {
+	public Object visit(Expr_acceso_vector node, Object param) {
 		node.getFuera().accept(this, CodeFunction.ADDRESS); // address[[fuera]]
 		node.getDentro().accept(this, CodeFunction.VALUE); // value[[dentro]]
 		out("push " + node.getTipo().getSize()); // PUSHA {tipo.size}
 		out("mul");// MUL
 		out("add");// ADD
-		
+
 		if (((CodeFunction) param) == CodeFunction.VALUE) {
 			out("load", node.getTipo()); // LOAD{tipo.size}
 		}
 		return null;
 	}
 
-	// class Expr_negada { Operador operador; Expr derecha; }
 	public Object visit(Expr_negada node, Object param) {
 		assert (param == CodeFunction.VALUE);
 		node.getDerecha().accept(this, CodeFunction.VALUE);// value[[derecha]]
@@ -244,25 +227,17 @@ public class CodeSelection extends DefaultVisitor {
 		return null;
 	}
 
-	// class Expr_punto { Expr izquierda; Expr derecha; }
-	public Object visit(Expr_punto node, Object param) {
-		node.getIzquierda().accept(this, CodeFunction.ADDRESS); // address[[izquierda]]
-		out("push " + node.getDerecha().getTipo().getSize()); //PUSH {derecha.tipo.size}
+	public Object visit(Expr_acceso_struct node, Object param) {
+		node.getStruct().accept(this, CodeFunction.ADDRESS); // address[[struct]]
+		out("push " + node.getTipo().getSize()); // PUSH {tipo.size} //TODO comprobar esto
 		out("add");// ADD
-		
+
 		if (((CodeFunction) param) == CodeFunction.VALUE) {
-			out("load", node.getTipo()); // LOAD< expr_ident.type>
+			out("load", node.getTipo()); // LOAD< expr_ident.type> //TODO comprobar esto
 		}
 		return null;
 	}
 
-	// class Expr_parentesis { Expr expr; }
-	public Object visit(Expr_parentesis node, Object param) {
-		node.getExpr().accept(this, CodeFunction.VALUE); // value[[expr]]
-		return null;
-	}
-
-	// class Expr_cast { Tipo tipo_convertido; Expr expr; }
 	public Object visit(Expr_cast node, Object param) {
 		node.getExpr().accept(this, CodeFunction.VALUE); // value[[expr]]
 		String de = Character.toString(node.getExpr().getTipo().getSuffix());
@@ -271,7 +246,6 @@ public class CodeSelection extends DefaultVisitor {
 		return null;
 	}
 
-	// class Expr_llamada_funcion { String nombre; List<Expr> parametros; }
 	public Object visit(Expr_llamada_funcion node, Object param) {
 		for (Expr child : node.getParametros())
 			child.accept(this, param);// valor[[parametrosi]]
@@ -282,11 +256,12 @@ public class CodeSelection extends DefaultVisitor {
 
 	private void out(String instruction) {
 		writer.println(instruction);
-		//System.out.println(instruction); // TODO - Comentar para que no se imprima por pantalla la generacion de codigo
+		// System.out.println(instruction); // TODO - Comentar para que no se imprima
+		// por pantalla la generacion de codigo
 	}
 
 	private void out(String instruccion, Tipo tipo) {
-		if (tipo instanceof TipoInt) {
+		if (tipo instanceof Tipo_Int) {
 			out(instruccion);
 		} else {
 			out(instruccion + tipo.getSuffix());

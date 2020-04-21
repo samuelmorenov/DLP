@@ -4,42 +4,18 @@ halt
 main:
 enter 0
 
-#line 3
+#line 26
 pusha 0
-push 0
-push 6
-mul
-add
-push 0
-push 2
-mul
-add
-push 1
+push 1111
 store
 
-#line 4
-pusha 0
-push 0
-push 6
-mul
-add
-push 1
-push 2
-mul
-add
-push 2
-store
+#line 27
+pusha 2
+pushf 2222.2
+storef
 
-#line 6
+#line 31
 pusha 0
-push 0
-push 6
-mul
-add
-push 2
-push 2
-mul
-add
 load
 out
 ret 0, 0, 0
