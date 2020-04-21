@@ -6,4 +6,6 @@ package ast;
 
 public interface Operador extends AST {
 
+	String getString();
+
 }

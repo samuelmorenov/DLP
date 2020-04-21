@@ -41,6 +41,11 @@ public class Tipo_Struct extends AbstractTipo {
 	public void setDefinicion(Definicion_struct definicion) {
 		this.definicion = definicion;
 	}
+	
+	@Override
+	public char getSuffix() {
+        return '?';
+	}
 
 	@Override
 	public int getSize() {

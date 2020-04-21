@@ -45,6 +45,11 @@ public class Tipo_Array extends AbstractTipo {
 	}
 	
 	@Override
+	public char getSuffix() {
+        return '?';
+	}
+	
+	@Override
 	public int getSize() {
 		return this.tipoElementos.getSize() * Integer.parseInt(this.tamanio);
 	}

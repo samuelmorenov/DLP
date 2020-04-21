@@ -13,6 +13,11 @@ public class Tipo_Float extends AbstractTipo {
 	public int getSize() {
 		return 4;
 	}
+	
+	@Override
+	public char getSuffix() {
+        return 'f';
+	}
 
 	@Override
 	public Object accept(Visitor v, Object param) { 

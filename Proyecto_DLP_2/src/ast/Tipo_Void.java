@@ -13,6 +13,11 @@ public class Tipo_Void extends AbstractTipo {
 	public int getSize() {
 		return 0;
 	}
+	
+	@Override
+	public char getSuffix() {
+        return '?';
+	}
 
 	@Override
 	public Object accept(Visitor v, Object param) { 

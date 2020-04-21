@@ -13,6 +13,11 @@ public class Tipo_Int extends AbstractTipo {
 	public int getSize() {
 		return 2;
 	}
+	
+	@Override
+	public char getSuffix() {
+        return 'i';
+	}
 
 	@Override
 	public Object accept(Visitor v, Object param) { 
