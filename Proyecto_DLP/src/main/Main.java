@@ -79,8 +79,8 @@ public class Main {
 		
 		
 		//TODO: Comentar para no mostrar la asignacion de memoria
-		PrintMemoryAllocation pma = new PrintMemoryAllocation();
-		ast.accept(pma, null);
+		//PrintMemoryAllocation pma = new PrintMemoryAllocation();
+		//ast.accept(pma, null);
 
 		return ast;
 	}

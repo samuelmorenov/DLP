@@ -256,8 +256,8 @@ public class CodeSelection extends DefaultVisitor {
 
 	private void out(String instruction) {
 		writer.println(instruction);
-		// System.out.println(instruction); // TODO - Comentar para que no se imprima
-		// por pantalla la generacion de codigo
+		// TODO: Comentar para no mostrar la generacion de codigo
+		System.out.println(instruction);
 	}
 
 	private void out(String instruccion, Tipo tipo) {

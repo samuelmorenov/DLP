@@ -22,7 +22,7 @@
 <body><pre>
 [ASTPrinter] -------------------------------- line:col  line:col
 
-<span class="dots"></span>Program &rarr;                                                   <span class="pos">14:5  31:8   </span><span class="sourceText">var </span><span class="posText">a:int;</span><span class="sourceText"> ... </span><span class="posText">print a</span><span class="sourceText">;		// 1111</span>
+<span class="dots"></span>Program &rarr;                                                   <span class="pos">14:5  36:20  </span><span class="sourceText">var </span><span class="posText">a:int;</span><span class="sourceText"> ... </span><span class="posText">println cast<int>(b</span><span class="sourceText">);			// 2222</span>
 <span class="dots">.  </span>definicion  <span class="type">List&lt;Definicion&gt;</span> = 
 <span class="dots">.  .  </span>Definicion_variable &rarr;                                 <span class="pos">14:5  14:5   </span><span class="sourceText">var </span><span class="posText">a</span><span class="sourceText">:int;</span>
 <span class="dots">.  .  |  </span>"<span class="value">a</span>"  
@@ -57,7 +57,7 @@
 <span class="dots">.  .  |  </span>"Punto"  <span class="type">Tipo_Struct.nombre</span>                        <span class="pos">23:7  23:11  </span><span class="sourceText">var p:</span><span class="posText">Punto</span><span class="sourceText">;</span>
 <span class="dots">.  .  |  </span><span class="value">GLOBAL</span>  <span class="type">Ambito</span>
 <span class="dots">.  .  |  </span><span class="value">16</span>  <span class="type">int</span>
-<span class="dots">.  .  </span>Definicion_funcion &rarr;                                  <span class="pos">25:1  31:8   </span><span class="sourceText"></span><span class="posText">main() {</span><span class="sourceText"> ... </span><span class="posText">print a</span><span class="sourceText">;		// 1111</span>
+<span class="dots">.  .  </span>Definicion_funcion &rarr;                                  <span class="pos">25:1  36:20  </span><span class="sourceText"></span><span class="posText">main() {</span><span class="sourceText"> ... </span><span class="posText">println cast<int>(b</span><span class="sourceText">);			// 2222</span>
 <span class="dots">.  .  |  </span>"<span class="value">main</span>"  
 <span class="dots">.  .  |  </span>parametros  <span class="type">List&lt;Definicion_variable&gt;</span> = 
 <span class="dots">.  .  |  </span><span class="value">Tipo_Void</span> &rarr;                                        <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
@@ -69,9 +69,49 @@
 <span class="dots">.  .  |  .  </span>Sentencia_asignacion &rarr;                          <span class="pos">27:2  27:11  </span><span class="sourceText"></span><span class="posText">b = 2222.2</span><span class="sourceText">;</span>
 <span class="dots">.  .  |  .  |  </span>"b"  <span class="type">Expr_uso_variable.string</span>                <span class="pos">27:2  27:2   </span><span class="sourceText"></span><span class="posText">b</span><span class="sourceText"> = 2222.2;</span>
 <span class="dots">.  .  |  .  |  </span>"2222.2"  <span class="type">Expr_real.string</span>                   <span class="pos">27:6  27:11  </span><span class="sourceText">b = </span><span class="posText">2222.2</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  </span>Sentencia_print &rarr;                               <span class="pos">31:8  31:8   </span><span class="sourceText">print </span><span class="posText">a</span><span class="sourceText">;		// 1111</span>
-<span class="dots">.  .  |  .  |  </span>"a"  <span class="type">Expr_uso_variable.string</span>                <span class="pos">31:8  31:8   </span><span class="sourceText">print </span><span class="posText">a</span><span class="sourceText">;		// 1111</span>
-<span class="dots">.  .  |  .  |  </span>"<span class="value"></span>"  
+<span class="dots">.  .  |  .  </span>Sentencia_asignacion &rarr;                          <span class="pos">28:2  28:12  </span><span class="sourceText"></span><span class="posText">v[3] = 3333</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  |  </span>Expr_acceso_vector &rarr;                         <span class="pos">28:2  28:4   </span><span class="sourceText"></span><span class="posText">v[3</span><span class="sourceText">] = 3333;</span>
+<span class="dots">.  .  |  .  |  .  </span>"v"  <span class="type">Expr_uso_variable.string</span>             <span class="pos">28:2  28:2   </span><span class="sourceText"></span><span class="posText">v</span><span class="sourceText">[3] = 3333;</span>
+<span class="dots">.  .  |  .  |  .  </span>"3"  <span class="type">Expr_int.string</span>                      <span class="pos">28:4  28:4   </span><span class="sourceText">v[</span><span class="posText">3</span><span class="sourceText">] = 3333;</span>
+<span class="dots">.  .  |  .  |  </span>"3333"  <span class="type">Expr_int.string</span>                      <span class="pos">28:9  28:12  </span><span class="sourceText">v[3] = </span><span class="posText">3333</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  </span>Sentencia_asignacion &rarr;                          <span class="pos">29:2  29:13  </span><span class="sourceText"></span><span class="posText">p.y = 4444.4</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  |  </span>Expr_acceso_struct &rarr;                         <span class="pos">29:2  29:4   </span><span class="sourceText"></span><span class="posText">p.y</span><span class="sourceText"> = 4444.4;</span>
+<span class="dots">.  .  |  .  |  .  </span>"p"  <span class="type">Expr_uso_variable.string</span>             <span class="pos">29:2  29:2   </span><span class="sourceText"></span><span class="posText">p</span><span class="sourceText">.y = 4444.4;</span>
+<span class="dots">.  .  |  .  |  .  </span>"<span class="value">y</span>"  
+<span class="dots">.  .  |  .  |  </span>"4444.4"  <span class="type">Expr_real.string</span>                   <span class="pos">29:8  29:13  </span><span class="sourceText">p.y = </span><span class="posText">4444.4</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  </span>Sentencia_print &rarr;                               <span class="pos">31:10  31:10 </span><span class="sourceText">println </span><span class="posText">a</span><span class="sourceText">;		// 1111</span>
+<span class="dots">.  .  |  .  |  </span>"a"  <span class="type">Expr_uso_variable.string</span>                <span class="pos">31:10  31:10 </span><span class="sourceText">println </span><span class="posText">a</span><span class="sourceText">;		// 1111</span>
+<span class="dots">.  .  |  .  |  </span>"<span class="value">ln</span>"  
+<span class="dots">.  .  |  .  </span>Sentencia_print &rarr;                               <span class="pos">32:10  32:16 </span><span class="sourceText">println </span><span class="posText">b + p.y</span><span class="sourceText">;	// 6666.6</span>
+<span class="dots">.  .  |  .  |  </span>Expr_operacion &rarr;                             <span class="pos">32:10  32:16 </span><span class="sourceText">println </span><span class="posText">b + p.y</span><span class="sourceText">;	// 6666.6</span>
+<span class="dots">.  .  |  .  |  .  </span>"b"  <span class="type">Expr_uso_variable.string</span>             <span class="pos">32:10  32:10 </span><span class="sourceText">println </span><span class="posText">b</span><span class="sourceText"> + p.y;	// 6666.6</span>
+<span class="dots">.  .  |  .  |  .  </span>"+"  <span class="type">Operador_aritmetico.string</span>           <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  .  |  .  </span>Expr_acceso_struct &rarr;                      <span class="pos">32:14  32:16 </span><span class="sourceText">println b + </span><span class="posText">p.y</span><span class="sourceText">;	// 6666.6</span>
+<span class="dots">.  .  |  .  |  .  |  </span>"p"  <span class="type">Expr_uso_variable.string</span>          <span class="pos">32:14  32:14 </span><span class="sourceText">println b + </span><span class="posText">p</span><span class="sourceText">.y;	// 6666.6</span>
+<span class="dots">.  .  |  .  |  .  |  </span>"<span class="value">y</span>"  
+<span class="dots">.  .  |  .  |  </span>"<span class="value">ln</span>"  
+<span class="dots">.  .  |  .  </span>Sentencia_print &rarr;                               <span class="pos">33:10  33:12 </span><span class="sourceText">println </span><span class="posText">v[3</span><span class="sourceText">];		// 3333</span>
+<span class="dots">.  .  |  .  |  </span>Expr_acceso_vector &rarr;                         <span class="pos">33:10  33:12 </span><span class="sourceText">println </span><span class="posText">v[3</span><span class="sourceText">];		// 3333</span>
+<span class="dots">.  .  |  .  |  .  </span>"v"  <span class="type">Expr_uso_variable.string</span>             <span class="pos">33:10  33:10 </span><span class="sourceText">println </span><span class="posText">v</span><span class="sourceText">[3];		// 3333</span>
+<span class="dots">.  .  |  .  |  .  </span>"3"  <span class="type">Expr_int.string</span>                      <span class="pos">33:12  33:12 </span><span class="sourceText">println v[</span><span class="posText">3</span><span class="sourceText">];		// 3333</span>
+<span class="dots">.  .  |  .  |  </span>"<span class="value">ln</span>"  
+<span class="dots">.  .  |  .  </span>Sentencia_print &rarr;                               <span class="pos">35:10  35:28 </span><span class="sourceText">println </span><span class="posText">a > 0 && b < 3333.3</span><span class="sourceText">;	// 1</span>
+<span class="dots">.  .  |  .  |  </span>Expr_operacion &rarr;                             <span class="pos">35:10  35:28 </span><span class="sourceText">println </span><span class="posText">a > 0 && b < 3333.3</span><span class="sourceText">;	// 1</span>
+<span class="dots">.  .  |  .  |  .  </span>Expr_operacion &rarr;                          <span class="pos">35:10  35:14 </span><span class="sourceText">println </span><span class="posText">a > 0</span><span class="sourceText"> && b < 3333.3;	// 1</span>
+<span class="dots">.  .  |  .  |  .  |  </span>"a"  <span class="type">Expr_uso_variable.string</span>          <span class="pos">35:10  35:10 </span><span class="sourceText">println </span><span class="posText">a</span><span class="sourceText"> > 0 && b < 3333.3;	// 1</span>
+<span class="dots">.  .  |  .  |  .  |  </span>">"  <span class="type">Operador_comparacion.string</span>       <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  .  |  .  |  </span>"0"  <span class="type">Expr_int.string</span>                   <span class="pos">35:14  35:14 </span><span class="sourceText">println a > </span><span class="posText">0</span><span class="sourceText"> && b < 3333.3;	// 1</span>
+<span class="dots">.  .  |  .  |  .  </span>"&&"  <span class="type">Operador_logico.string</span>              <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  .  |  .  </span>Expr_operacion &rarr;                          <span class="pos">35:19  35:28 </span><span class="sourceText">println a > 0 && </span><span class="posText">b < 3333.3</span><span class="sourceText">;	// 1</span>
+<span class="dots">.  .  |  .  |  .  |  </span>"b"  <span class="type">Expr_uso_variable.string</span>          <span class="pos">35:19  35:19 </span><span class="sourceText">println a > 0 && </span><span class="posText">b</span><span class="sourceText"> < 3333.3;	// 1</span>
+<span class="dots">.  .  |  .  |  .  |  </span>"<"  <span class="type">Operador_comparacion.string</span>       <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  .  |  .  |  </span>"3333.3"  <span class="type">Expr_real.string</span>             <span class="pos">35:23  35:28 </span><span class="sourceText">println a > 0 && b < </span><span class="posText">3333.3</span><span class="sourceText">;	// 1</span>
+<span class="dots">.  .  |  .  |  </span>"<span class="value">ln</span>"  
+<span class="dots">.  .  |  .  </span>Sentencia_print &rarr;                               <span class="pos">36:20  36:20 </span><span class="sourceText">println cast<int>(</span><span class="posText">b</span><span class="sourceText">);			// 2222</span>
+<span class="dots">.  .  |  .  |  </span>Expr_cast &rarr;                                  <span class="pos">36:20  36:20 </span><span class="sourceText">println cast<int>(</span><span class="posText">b</span><span class="sourceText">);			// 2222</span>
+<span class="dots">.  .  |  .  |  .  </span><span class="value">Tipo_Int</span> &rarr;                                <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  .  |  .  </span>"b"  <span class="type">Expr_uso_variable.string</span>             <span class="pos">36:20  36:20 </span><span class="sourceText">println cast<int>(</span><span class="posText">b</span><span class="sourceText">);			// 2222</span>
+<span class="dots">.  .  |  .  |  </span>"<span class="value">ln</span>"  
 
 [ASTPrinter] --------------------------------
 </pre>
