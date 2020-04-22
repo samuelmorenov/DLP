@@ -68,6 +68,11 @@ public class Tipo_Struct extends AbstractTipo {
 	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
 	}
+	
+	@Override
+	public String getMemoryAllocationString() {
+		return nombre;
+	}
 
 	private String nombre;
 	private int size = -1;

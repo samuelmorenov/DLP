@@ -45,6 +45,44 @@ public class CodeSelection extends DefaultVisitor {
 		return null;
 	}
 
+	//////////////////////////////////////////////
+	////////////// OPCIONAL: /////////////////////
+	//////////////////////////////////////////////
+
+	// class Definicion_variable { String nombre; Tipo tipo; Ambito ambito; }
+	public Object visit(Definicion_variable node, Object param) {
+
+		super.visit(node, param);
+		out("#global " + node.getNombre() + ":" + node.getTipo().getMemoryAllocationString());
+		// #global <nombre>:<tipo>
+
+		return null;
+	}
+
+	// class Definicion_struct { String nombre; List<Campo_struct> campo_struct; }
+	public Object visit(Definicion_struct node, Object param) {
+
+		out("#type " + node.getNombre() + ": {");// #type Punto: {
+		super.visit(node, param);// x:int y:int
+		out("}");// }
+
+		return null;
+	}
+
+	// class Campo_struct { String nombre; Tipo tipo; }
+	public Object visit(Campo_struct node, Object param) {
+
+		super.visit(node, param);
+		out(node.getNombre() + ":" + node.getTipo().getMemoryAllocationString());
+		// <nombre>:<tipo>
+
+		return null;
+	}
+
+	//////////////////////////////////////////////
+	////////////// OPCIONAL: /////////////////////
+	//////////////////////////////////////////////
+
 	public Object visit(Definicion_funcion node, Object param) {
 
 		int localesSize = 0;

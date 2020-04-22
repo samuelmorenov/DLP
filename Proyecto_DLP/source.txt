@@ -14,5 +14,5 @@ main() {
   eg.ep.entero1 = 1;
   eg.ep.entero2 = 2;
   eg.ep.entero3 = eg.ep.entero1 + eg.ep.entero2;
-  print(eg.ep.entero3); 
+  println(eg.ep.entero3);   
 }

@@ -9,23 +9,27 @@ import visitor.*;
 //	tipo_Void:tipo -> 
 
 public class Tipo_Void extends AbstractTipo {
-	
+
 	public int getSize() {
 		return 0;
 	}
-	
+
 	@Override
 	public char getSuffix() {
-        return '?';
+		return '?';
 	}
 
 	@Override
-	public Object accept(Visitor v, Object param) { 
+	public String getMemoryAllocationString() {
+		return "?";
+	}
+
+	@Override
+	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
 	}
 
-
 	public String toString() {
-       return "{Tipo_Void}";
-   }
+		return "{Tipo_Void}";
+	}
 }

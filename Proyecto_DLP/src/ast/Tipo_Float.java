@@ -23,6 +23,11 @@ public class Tipo_Float extends AbstractTipo {
 	public Object accept(Visitor v, Object param) { 
 		return v.visit(this, param);
 	}
+	
+	@Override
+	public String getMemoryAllocationString() {
+		return "float";
+	}
 
 
 	public String toString() {

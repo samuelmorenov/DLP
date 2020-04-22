@@ -9,5 +9,7 @@ public interface Tipo extends AST {
 	int getSize();
 
 	char getSuffix();
+	
+	String getMemoryAllocationString();
 
 }

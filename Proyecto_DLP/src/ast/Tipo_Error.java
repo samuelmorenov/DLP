@@ -19,10 +19,15 @@ public class Tipo_Error extends AbstractTipo {
 	public int getSize() {
 		return 0;
 	}
-	
+
 	@Override
 	public char getSuffix() {
-        return '?';
+		return '?';
+	}
+
+	@Override
+	public String getMemoryAllocationString() {
+		return "?";
 	}
 
 	public String toString() {

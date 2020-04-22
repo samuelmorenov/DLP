@@ -22,7 +22,7 @@
 <body><pre>
 [ASTPrinter] -------------------------------- line:col  line:col
 
-<span class="dots"></span>Program &rarr;                                                   <span class="pos">1:8  17:21   </span><span class="sourceText">struct </span><span class="posText">EstructPequenio {</span><span class="sourceText"> ... </span><span class="posText">print(eg.ep.entero3</span><span class="sourceText">); </span>
+<span class="dots"></span>Program &rarr;                                                   <span class="pos">1:8  17:23   </span><span class="sourceText">struct </span><span class="posText">EstructPequenio {</span><span class="sourceText"> ... </span><span class="posText">println(eg.ep.entero3</span><span class="sourceText">);   </span>
 <span class="dots">.  </span>definicion  <span class="type">List&lt;Definicion&gt;</span> = 
 <span class="dots">.  .  </span>Definicion_struct &rarr;                                   <span class="pos">1:8  4:8     </span><span class="sourceText">struct </span><span class="posText">EstructPequenio {</span><span class="sourceText"> ... </span><span class="posText">entero3</span><span class="sourceText">:int;</span>
 <span class="dots">.  .  |  </span>"<span class="value">EstructPequenio</span>"  
@@ -51,7 +51,7 @@
 <span class="dots">.  .  |  </span>"EstructGrande"  <span class="type">Tipo_Struct.nombre</span>                <span class="pos">11:8  11:20  </span><span class="sourceText">var eg:</span><span class="posText">EstructGrande</span><span class="sourceText">;</span>
 <span class="dots">.  .  |  </span><span class="value">GLOBAL</span>  <span class="type">Ambito</span>
 <span class="dots">.  .  |  </span><span class="value">0</span>  <span class="type">int</span>
-<span class="dots">.  .  </span>Definicion_funcion &rarr;                                  <span class="pos">13:1  17:21  </span><span class="sourceText"></span><span class="posText">main() {</span><span class="sourceText"> ... </span><span class="posText">print(eg.ep.entero3</span><span class="sourceText">); </span>
+<span class="dots">.  .  </span>Definicion_funcion &rarr;                                  <span class="pos">13:1  17:23  </span><span class="sourceText"></span><span class="posText">main() {</span><span class="sourceText"> ... </span><span class="posText">println(eg.ep.entero3</span><span class="sourceText">);   </span>
 <span class="dots">.  .  |  </span>"<span class="value">main</span>"  
 <span class="dots">.  .  |  </span>parametros  <span class="type">List&lt;Definicion_variable&gt;</span> = 
 <span class="dots">.  .  |  </span><span class="value">Tipo_Void</span> &rarr;                                        <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
@@ -89,13 +89,13 @@
 <span class="dots">.  .  |  .  |  .  |  .  </span>"eg"  <span class="type">Expr_uso_variable.string</span>      <span class="pos">16:35  16:36 </span><span class="sourceText">eg.ep.entero3 = eg.ep.entero1 + </span><span class="posText">eg</span><span class="sourceText">.ep.entero2;</span>
 <span class="dots">.  .  |  .  |  .  |  .  </span>"<span class="value">ep</span>"  
 <span class="dots">.  .  |  .  |  .  |  </span>"<span class="value">entero2</span>"  
-<span class="dots">.  .  |  .  </span>Sentencia_print &rarr;                               <span class="pos">17:9  17:21  </span><span class="sourceText">print(</span><span class="posText">eg.ep.entero3</span><span class="sourceText">); </span>
-<span class="dots">.  .  |  .  |  </span>Expr_acceso_struct &rarr;                         <span class="pos">17:9  17:21  </span><span class="sourceText">print(</span><span class="posText">eg.ep.entero3</span><span class="sourceText">); </span>
-<span class="dots">.  .  |  .  |  .  </span>Expr_acceso_struct &rarr;                      <span class="pos">17:9  17:13  </span><span class="sourceText">print(</span><span class="posText">eg.ep</span><span class="sourceText">.entero3); </span>
-<span class="dots">.  .  |  .  |  .  |  </span>"eg"  <span class="type">Expr_uso_variable.string</span>         <span class="pos">17:9  17:10  </span><span class="sourceText">print(</span><span class="posText">eg</span><span class="sourceText">.ep.entero3); </span>
+<span class="dots">.  .  |  .  </span>Sentencia_print &rarr;                               <span class="pos">17:11  17:23 </span><span class="sourceText">println(</span><span class="posText">eg.ep.entero3</span><span class="sourceText">);   </span>
+<span class="dots">.  .  |  .  |  </span>Expr_acceso_struct &rarr;                         <span class="pos">17:11  17:23 </span><span class="sourceText">println(</span><span class="posText">eg.ep.entero3</span><span class="sourceText">);   </span>
+<span class="dots">.  .  |  .  |  .  </span>Expr_acceso_struct &rarr;                      <span class="pos">17:11  17:15 </span><span class="sourceText">println(</span><span class="posText">eg.ep</span><span class="sourceText">.entero3);   </span>
+<span class="dots">.  .  |  .  |  .  |  </span>"eg"  <span class="type">Expr_uso_variable.string</span>         <span class="pos">17:11  17:12 </span><span class="sourceText">println(</span><span class="posText">eg</span><span class="sourceText">.ep.entero3);   </span>
 <span class="dots">.  .  |  .  |  .  |  </span>"<span class="value">ep</span>"  
 <span class="dots">.  .  |  .  |  .  </span>"<span class="value">entero3</span>"  
-<span class="dots">.  .  |  .  |  </span>"<span class="value"></span>"  
+<span class="dots">.  .  |  .  |  </span>"<span class="value">ln</span>"  
 
 [ASTPrinter] --------------------------------
 </pre>

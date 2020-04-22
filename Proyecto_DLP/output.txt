@@ -1,6 +1,15 @@
 #source "source.txt"
 call main
 halt
+#type EstructPequenio: {
+entero1:int
+entero2:int
+entero3:int
+}
+#type EstructGrande: {
+ep:EstructPequenio
+}
+#global eg:EstructGrande
 main:
 enter 0
 
@@ -51,4 +60,6 @@ push 2
 add
 load
 out
+pushb 10
+outb
 ret 0, 0, 0
