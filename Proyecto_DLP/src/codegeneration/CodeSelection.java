@@ -268,24 +268,16 @@ public class CodeSelection extends DefaultVisitor {
 	// class Expr_acceso_struct { Expr struct; String campo; }
 	public Object visit(Expr_acceso_struct node, Object param) {
 
-		// super.visit(node, param);
+		// 1 - Meter en la pila la direccion donde empieza la estructura
+		// 2 - Meter en la pila el desplazamiento del campo dentro de su estructura
+		// 3 - ADD
 
-		if (node.getStruct() != null) {
-			node.getStruct().accept(this, CodeFunction.ADDRESS); // address[[struct]]
-		}
-
-		// TODO esta es la mejor manera?
-		Campo_struct campo = node.getCampo_struct();
-		if (campo == null)
-			return null;
-
-		out("push " + campo.getTipo().getSize()); // PUSH {tipo.size} //TODO comprobar esto
-		System.out.println("¿1?");
-		out("add");// ADD
+		node.getStruct().accept(this, CodeFunction.ADDRESS);
+		out("push " + node.getCampo_struct().getAddress());
+		out("add");
 
 		if (((CodeFunction) param) == CodeFunction.VALUE) {
-			out("load", node.getTipo()); // LOAD< expr_ident.type> //TODO comprobar esto
-			System.out.println("¿2?");
+			out("load", node.getTipo());
 		}
 		return null;
 
@@ -310,7 +302,7 @@ public class CodeSelection extends DefaultVisitor {
 	private void out(String instruction) {
 		writer.println(instruction);
 		// TODO: Comentar para no mostrar la generacion de codigo
-		System.out.println(instruction);
+		// System.out.println(instruction);
 	}
 
 	private void out(String instruccion, Tipo tipo) {

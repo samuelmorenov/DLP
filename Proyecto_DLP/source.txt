@@ -1,18 +1,7 @@
-struct EstructPequenio {
-	entero1:int;
-	entero2:int;
-	entero3:int;
-};
-
-struct EstructGrande {
-	ep:EstructPequenio;
-};
-
-var eg:EstructGrande;
-
+var matriz:[3][3]int;
 main() {
-  eg.ep.entero1 = 1;
-  eg.ep.entero2 = 2;
-  eg.ep.entero3 = eg.ep.entero1 + eg.ep.entero2;
-  println(eg.ep.entero3);   
+  matriz[0][1] = 1;
+  matriz[1][0] = 2;
+  matriz[1][2] = matriz[0][1] + matriz[1][0];
+  print(matriz[1][2]);
 }
