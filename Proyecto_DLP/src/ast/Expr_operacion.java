@@ -4,8 +4,6 @@
 
 package ast;
 
-import org.antlr.v4.runtime.*;
-
 import visitor.*;
 
 //	expr_operacion:expr -> izquierda:expr  operador:operador  derecha:expr
@@ -17,9 +15,9 @@ public class Expr_operacion extends AbstractExpr {
 		this.operador = operador;
 		this.derecha = derecha;
 
-       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
-       // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(izquierda, operador, derecha);
+		// Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
+		// Obtiene la linea/columna a partir de las de los hijos.
+		setPositions(izquierda, operador, derecha);
 	}
 
 	public Expr_operacion(Object izquierda, Object operador, Object derecha) {
@@ -27,14 +25,15 @@ public class Expr_operacion extends AbstractExpr {
 		this.operador = (Operador) getAST(operador);
 		this.derecha = (Expr) getAST(derecha);
 
-       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
-       // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(izquierda, operador, derecha);
+		// Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
+		// Obtiene la linea/columna a partir de las de los hijos.
+		setPositions(izquierda, operador, derecha);
 	}
 
 	public Expr getIzquierda() {
 		return izquierda;
 	}
+
 	public void setIzquierda(Expr izquierda) {
 		this.izquierda = izquierda;
 	}
@@ -42,6 +41,7 @@ public class Expr_operacion extends AbstractExpr {
 	public Operador getOperador() {
 		return operador;
 	}
+
 	public void setOperador(Operador operador) {
 		this.operador = operador;
 	}
@@ -49,12 +49,13 @@ public class Expr_operacion extends AbstractExpr {
 	public Expr getDerecha() {
 		return derecha;
 	}
+
 	public void setDerecha(Expr derecha) {
 		this.derecha = derecha;
 	}
 
 	@Override
-	public Object accept(Visitor v, Object param) { 
+	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
 	}
 
@@ -63,6 +64,6 @@ public class Expr_operacion extends AbstractExpr {
 	private Expr derecha;
 
 	public String toString() {
-       return "{izquierda:" + getIzquierda() + ", operador:" + getOperador() + ", derecha:" + getDerecha() + "}";
-   }
+		return "{izquierda:" + getIzquierda() + ", operador:" + getOperador() + ", derecha:" + getDerecha() + "}";
+	}
 }

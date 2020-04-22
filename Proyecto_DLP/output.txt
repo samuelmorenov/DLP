@@ -4,81 +4,51 @@ halt
 main:
 enter 0
 
-#line 26
+#line 14
 pusha 0
-push 1111
+push 6
+add
+push 2
+add
+push 1
 store
 
-#line 27
-pusha 2
-pushf 2222.2
-storef
-
-#line 28
-pusha 6
-push 3
-push 2
-mul
+#line 15
+pusha 0
+push 6
 add
-push 3333
+push 2
+add
+push 2
 store
 
-#line 29
-pusha 16
-push 4
-add
-pushf 4444.4
-storef
-
-#line 31
+#line 16
 pusha 0
-load
-out
-pushb 10
-outb
-
-#line 32
-pusha 2
-loadf
-pusha 16
-push 4
+push 6
 add
-loadf
-addf
-outf
-pushb 10
-outb
-
-#line 33
-pusha 6
-push 3
 push 2
-mul
+add
+pusha 0
+push 6
+add
+push 2
+add
+load
+pusha 0
+push 6
+add
+push 2
+add
+load
+add
+store
+
+#line 17
+pusha 0
+push 6
+add
+push 2
 add
 load
 out
-pushb 10
-outb
-
-#line 35
-pusha 0
-load
-push 0
-gt
-pusha 2
-loadf
-pushf 3333.3
-ltf
-and
-out
-pushb 10
-outb
-
-#line 36
-pusha 2
-loadf
-f2i
-out
-pushb 10
-outb
 ret 0, 0, 0

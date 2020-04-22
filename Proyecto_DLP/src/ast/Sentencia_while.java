@@ -5,7 +5,6 @@
 package ast;
 
 import java.util.*;
-import org.antlr.v4.runtime.*;
 
 import visitor.*;
 
@@ -17,23 +16,24 @@ public class Sentencia_while extends AbstractSentencia {
 		this.condicion = condicion;
 		this.sentencias = sentencias;
 
-       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
-       // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(condicion, sentencias);
+		// Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
+		// Obtiene la linea/columna a partir de las de los hijos.
+		setPositions(condicion, sentencias);
 	}
 
 	public Sentencia_while(Object condicion, Object sentencias) {
 		this.condicion = (Expr) getAST(condicion);
 		this.sentencias = this.<Sentencia>getAstFromContexts(sentencias);
 
-       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
-       // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(condicion, sentencias);
+		// Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
+		// Obtiene la linea/columna a partir de las de los hijos.
+		setPositions(condicion, sentencias);
 	}
 
 	public Expr getCondicion() {
 		return condicion;
 	}
+
 	public void setCondicion(Expr condicion) {
 		this.condicion = condicion;
 	}
@@ -41,12 +41,13 @@ public class Sentencia_while extends AbstractSentencia {
 	public List<Sentencia> getSentencias() {
 		return sentencias;
 	}
+
 	public void setSentencias(List<Sentencia> sentencias) {
 		this.sentencias = sentencias;
 	}
 
 	@Override
-	public Object accept(Visitor v, Object param) { 
+	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
 	}
 
@@ -54,6 +55,6 @@ public class Sentencia_while extends AbstractSentencia {
 	private List<Sentencia> sentencias;
 
 	public String toString() {
-       return "{condicion:" + getCondicion() + ", sentencias:" + getSentencias() + "}";
-   }
+		return "{condicion:" + getCondicion() + ", sentencias:" + getSentencias() + "}";
+	}
 }

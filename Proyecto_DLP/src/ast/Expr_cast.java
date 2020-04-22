@@ -4,8 +4,6 @@
 
 package ast;
 
-import org.antlr.v4.runtime.*;
-
 import visitor.*;
 
 //	expr_cast:expr -> tipo_convertido:tipo  expr:expr
@@ -16,23 +14,24 @@ public class Expr_cast extends AbstractExpr {
 		this.tipo_convertido = tipo_convertido;
 		this.expr = expr;
 
-       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
-       // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(tipo_convertido, expr);
+		// Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
+		// Obtiene la linea/columna a partir de las de los hijos.
+		setPositions(tipo_convertido, expr);
 	}
 
 	public Expr_cast(Object tipo_convertido, Object expr) {
 		this.tipo_convertido = (Tipo) getAST(tipo_convertido);
 		this.expr = (Expr) getAST(expr);
 
-       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
-       // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(tipo_convertido, expr);
+		// Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
+		// Obtiene la linea/columna a partir de las de los hijos.
+		setPositions(tipo_convertido, expr);
 	}
 
 	public Tipo getTipo_convertido() {
 		return tipo_convertido;
 	}
+
 	public void setTipo_convertido(Tipo tipo_convertido) {
 		this.tipo_convertido = tipo_convertido;
 	}
@@ -40,12 +39,13 @@ public class Expr_cast extends AbstractExpr {
 	public Expr getExpr() {
 		return expr;
 	}
+
 	public void setExpr(Expr expr) {
 		this.expr = expr;
 	}
 
 	@Override
-	public Object accept(Visitor v, Object param) { 
+	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
 	}
 
@@ -53,6 +53,6 @@ public class Expr_cast extends AbstractExpr {
 	private Expr expr;
 
 	public String toString() {
-       return "{tipo_convertido:" + getTipo_convertido() + ", expr:" + getExpr() + "}";
-   }
+		return "{tipo_convertido:" + getTipo_convertido() + ", expr:" + getExpr() + "}";
+	}
 }

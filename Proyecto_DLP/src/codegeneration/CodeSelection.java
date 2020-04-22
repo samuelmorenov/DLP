@@ -227,15 +227,24 @@ public class CodeSelection extends DefaultVisitor {
 		return null;
 	}
 
+	// class Expr_acceso_struct { Expr struct; String campo; }
 	public Object visit(Expr_acceso_struct node, Object param) {
-		node.getStruct().accept(this, CodeFunction.ADDRESS); // address[[struct]]
+
+		// super.visit(node, param);
+
+		if (node.getStruct() != null) {
+			node.getStruct().accept(this, CodeFunction.ADDRESS); // address[[struct]]
+		}
 		out("push " + node.getTipo().getSize()); // PUSH {tipo.size} //TODO comprobar esto
+		System.out.println("¿1?");
 		out("add");// ADD
 
 		if (((CodeFunction) param) == CodeFunction.VALUE) {
 			out("load", node.getTipo()); // LOAD< expr_ident.type> //TODO comprobar esto
+			System.out.println("¿2?");
 		}
 		return null;
+
 	}
 
 	public Object visit(Expr_cast node, Object param) {
@@ -257,7 +266,7 @@ public class CodeSelection extends DefaultVisitor {
 	private void out(String instruction) {
 		writer.println(instruction);
 		// TODO: Comentar para no mostrar la generacion de codigo
-		//System.out.println(instruction);
+		System.out.println(instruction);
 	}
 
 	private void out(String instruccion, Tipo tipo) {

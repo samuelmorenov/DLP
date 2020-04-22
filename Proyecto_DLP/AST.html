@@ -22,96 +22,80 @@
 <body><pre>
 [ASTPrinter] -------------------------------- line:col  line:col
 
-<span class="dots"></span>Program &rarr;                                                   <span class="pos">14:5  36:20  </span><span class="sourceText">var </span><span class="posText">a:int;</span><span class="sourceText"> ... </span><span class="posText">println cast<int>(b</span><span class="sourceText">);			// 2222</span>
+<span class="dots"></span>Program &rarr;                                                   <span class="pos">1:8  17:21   </span><span class="sourceText">struct </span><span class="posText">EstructPequenio {</span><span class="sourceText"> ... </span><span class="posText">print(eg.ep.entero3</span><span class="sourceText">); </span>
 <span class="dots">.  </span>definicion  <span class="type">List&lt;Definicion&gt;</span> = 
-<span class="dots">.  .  </span>Definicion_variable &rarr;                                 <span class="pos">14:5  14:5   </span><span class="sourceText">var </span><span class="posText">a</span><span class="sourceText">:int;</span>
-<span class="dots">.  .  |  </span>"<span class="value">a</span>"  
-<span class="dots">.  .  |  </span><span class="value">Tipo_Int</span> &rarr;                                         <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  </span>Definicion_struct &rarr;                                   <span class="pos">1:8  4:8     </span><span class="sourceText">struct </span><span class="posText">EstructPequenio {</span><span class="sourceText"> ... </span><span class="posText">entero3</span><span class="sourceText">:int;</span>
+<span class="dots">.  .  |  </span>"<span class="value">EstructPequenio</span>"  
+<span class="dots">.  .  |  </span>campo_struct  <span class="type">List&lt;Campo_struct&gt;</span> = 
+<span class="dots">.  .  |  .  </span>Campo_struct &rarr;                                  <span class="pos">2:2  2:8     </span><span class="sourceText"></span><span class="posText">entero1</span><span class="sourceText">:int;</span>
+<span class="dots">.  .  |  .  |  </span>"<span class="value">entero1</span>"  
+<span class="dots">.  .  |  .  |  </span><span class="value">Tipo_Int</span> &rarr;                                   <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  .  |  </span><span class="value">0</span>  <span class="type">int</span>
+<span class="dots">.  .  |  .  </span>Campo_struct &rarr;                                  <span class="pos">3:2  3:8     </span><span class="sourceText"></span><span class="posText">entero2</span><span class="sourceText">:int;</span>
+<span class="dots">.  .  |  .  |  </span>"<span class="value">entero2</span>"  
+<span class="dots">.  .  |  .  |  </span><span class="value">Tipo_Int</span> &rarr;                                   <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  .  |  </span><span class="value">2</span>  <span class="type">int</span>
+<span class="dots">.  .  |  .  </span>Campo_struct &rarr;                                  <span class="pos">4:2  4:8     </span><span class="sourceText"></span><span class="posText">entero3</span><span class="sourceText">:int;</span>
+<span class="dots">.  .  |  .  |  </span>"<span class="value">entero3</span>"  
+<span class="dots">.  .  |  .  |  </span><span class="value">Tipo_Int</span> &rarr;                                   <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  .  |  </span><span class="value">4</span>  <span class="type">int</span>
+<span class="dots">.  .  </span>Definicion_struct &rarr;                                   <span class="pos">7:8  8:19    </span><span class="sourceText">struct </span><span class="posText">EstructGrande {</span><span class="sourceText"> ... </span><span class="posText">ep:EstructPequenio</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  </span>"<span class="value">EstructGrande</span>"  
+<span class="dots">.  .  |  </span>campo_struct  <span class="type">List&lt;Campo_struct&gt;</span> = 
+<span class="dots">.  .  |  .  </span>Campo_struct &rarr;                                  <span class="pos">8:2  8:19    </span><span class="sourceText"></span><span class="posText">ep:EstructPequenio</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  |  </span>"<span class="value">ep</span>"  
+<span class="dots">.  .  |  .  |  </span>"EstructPequenio"  <span class="type">Tipo_Struct.nombre</span>        <span class="pos">8:5  8:19    </span><span class="sourceText">ep:</span><span class="posText">EstructPequenio</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  |  </span><span class="value">0</span>  <span class="type">int</span>
+<span class="dots">.  .  </span>Definicion_variable &rarr;                                 <span class="pos">11:5  11:20  </span><span class="sourceText">var </span><span class="posText">eg:EstructGrande</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  </span>"<span class="value">eg</span>"  
+<span class="dots">.  .  |  </span>"EstructGrande"  <span class="type">Tipo_Struct.nombre</span>                <span class="pos">11:8  11:20  </span><span class="sourceText">var eg:</span><span class="posText">EstructGrande</span><span class="sourceText">;</span>
 <span class="dots">.  .  |  </span><span class="value">GLOBAL</span>  <span class="type">Ambito</span>
 <span class="dots">.  .  |  </span><span class="value">0</span>  <span class="type">int</span>
-<span class="dots">.  .  </span>Definicion_variable &rarr;                                 <span class="pos">15:5  15:5   </span><span class="sourceText">var </span><span class="posText">b</span><span class="sourceText">:float;</span>
-<span class="dots">.  .  |  </span>"<span class="value">b</span>"  
-<span class="dots">.  .  |  </span><span class="value">Tipo_Float</span> &rarr;                                       <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
-<span class="dots">.  .  |  </span><span class="value">GLOBAL</span>  <span class="type">Ambito</span>
-<span class="dots">.  .  |  </span><span class="value">2</span>  <span class="type">int</span>
-<span class="dots">.  .  </span>Definicion_struct &rarr;                                   <span class="pos">17:8  19:2   </span><span class="sourceText">struct </span><span class="posText">Punto {</span><span class="sourceText"> ... </span><span class="posText">y</span><span class="sourceText">:float;</span>
-<span class="dots">.  .  |  </span>"<span class="value">Punto</span>"  
-<span class="dots">.  .  |  </span>campo_struct  <span class="type">List&lt;Campo_struct&gt;</span> = 
-<span class="dots">.  .  |  .  </span>Campo_struct &rarr;                                  <span class="pos">18:2  18:2   </span><span class="sourceText"></span><span class="posText">x</span><span class="sourceText">:float;</span>
-<span class="dots">.  .  |  .  |  </span>"<span class="value">x</span>"  
-<span class="dots">.  .  |  .  |  </span><span class="value">Tipo_Float</span> &rarr;                                 <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
-<span class="dots">.  .  |  .  |  </span><span class="value">0</span>  <span class="type">int</span>
-<span class="dots">.  .  |  .  </span>Campo_struct &rarr;                                  <span class="pos">19:2  19:2   </span><span class="sourceText"></span><span class="posText">y</span><span class="sourceText">:float;</span>
-<span class="dots">.  .  |  .  |  </span>"<span class="value">y</span>"  
-<span class="dots">.  .  |  .  |  </span><span class="value">Tipo_Float</span> &rarr;                                 <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
-<span class="dots">.  .  |  .  |  </span><span class="value">4</span>  <span class="type">int</span>
-<span class="dots">.  .  </span>Definicion_variable &rarr;                                 <span class="pos">22:5  22:8   </span><span class="sourceText">var </span><span class="posText">v:[5</span><span class="sourceText">]int;</span>
-<span class="dots">.  .  |  </span>"<span class="value">v</span>"  
-<span class="dots">.  .  |  </span>Tipo_Array &rarr;                                       <span class="pos">22:8  22:8   </span><span class="sourceText">var v:[</span><span class="posText">5</span><span class="sourceText">]int;</span>
-<span class="dots">.  .  |  .  </span>"<span class="value">5</span>"  
-<span class="dots">.  .  |  .  </span><span class="value">Tipo_Int</span> &rarr;                                      <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
-<span class="dots">.  .  |  </span><span class="value">GLOBAL</span>  <span class="type">Ambito</span>
-<span class="dots">.  .  |  </span><span class="value">6</span>  <span class="type">int</span>
-<span class="dots">.  .  </span>Definicion_variable &rarr;                                 <span class="pos">23:5  23:11  </span><span class="sourceText">var </span><span class="posText">p:Punto</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  </span>"<span class="value">p</span>"  
-<span class="dots">.  .  |  </span>"Punto"  <span class="type">Tipo_Struct.nombre</span>                        <span class="pos">23:7  23:11  </span><span class="sourceText">var p:</span><span class="posText">Punto</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  </span><span class="value">GLOBAL</span>  <span class="type">Ambito</span>
-<span class="dots">.  .  |  </span><span class="value">16</span>  <span class="type">int</span>
-<span class="dots">.  .  </span>Definicion_funcion &rarr;                                  <span class="pos">25:1  36:20  </span><span class="sourceText"></span><span class="posText">main() {</span><span class="sourceText"> ... </span><span class="posText">println cast<int>(b</span><span class="sourceText">);			// 2222</span>
+<span class="dots">.  .  </span>Definicion_funcion &rarr;                                  <span class="pos">13:1  17:21  </span><span class="sourceText"></span><span class="posText">main() {</span><span class="sourceText"> ... </span><span class="posText">print(eg.ep.entero3</span><span class="sourceText">); </span>
 <span class="dots">.  .  |  </span>"<span class="value">main</span>"  
 <span class="dots">.  .  |  </span>parametros  <span class="type">List&lt;Definicion_variable&gt;</span> = 
 <span class="dots">.  .  |  </span><span class="value">Tipo_Void</span> &rarr;                                        <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
 <span class="dots">.  .  |  </span>locales  <span class="type">List&lt;Definicion_variable&gt;</span> = 
 <span class="dots">.  .  |  </span>sentencias  <span class="type">List&lt;Sentencia&gt;</span> = 
-<span class="dots">.  .  |  .  </span>Sentencia_asignacion &rarr;                          <span class="pos">26:2  26:9   </span><span class="sourceText"></span><span class="posText">a = 1111</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span>"a"  <span class="type">Expr_uso_variable.string</span>                <span class="pos">26:2  26:2   </span><span class="sourceText"></span><span class="posText">a</span><span class="sourceText"> = 1111;</span>
-<span class="dots">.  .  |  .  |  </span>"1111"  <span class="type">Expr_int.string</span>                      <span class="pos">26:6  26:9   </span><span class="sourceText">a = </span><span class="posText">1111</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  </span>Sentencia_asignacion &rarr;                          <span class="pos">27:2  27:11  </span><span class="sourceText"></span><span class="posText">b = 2222.2</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span>"b"  <span class="type">Expr_uso_variable.string</span>                <span class="pos">27:2  27:2   </span><span class="sourceText"></span><span class="posText">b</span><span class="sourceText"> = 2222.2;</span>
-<span class="dots">.  .  |  .  |  </span>"2222.2"  <span class="type">Expr_real.string</span>                   <span class="pos">27:6  27:11  </span><span class="sourceText">b = </span><span class="posText">2222.2</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  </span>Sentencia_asignacion &rarr;                          <span class="pos">28:2  28:12  </span><span class="sourceText"></span><span class="posText">v[3] = 3333</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span>Expr_acceso_vector &rarr;                         <span class="pos">28:2  28:4   </span><span class="sourceText"></span><span class="posText">v[3</span><span class="sourceText">] = 3333;</span>
-<span class="dots">.  .  |  .  |  .  </span>"v"  <span class="type">Expr_uso_variable.string</span>             <span class="pos">28:2  28:2   </span><span class="sourceText"></span><span class="posText">v</span><span class="sourceText">[3] = 3333;</span>
-<span class="dots">.  .  |  .  |  .  </span>"3"  <span class="type">Expr_int.string</span>                      <span class="pos">28:4  28:4   </span><span class="sourceText">v[</span><span class="posText">3</span><span class="sourceText">] = 3333;</span>
-<span class="dots">.  .  |  .  |  </span>"3333"  <span class="type">Expr_int.string</span>                      <span class="pos">28:9  28:12  </span><span class="sourceText">v[3] = </span><span class="posText">3333</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  </span>Sentencia_asignacion &rarr;                          <span class="pos">29:2  29:13  </span><span class="sourceText"></span><span class="posText">p.y = 4444.4</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span>Expr_acceso_struct &rarr;                         <span class="pos">29:2  29:4   </span><span class="sourceText"></span><span class="posText">p.y</span><span class="sourceText"> = 4444.4;</span>
-<span class="dots">.  .  |  .  |  .  </span>"p"  <span class="type">Expr_uso_variable.string</span>             <span class="pos">29:2  29:2   </span><span class="sourceText"></span><span class="posText">p</span><span class="sourceText">.y = 4444.4;</span>
-<span class="dots">.  .  |  .  |  .  </span>"<span class="value">y</span>"  
-<span class="dots">.  .  |  .  |  </span>"4444.4"  <span class="type">Expr_real.string</span>                   <span class="pos">29:8  29:13  </span><span class="sourceText">p.y = </span><span class="posText">4444.4</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  </span>Sentencia_print &rarr;                               <span class="pos">31:10  31:10 </span><span class="sourceText">println </span><span class="posText">a</span><span class="sourceText">;		// 1111</span>
-<span class="dots">.  .  |  .  |  </span>"a"  <span class="type">Expr_uso_variable.string</span>                <span class="pos">31:10  31:10 </span><span class="sourceText">println </span><span class="posText">a</span><span class="sourceText">;		// 1111</span>
-<span class="dots">.  .  |  .  |  </span>"<span class="value">ln</span>"  
-<span class="dots">.  .  |  .  </span>Sentencia_print &rarr;                               <span class="pos">32:10  32:16 </span><span class="sourceText">println </span><span class="posText">b + p.y</span><span class="sourceText">;	// 6666.6</span>
-<span class="dots">.  .  |  .  |  </span>Expr_operacion &rarr;                             <span class="pos">32:10  32:16 </span><span class="sourceText">println </span><span class="posText">b + p.y</span><span class="sourceText">;	// 6666.6</span>
-<span class="dots">.  .  |  .  |  .  </span>"b"  <span class="type">Expr_uso_variable.string</span>             <span class="pos">32:10  32:10 </span><span class="sourceText">println </span><span class="posText">b</span><span class="sourceText"> + p.y;	// 6666.6</span>
+<span class="dots">.  .  |  .  </span>Sentencia_asignacion &rarr;                          <span class="pos">14:3  14:19  </span><span class="sourceText"></span><span class="posText">eg.ep.entero1 = 1</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  |  </span>Expr_acceso_struct &rarr;                         <span class="pos">14:3  14:15  </span><span class="sourceText"></span><span class="posText">eg.ep.entero1</span><span class="sourceText"> = 1;</span>
+<span class="dots">.  .  |  .  |  .  </span>Expr_acceso_struct &rarr;                      <span class="pos">14:3  14:7   </span><span class="sourceText"></span><span class="posText">eg.ep</span><span class="sourceText">.entero1 = 1;</span>
+<span class="dots">.  .  |  .  |  .  |  </span>"eg"  <span class="type">Expr_uso_variable.string</span>         <span class="pos">14:3  14:4   </span><span class="sourceText"></span><span class="posText">eg</span><span class="sourceText">.ep.entero1 = 1;</span>
+<span class="dots">.  .  |  .  |  .  |  </span>"<span class="value">ep</span>"  
+<span class="dots">.  .  |  .  |  .  </span>"<span class="value">entero1</span>"  
+<span class="dots">.  .  |  .  |  </span>"1"  <span class="type">Expr_int.string</span>                         <span class="pos">14:19  14:19 </span><span class="sourceText">eg.ep.entero1 = </span><span class="posText">1</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  </span>Sentencia_asignacion &rarr;                          <span class="pos">15:3  15:19  </span><span class="sourceText"></span><span class="posText">eg.ep.entero2 = 2</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  |  </span>Expr_acceso_struct &rarr;                         <span class="pos">15:3  15:15  </span><span class="sourceText"></span><span class="posText">eg.ep.entero2</span><span class="sourceText"> = 2;</span>
+<span class="dots">.  .  |  .  |  .  </span>Expr_acceso_struct &rarr;                      <span class="pos">15:3  15:7   </span><span class="sourceText"></span><span class="posText">eg.ep</span><span class="sourceText">.entero2 = 2;</span>
+<span class="dots">.  .  |  .  |  .  |  </span>"eg"  <span class="type">Expr_uso_variable.string</span>         <span class="pos">15:3  15:4   </span><span class="sourceText"></span><span class="posText">eg</span><span class="sourceText">.ep.entero2 = 2;</span>
+<span class="dots">.  .  |  .  |  .  |  </span>"<span class="value">ep</span>"  
+<span class="dots">.  .  |  .  |  .  </span>"<span class="value">entero2</span>"  
+<span class="dots">.  .  |  .  |  </span>"2"  <span class="type">Expr_int.string</span>                         <span class="pos">15:19  15:19 </span><span class="sourceText">eg.ep.entero2 = </span><span class="posText">2</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  </span>Sentencia_asignacion &rarr;                          <span class="pos">16:3  16:47  </span><span class="sourceText"></span><span class="posText">eg.ep.entero3 = eg.ep.entero1 + eg.ep.entero2</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  |  </span>Expr_acceso_struct &rarr;                         <span class="pos">16:3  16:15  </span><span class="sourceText"></span><span class="posText">eg.ep.entero3</span><span class="sourceText"> = eg.ep.entero1 + eg.ep.entero2;</span>
+<span class="dots">.  .  |  .  |  .  </span>Expr_acceso_struct &rarr;                      <span class="pos">16:3  16:7   </span><span class="sourceText"></span><span class="posText">eg.ep</span><span class="sourceText">.entero3 = eg.ep.entero1 + eg.ep.entero2;</span>
+<span class="dots">.  .  |  .  |  .  |  </span>"eg"  <span class="type">Expr_uso_variable.string</span>         <span class="pos">16:3  16:4   </span><span class="sourceText"></span><span class="posText">eg</span><span class="sourceText">.ep.entero3 = eg.ep.entero1 + eg.ep.entero2;</span>
+<span class="dots">.  .  |  .  |  .  |  </span>"<span class="value">ep</span>"  
+<span class="dots">.  .  |  .  |  .  </span>"<span class="value">entero3</span>"  
+<span class="dots">.  .  |  .  |  </span>Expr_operacion &rarr;                             <span class="pos">16:19  16:47 </span><span class="sourceText">eg.ep.entero3 = </span><span class="posText">eg.ep.entero1 + eg.ep.entero2</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  |  .  </span>Expr_acceso_struct &rarr;                      <span class="pos">16:19  16:31 </span><span class="sourceText">eg.ep.entero3 = </span><span class="posText">eg.ep.entero1</span><span class="sourceText"> + eg.ep.entero2;</span>
+<span class="dots">.  .  |  .  |  .  |  </span>Expr_acceso_struct &rarr;                   <span class="pos">16:19  16:23 </span><span class="sourceText">eg.ep.entero3 = </span><span class="posText">eg.ep</span><span class="sourceText">.entero1 + eg.ep.entero2;</span>
+<span class="dots">.  .  |  .  |  .  |  .  </span>"eg"  <span class="type">Expr_uso_variable.string</span>      <span class="pos">16:19  16:20 </span><span class="sourceText">eg.ep.entero3 = </span><span class="posText">eg</span><span class="sourceText">.ep.entero1 + eg.ep.entero2;</span>
+<span class="dots">.  .  |  .  |  .  |  .  </span>"<span class="value">ep</span>"  
+<span class="dots">.  .  |  .  |  .  |  </span>"<span class="value">entero1</span>"  
 <span class="dots">.  .  |  .  |  .  </span>"+"  <span class="type">Operador_aritmetico.string</span>           <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
-<span class="dots">.  .  |  .  |  .  </span>Expr_acceso_struct &rarr;                      <span class="pos">32:14  32:16 </span><span class="sourceText">println b + </span><span class="posText">p.y</span><span class="sourceText">;	// 6666.6</span>
-<span class="dots">.  .  |  .  |  .  |  </span>"p"  <span class="type">Expr_uso_variable.string</span>          <span class="pos">32:14  32:14 </span><span class="sourceText">println b + </span><span class="posText">p</span><span class="sourceText">.y;	// 6666.6</span>
-<span class="dots">.  .  |  .  |  .  |  </span>"<span class="value">y</span>"  
-<span class="dots">.  .  |  .  |  </span>"<span class="value">ln</span>"  
-<span class="dots">.  .  |  .  </span>Sentencia_print &rarr;                               <span class="pos">33:10  33:12 </span><span class="sourceText">println </span><span class="posText">v[3</span><span class="sourceText">];		// 3333</span>
-<span class="dots">.  .  |  .  |  </span>Expr_acceso_vector &rarr;                         <span class="pos">33:10  33:12 </span><span class="sourceText">println </span><span class="posText">v[3</span><span class="sourceText">];		// 3333</span>
-<span class="dots">.  .  |  .  |  .  </span>"v"  <span class="type">Expr_uso_variable.string</span>             <span class="pos">33:10  33:10 </span><span class="sourceText">println </span><span class="posText">v</span><span class="sourceText">[3];		// 3333</span>
-<span class="dots">.  .  |  .  |  .  </span>"3"  <span class="type">Expr_int.string</span>                      <span class="pos">33:12  33:12 </span><span class="sourceText">println v[</span><span class="posText">3</span><span class="sourceText">];		// 3333</span>
-<span class="dots">.  .  |  .  |  </span>"<span class="value">ln</span>"  
-<span class="dots">.  .  |  .  </span>Sentencia_print &rarr;                               <span class="pos">35:10  35:28 </span><span class="sourceText">println </span><span class="posText">a > 0 && b < 3333.3</span><span class="sourceText">;	// 1</span>
-<span class="dots">.  .  |  .  |  </span>Expr_operacion &rarr;                             <span class="pos">35:10  35:28 </span><span class="sourceText">println </span><span class="posText">a > 0 && b < 3333.3</span><span class="sourceText">;	// 1</span>
-<span class="dots">.  .  |  .  |  .  </span>Expr_operacion &rarr;                          <span class="pos">35:10  35:14 </span><span class="sourceText">println </span><span class="posText">a > 0</span><span class="sourceText"> && b < 3333.3;	// 1</span>
-<span class="dots">.  .  |  .  |  .  |  </span>"a"  <span class="type">Expr_uso_variable.string</span>          <span class="pos">35:10  35:10 </span><span class="sourceText">println </span><span class="posText">a</span><span class="sourceText"> > 0 && b < 3333.3;	// 1</span>
-<span class="dots">.  .  |  .  |  .  |  </span>">"  <span class="type">Operador_comparacion.string</span>       <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
-<span class="dots">.  .  |  .  |  .  |  </span>"0"  <span class="type">Expr_int.string</span>                   <span class="pos">35:14  35:14 </span><span class="sourceText">println a > </span><span class="posText">0</span><span class="sourceText"> && b < 3333.3;	// 1</span>
-<span class="dots">.  .  |  .  |  .  </span>"&&"  <span class="type">Operador_logico.string</span>              <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
-<span class="dots">.  .  |  .  |  .  </span>Expr_operacion &rarr;                          <span class="pos">35:19  35:28 </span><span class="sourceText">println a > 0 && </span><span class="posText">b < 3333.3</span><span class="sourceText">;	// 1</span>
-<span class="dots">.  .  |  .  |  .  |  </span>"b"  <span class="type">Expr_uso_variable.string</span>          <span class="pos">35:19  35:19 </span><span class="sourceText">println a > 0 && </span><span class="posText">b</span><span class="sourceText"> < 3333.3;	// 1</span>
-<span class="dots">.  .  |  .  |  .  |  </span>"<"  <span class="type">Operador_comparacion.string</span>       <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
-<span class="dots">.  .  |  .  |  .  |  </span>"3333.3"  <span class="type">Expr_real.string</span>             <span class="pos">35:23  35:28 </span><span class="sourceText">println a > 0 && b < </span><span class="posText">3333.3</span><span class="sourceText">;	// 1</span>
-<span class="dots">.  .  |  .  |  </span>"<span class="value">ln</span>"  
-<span class="dots">.  .  |  .  </span>Sentencia_print &rarr;                               <span class="pos">36:20  36:20 </span><span class="sourceText">println cast<int>(</span><span class="posText">b</span><span class="sourceText">);			// 2222</span>
-<span class="dots">.  .  |  .  |  </span>Expr_cast &rarr;                                  <span class="pos">36:20  36:20 </span><span class="sourceText">println cast<int>(</span><span class="posText">b</span><span class="sourceText">);			// 2222</span>
-<span class="dots">.  .  |  .  |  .  </span><span class="value">Tipo_Int</span> &rarr;                                <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
-<span class="dots">.  .  |  .  |  .  </span>"b"  <span class="type">Expr_uso_variable.string</span>             <span class="pos">36:20  36:20 </span><span class="sourceText">println cast<int>(</span><span class="posText">b</span><span class="sourceText">);			// 2222</span>
-<span class="dots">.  .  |  .  |  </span>"<span class="value">ln</span>"  
+<span class="dots">.  .  |  .  |  .  </span>Expr_acceso_struct &rarr;                      <span class="pos">16:35  16:47 </span><span class="sourceText">eg.ep.entero3 = eg.ep.entero1 + </span><span class="posText">eg.ep.entero2</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  |  .  |  </span>Expr_acceso_struct &rarr;                   <span class="pos">16:35  16:39 </span><span class="sourceText">eg.ep.entero3 = eg.ep.entero1 + </span><span class="posText">eg.ep</span><span class="sourceText">.entero2;</span>
+<span class="dots">.  .  |  .  |  .  |  .  </span>"eg"  <span class="type">Expr_uso_variable.string</span>      <span class="pos">16:35  16:36 </span><span class="sourceText">eg.ep.entero3 = eg.ep.entero1 + </span><span class="posText">eg</span><span class="sourceText">.ep.entero2;</span>
+<span class="dots">.  .  |  .  |  .  |  .  </span>"<span class="value">ep</span>"  
+<span class="dots">.  .  |  .  |  .  |  </span>"<span class="value">entero2</span>"  
+<span class="dots">.  .  |  .  </span>Sentencia_print &rarr;                               <span class="pos">17:9  17:21  </span><span class="sourceText">print(</span><span class="posText">eg.ep.entero3</span><span class="sourceText">); </span>
+<span class="dots">.  .  |  .  |  </span>Expr_acceso_struct &rarr;                         <span class="pos">17:9  17:21  </span><span class="sourceText">print(</span><span class="posText">eg.ep.entero3</span><span class="sourceText">); </span>
+<span class="dots">.  .  |  .  |  .  </span>Expr_acceso_struct &rarr;                      <span class="pos">17:9  17:13  </span><span class="sourceText">print(</span><span class="posText">eg.ep</span><span class="sourceText">.entero3); </span>
+<span class="dots">.  .  |  .  |  .  |  </span>"eg"  <span class="type">Expr_uso_variable.string</span>         <span class="pos">17:9  17:10  </span><span class="sourceText">print(</span><span class="posText">eg</span><span class="sourceText">.ep.entero3); </span>
+<span class="dots">.  .  |  .  |  .  |  </span>"<span class="value">ep</span>"  
+<span class="dots">.  .  |  .  |  .  </span>"<span class="value">entero3</span>"  
+<span class="dots">.  .  |  .  |  </span>"<span class="value"></span>"  
 
 [ASTPrinter] --------------------------------
 </pre>
