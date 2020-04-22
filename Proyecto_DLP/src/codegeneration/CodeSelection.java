@@ -273,7 +273,13 @@ public class CodeSelection extends DefaultVisitor {
 		if (node.getStruct() != null) {
 			node.getStruct().accept(this, CodeFunction.ADDRESS); // address[[struct]]
 		}
-		out("push " + node.getTipo().getSize()); // PUSH {tipo.size} //TODO comprobar esto
+
+		// TODO esta es la mejor manera?
+		Campo_struct campo = node.getCampo_struct();
+		if (campo == null)
+			return null;
+
+		out("push " + campo.getTipo().getSize()); // PUSH {tipo.size} //TODO comprobar esto
 		System.out.println("¿1?");
 		out("add");// ADD
 

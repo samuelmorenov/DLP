@@ -348,15 +348,8 @@ public class TypeChecking extends DefaultVisitor {
 			predicado(false, "Debe ser tipo struct", node);
 			return null;
 		}
-		Definicion_struct def = ((Tipo_Struct) node.getStruct().getTipo()).getDefinicion();
 
-		Campo_struct campo = null;
-		for (Campo_struct cs : def.getCampo_struct()) {
-			if (cs.getNombre().equals(node.getCampo())) {
-				campo = cs;
-			}
-		}
-
+		Campo_struct campo = node.getCampo_struct();
 		if (campo == null) {
 			predicado(false, "Campo no definido", node);
 			node.setTipo(new Tipo_Error());

@@ -43,6 +43,18 @@ public class Expr_acceso_struct extends AbstractExpr {
 	public void setCampo(String campo) {
 		this.campo = campo;
 	}
+	
+	// TODO esta es la mejor manera?
+	public Campo_struct getCampo_struct() {
+		Definicion_struct def = ((Tipo_Struct) struct.getTipo()).getDefinicion();
+		Campo_struct campoAux = null;
+		for (Campo_struct cs : def.getCampo_struct()) {
+			if (cs.getNombre().equals(campo)) {
+				campoAux = cs;
+			}
+		}
+		return campoAux;
+	}
 
 	@Override
 	public Object accept(Visitor v, Object param) { 
