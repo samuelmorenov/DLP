@@ -37,53 +37,55 @@ public class CodeSelection extends DefaultVisitor {
 	}
 
 	public Object visit(Program node, Object param) {
-		out("#source \"" + sourceFile + "\""); // #SOURCE {file}
-		out("call main");// CALL main
-		out("halt");// HALT
-		visitChildren(node.getDefinicion(), param);// define[[bloquei]]
+		// #SOURCE {file}
+		out("#source \"" + sourceFile + "\"");
+		// CALL main
+		out("call main");
+		// HALT
+		out("halt");
+		// define[[definicioni]]
+		visitChildren(node.getDefinicion(), param);
 
 		return null;
 	}
-
-	//////////////////////////////////////////////
-	////////////// OPCIONAL: /////////////////////
-	//////////////////////////////////////////////
 
 	// class Definicion_variable { String nombre; Tipo tipo; Ambito ambito; }
 	public Object visit(Definicion_variable node, Object param) {
 
 		super.visit(node, param);
-		out("#global " + node.getNombre() + ":" + node.getTipo().getMemoryAllocationString());
 		// #global <nombre>:<tipo>
-
+		out("#global " + node.getNombre() + ":" + node.getTipo().getMemoryAllocationString());
 		return null;
 	}
 
 	// class Definicion_struct { String nombre; List<Campo_struct> campo_struct; }
 	public Object visit(Definicion_struct node, Object param) {
-
-		out("#type " + node.getNombre() + ": {");// #type Punto: {
-		super.visit(node, param);// x:int y:int
-		out("}");// }
-
-		return null;
-	}
-
-	// class Campo_struct { String nombre; Tipo tipo; }
-	public Object visit(Campo_struct node, Object param) {
-
-		super.visit(node, param);
-		out(node.getNombre() + ":" + node.getTipo().getMemoryAllocationString());
+		// #type Punto: {
+		out("#type " + node.getNombre() + ": {");
 		// <nombre>:<tipo>
-
+		super.visit(node, param);
+		// }
+		out("}");
 		return null;
 	}
-
-	//////////////////////////////////////////////
-	////////////// OPCIONAL: /////////////////////
-	//////////////////////////////////////////////
 
 	public Object visit(Definicion_funcion node, Object param) {
+
+		// TODO: Metadatos
+		// #func <nombre>
+		out("#func " + node.getNombre());
+		// #param <nombre>:<tipo>
+		for (Definicion_variable e : node.getParametros()) {
+			out("#param " + e.getNombre() + ":" + e.getTipo().getMemoryAllocationString());
+		}
+		// #ret <tipo> / #ret void
+		out("#ret " + node.getRetorno().getMemoryAllocationString());
+		// #local <nombre>:<tipo>
+		for (Definicion_variable e : node.getLocales()) {
+			out("#local " + e.getNombre() + ":" + e.getTipo().getMemoryAllocationString());
+		}
+
+		// Generacion de codigo
 
 		int localesSize = 0;
 		int parametrosSize = 0;
@@ -96,81 +98,131 @@ public class CodeSelection extends DefaultVisitor {
 			parametrosSize += e.getTipo().getSize();
 		}
 
-		out(node.getNombre() + ":");// {nombre}:
-		out("enter " + localesSize);// ENTER {sumatorio localesi.tipo.size}
-		visitChildren(node.getSentencias(), param);// ejecuta[[sentenciasi]]
+		// {nombre}:
+		out(node.getNombre() + ":");
+		// ENTER {sumatorio localesi.tipo.size}
+		out("enter " + localesSize);
+		// ejecuta[[sentenciasi]]
+		visitChildren(node.getSentencias(), param);
 
-		if (node.getRetorno() instanceof Tipo_Void)// si retorno == VOID
+		// si retorno == VOID
+		if (node.getRetorno() instanceof Tipo_Void) {
+			// RET
+			// {retorno.size},
+			// {sumatorio localesi.tipo.size},
+			// {sumatorio parametrosi.tipo.size}
 			out("ret " + retornoSize + ", " + localesSize + ", " + parametrosSize);
-		// RET {retorno.size}, {sumatorio localesi.tipo.size}, {sumatorio
-		// parametrosi.tipo.size}
+		}
 
+		return null;
+	}
+
+	// class Campo_struct { String nombre; Tipo tipo; }
+	public Object visit(Campo_struct node, Object param) {
+
+		super.visit(node, param);
+		// <nombre>:<tipo>
+		out(node.getNombre() + ":" + node.getTipo().getMemoryAllocationString());
 		return null;
 	}
 
 	public Object visit(Sentencia_asignacion node, Object param) {
-		line(node);// #LINE {end.line}
-		node.getIzquierda().accept(this, CodeFunction.ADDRESS); // address[[izquierda]]
-		node.getDerecha().accept(this, CodeFunction.VALUE); // value[[derecha]]
-		out("store", node.getIzquierda().getTipo()); // STORE<izquierda.tipo>
+		// #LINE {end.line}
+		line(node);
+		// address[[izquierda]]
+		node.getIzquierda().accept(this, CodeFunction.ADDRESS);
+		// value[[derecha]]
+		node.getDerecha().accept(this, CodeFunction.VALUE);
+		// STORE<izquierda.tipo>
+		out("store", node.getIzquierda().getTipo());
 		return null;
 	}
 
 	public Object visit(Sentencia_print node, Object param) {
-		line(node);// #LINE {end.line}
-		super.visit(node, CodeFunction.VALUE); // value[[expresiones]]
-		out("out", node.getExpresiones().getTipo()); // OUT<expresiones.tipo>
+		// #LINE {end.line}
+		line(node);
+		// value[[expresiones]]
+		super.visit(node, CodeFunction.VALUE);
+		// OUT<expresiones.tipo>
+		out("out", node.getExpresiones().getTipo());
 		if (node.getFincadena().equals("sp")) {
-			out("pushb 32"); // PUSHB [[finCadena]]
-			out("outb"); // OUTB
+			// PUSHB [[finCadena]]
+			out("pushb 32");
+			// OUTB
+			out("outb");
 		}
 		if (node.getFincadena().equals("ln")) {
-			out("pushb 10");// PUSHB [[finCadena]]
-			out("outb");// OUTB
+			// PUSHB [[finCadena]]
+			out("pushb 10");
+			// OUTB
+			out("outb");
 		}
 		return null;
 	}
 
 	public Object visit(Sentencia_read node, Object param) {
-		line(node);// #LINE {end.line}
-		super.visit(node, CodeFunction.VALUE);// value[[expresiones]]
-		out("in", node.getExpresiones().getTipo());// IN<expresiones.tipo>
+		// #LINE {end.line}
+		line(node);
+		// value[[expresiones]]
+		super.visit(node, CodeFunction.VALUE);
+		// IN<expresiones.tipo>
+		out("in", node.getExpresiones().getTipo());
 		return null;
 	}
 
 	public Object visit(Sentencia_if node, Object param) {
-		line(node);// #LINE {end.line}
-		String contadorIf = String.valueOf(++contadorGeneralIF);// {contadorIF = ++contadorGeneralIF}
-		node.getCondicion().accept(this, param);// valor[[condicion]]
-		out("jz else" + contadorIf);// jz else{contadorIf}
-		visitChildren(node.getSentencias(), param);// ejecuta[[sentenciasi]]
-		out("jmp finElse" + contadorIf);// jmp finIf{contadorIf}
-		out("else" + contadorIf + ":");// else{contadorIf}:
-		visitChildren(node.getSino(), param);// ejecuta[[sinoi]]
-		out("finElse" + contadorIf + ":");// finIf{contadorIf}:
+		// #LINE {end.line}
+		line(node);
+		// {contadorIF = ++contadorGeneralIF}
+		String contadorIf = String.valueOf(++contadorGeneralIF);
+		// valor[[condicion]]
+		node.getCondicion().accept(this, param);
+		// jz else{contadorIf}
+		out("jz else" + contadorIf);
+		// ejecuta[[sentenciasi]]
+		visitChildren(node.getSentencias(), param);
+		// jmp finIf{contadorIf}
+		out("jmp finElse" + contadorIf);
+		// else{contadorIf}:
+		out("else" + contadorIf + ":");
+		// ejecuta[[sinoi]]
+		visitChildren(node.getSino(), param);
+		// finIf{contadorIf}:
+		out("finElse" + contadorIf + ":");
 		return null;
 	}
 
 	public Object visit(Sentencia_while node, Object param) {
-		line(node);// #LINE {end.line}
-		String contadorWhile = String.valueOf(++contadorGeneralWhile);// {contadorWhile = ++contadorGeneralWhile}
-		out("while" + contadorWhile + ":");// while{contadorWhile}:
-		node.getCondicion().accept(this, param);// valor[[condicion]]
-		out("jz finWhile" + contadorWhile);// jz finWhile{contadorWhile}
-		visitChildren(node.getSentencias(), param);// ejecuta[[sentenciasi]]
-		out("jmp while" + contadorWhile);// jmp while{contadorWhile}
-		out("finWhile" + contadorWhile + ":");// finWhile{contadorWhile}:
+		// #LINE {end.line}
+		line(node);
+		// {contadorWhile = ++contadorGeneralWhile}
+		String contadorWhile = String.valueOf(++contadorGeneralWhile);
+		// while{contadorWhile}:
+		out("while" + contadorWhile + ":");
+		// valor[[condicion]]
+		node.getCondicion().accept(this, param);
+		// jz finWhile{contadorWhile}
+		out("jz finWhile" + contadorWhile);
+		// ejecuta[[sentenciasi]]
+		visitChildren(node.getSentencias(), param);
+		// jmp while{contadorWhile}
+		out("jmp while" + contadorWhile);
+		// finWhile{contadorWhile}:
+		out("finWhile" + contadorWhile + ":");
 		return null;
 	}
 
 	public Object visit(Sentencia_llamada_funcion node, Object param) {
-		line(node);// #LINE {end.line}
-		visitChildren(node.getParametros(), param);// valor[[parametrosi]]
-		out("call " + node.getNombre());// CALL {nombre}
-		if (!(node.getDefinicion().getRetorno() instanceof Tipo_Void)) {// si
-																		// sentencia_llamada_funcion.definicion.retorno
-																		// != tipoVoid
-			out("pop", node.getDefinicion().getRetorno());// POP< sentencia_llamada_funcion.definici�n.retorno>
+		// #LINE {end.line}
+		line(node);
+		// valor[[parametrosi]]
+		visitChildren(node.getParametros(), param);
+		// CALL {nombre}
+		out("call " + node.getNombre());
+		// si sentencia_llamada_funcion.definicion.retorno != tipoVoid
+		if (!(node.getDefinicion().getRetorno() instanceof Tipo_Void)) {
+			// POP< sentencia_llamada_funcion.definición.retorno>
+			out("pop", node.getDefinicion().getRetorno());
 		}
 		return null;
 	}
@@ -180,47 +232,62 @@ public class CodeSelection extends DefaultVisitor {
 		int localesi = 0;
 		int parametrosi = 0;
 		retorno = node.getFuncionActual().getRetorno().getSize();
-		for (Definicion_variable child : node.getFuncionActual().getLocales())
+		for (Definicion_variable child : node.getFuncionActual().getLocales()) {
 			localesi = localesi + child.getTipo().getSize();
-		for (Definicion_variable child : node.getFuncionActual().getParametros())
-			parametrosi = localesi + child.getTipo().getSize();
-
-		if (node.getExpresion() != null) {// si expresion != null
-			line(node);// #LINE {end.line}
-			node.getExpresion().accept(this, param);// valor[[expr]]
 		}
-		out("ret " + retorno + // RET {sentencia_return.funcion.retorno.size},
-				", " + localesi + // {sumatorio sentencia_return.funcion.localesi.tipo.size},
-				", " + parametrosi);// {sumatorio sentencia_return.funcion.parametrosi.tipo.size}
+		for (Definicion_variable child : node.getFuncionActual().getParametros()) {
+			parametrosi = parametrosi + child.getTipo().getSize();
+		}
+
+		// si expresion != null
+		if (node.getExpresion() != null) {
+			// #LINE {end.line}
+			line(node);
+			// valor[[expr]]
+			node.getExpresion().accept(this, CodeFunction.VALUE);
+		}
+		// RET {sentencia_return.funcion.retorno.size},
+		out("ret " + retorno +
+		// {sumatorio sentencia_return.funcion.localesi.tipo.size},
+				", " + localesi +
+				// {sumatorio sentencia_return.funcion.parametrosi.tipo.size}
+				", " + parametrosi);
 		return null;
 	}
 
 	public Object visit(Expr_int node, Object param) {
 		assert (param == CodeFunction.VALUE);
-		out("push " + node.getString()); // PUSH {value}
+		// PUSH {value}
+		out("push " + node.getString());
 		return null;
 	}
 
 	public Object visit(Expr_real node, Object param) {
 		assert (param == CodeFunction.VALUE);
-		out("pushf " + node.getString());// PUSHF {value}
+		// PUSHF {value}
+		out("pushf " + node.getString());
 		return null;
 	}
 
 	public Object visit(Expr_char node, Object param) {
 		assert (param == CodeFunction.VALUE);
-		out("pushb " + (int) node.getString().charAt(1));// PUSHB {value}
+		// PUSHB {value}
+		out("pushb " + (int) node.getString().charAt(1));
 		return null;
 	}
 
 	public Object visit(Expr_uso_variable node, Object param) {
 
 		if (((CodeFunction) param) == CodeFunction.VALUE) {
-			visit(node, CodeFunction.ADDRESS); // address [[expr_ident]]
-			out("load", node.getTipo()); // LOAD< expr_ident.type>
+			// address [[expr_ident]]
+			visit(node, CodeFunction.ADDRESS);
+			// LOAD< expr_ident.type>
+			out("load", node.getTipo());
 		}
 
-		else { // Funcion.DIRECCION
+		// Funcion.DIRECCION
+		else {
+			// TODO: Comentar
 			assert (param == CodeFunction.ADDRESS);
 
 			if (node.getDefinicion().getAmbito() == Ambito.GLOBAL) {
@@ -239,29 +306,40 @@ public class CodeSelection extends DefaultVisitor {
 
 	public Object visit(Expr_operacion node, Object param) {
 		assert (param == CodeFunction.VALUE);
-		node.getIzquierda().accept(this, CodeFunction.VALUE);// value[[izquierda]]
-		node.getDerecha().accept(this, CodeFunction.VALUE);// value[[derecha]]
+		// value[[izquierda]]
+		node.getIzquierda().accept(this, CodeFunction.VALUE);
+		// value[[derecha]]
+		node.getDerecha().accept(this, CodeFunction.VALUE);
+		// TODO: Comentar
 		out(instruccion.get(node.getOperador().getString()), node.getIzquierda().getTipo());
 		return null;
 	}
 
 	public Object visit(Expr_acceso_vector node, Object param) {
-		node.getFuera().accept(this, CodeFunction.ADDRESS); // address[[fuera]]
-		node.getDentro().accept(this, CodeFunction.VALUE); // value[[dentro]]
-		out("push " + node.getTipo().getSize()); // PUSHA {tipo.size}
-		out("mul");// MUL
-		out("add");// ADD
+		// address[[fuera]]
+		node.getFuera().accept(this, CodeFunction.ADDRESS);
+		// value[[dentro]]
+		node.getDentro().accept(this, CodeFunction.VALUE);
+		// PUSHA {tipo.size}
+		out("push " + node.getTipo().getSize());
+		// MUL
+		out("mul");
+		// ADD
+		out("add");
 
 		if (((CodeFunction) param) == CodeFunction.VALUE) {
-			out("load", node.getTipo()); // LOAD{tipo.size}
+			// LOAD{tipo.size}
+			out("load", node.getTipo());
 		}
 		return null;
 	}
 
 	public Object visit(Expr_negada node, Object param) {
 		assert (param == CodeFunction.VALUE);
-		node.getDerecha().accept(this, CodeFunction.VALUE);// value[[derecha]]
-		out(instruccion.get(node.getOperador().getString()), node.getDerecha().getTipo());// {operador.instruccion}
+		// value[[derecha]]
+		node.getDerecha().accept(this, CodeFunction.VALUE);
+		// {operador.instruccion}
+		out(instruccion.get(node.getOperador().getString()), node.getDerecha().getTipo());
 		return null;
 	}
 
@@ -271,6 +349,7 @@ public class CodeSelection extends DefaultVisitor {
 		// 1 - Meter en la pila la direccion donde empieza la estructura
 		// 2 - Meter en la pila el desplazamiento del campo dentro de su estructura
 		// 3 - ADD
+		// TODO: Comentar
 
 		node.getStruct().accept(this, CodeFunction.ADDRESS);
 		out("push " + node.getCampo_struct().getAddress());
@@ -284,17 +363,22 @@ public class CodeSelection extends DefaultVisitor {
 	}
 
 	public Object visit(Expr_cast node, Object param) {
-		node.getExpr().accept(this, CodeFunction.VALUE); // value[[expr]]
+		// value[[expr]]
+		node.getExpr().accept(this, CodeFunction.VALUE);
 		String de = Character.toString(node.getExpr().getTipo().getSuffix());
 		String a = Character.toString(node.getTipo_convertido().getSuffix());
-		out(de + "2" + a); // {expr.tipo}2{tipo_convertido}
+		// {expr.tipo}2{tipo_convertido}
+		out(de + "2" + a);
 		return null;
 	}
 
 	public Object visit(Expr_llamada_funcion node, Object param) {
-		for (Expr child : node.getParametros())
-			child.accept(this, param);// valor[[parametrosi]]
-		out("call " + node.getNombre());// CALL {nombre}
+		// valor[[parametrosi]]
+		for (Expr child : node.getParametros()) {
+			child.accept(this, param);
+		}
+		// CALL {nombre}
+		out("call " + node.getNombre());
 		return null;
 	}
 	//////////////////////////////////////////

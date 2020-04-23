@@ -21,7 +21,7 @@ public class Tipo_Void extends AbstractTipo {
 
 	@Override
 	public String getMemoryAllocationString() {
-		return "?";
+		return "void";
 	}
 
 	@Override

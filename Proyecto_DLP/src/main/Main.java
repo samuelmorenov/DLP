@@ -82,7 +82,7 @@ public class Main {
 		@SuppressWarnings("unused")
 		PrintMemoryAllocation pma = new PrintMemoryAllocation();
 		//TODO: Comentar para no mostrar la asignacion de memoria
-		ast.accept(pma, null);
+		//ast.accept(pma, null);
 
 		return ast;
 	}

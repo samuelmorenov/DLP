@@ -16,23 +16,24 @@ public class Expr_acceso_struct extends AbstractExpr {
 		this.struct = struct;
 		this.campo = campo;
 
-       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
-       // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(struct);
+		// Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
+		// Obtiene la linea/columna a partir de las de los hijos.
+		setPositions(struct);
 	}
 
 	public Expr_acceso_struct(Object struct, Object campo) {
 		this.struct = (Expr) getAST(struct);
-		this.campo = (campo instanceof Token) ? ((Token)campo).getText() : (String) campo;
+		this.campo = (campo instanceof Token) ? ((Token) campo).getText() : (String) campo;
 
-       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
-       // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(struct, campo);
+		// Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
+		// Obtiene la linea/columna a partir de las de los hijos.
+		setPositions(struct, campo);
 	}
 
 	public Expr getStruct() {
 		return struct;
 	}
+
 	public void setStruct(Expr struct) {
 		this.struct = struct;
 	}
@@ -40,11 +41,11 @@ public class Expr_acceso_struct extends AbstractExpr {
 	public String getCampo() {
 		return campo;
 	}
+
 	public void setCampo(String campo) {
 		this.campo = campo;
 	}
-	
-	// TODO esta es la mejor manera?
+
 	public Campo_struct getCampo_struct() {
 		Definicion_struct def = ((Tipo_Struct) struct.getTipo()).getDefinicion();
 		Campo_struct campoAux = null;
@@ -57,7 +58,7 @@ public class Expr_acceso_struct extends AbstractExpr {
 	}
 
 	@Override
-	public Object accept(Visitor v, Object param) { 
+	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
 	}
 
@@ -65,6 +66,6 @@ public class Expr_acceso_struct extends AbstractExpr {
 	private String campo;
 
 	public String toString() {
-       return "{struct:" + getStruct() + ", campo:" + getCampo() + "}";
-   }
+		return "{struct:" + getStruct() + ", campo:" + getCampo() + "}";
+	}
 }
