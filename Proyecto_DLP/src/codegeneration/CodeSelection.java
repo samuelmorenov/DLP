@@ -184,10 +184,12 @@ public class CodeSelection extends DefaultVisitor {
 			// #LINE {end.line}
 			line(node);
 		}
-		// value[[expresiones]]
-		super.visit(node, CodeFunction.VALUE);
+		// address[[expresiones]] //TODO cambiado
+		super.visit(node, CodeFunction.ADDRESS);
 		// IN<expresiones.tipo>
 		out("in", node.getExpresiones().getTipo());
+		// LOAD TODO cambiado
+		out("store", node.getExpresiones().getTipo());
 		return null;
 	}
 
@@ -252,7 +254,7 @@ public class CodeSelection extends DefaultVisitor {
 			line(node);
 		}
 		// valor[[parametrosi]]
-		visitChildren(node.getParametros(), param);
+		visitChildren(node.getParametros(), CodeFunction.VALUE);
 		// CALL {nombre}
 		out("call " + node.getNombre());
 		// si sentencia_llamada_funcion.definicion.retorno != tipoVoid
@@ -410,7 +412,7 @@ public class CodeSelection extends DefaultVisitor {
 
 	public Object visit(Expr_llamada_funcion node, Object param) {
 		// valor[[parametrosi]]
-		visitChildren(node.getParametros(), param);
+		visitChildren(node.getParametros(), CodeFunction.VALUE);
 		// CALL {nombre}
 		out("call " + node.getNombre());
 		return null;
