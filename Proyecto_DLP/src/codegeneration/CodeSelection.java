@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import ast.*;
+import main.Config;
 import visitor.*;
 
 enum CodeFunction {
@@ -37,14 +38,16 @@ public class CodeSelection extends DefaultVisitor {
 	}
 
 	public Object visit(Program node, Object param) {
-		// #SOURCE {file}
-		out("#source \"" + sourceFile + "\"");
+		if (metadatos) {
+			// #SOURCE {file}
+			out("#source \"" + sourceFile + "\"");
+		}
 		// CALL main
 		out("call main");
 		// HALT
 		out("halt");
 		// define[[definicioni]]
-		visitChildren(node.getDefinicion(), param);
+		super.visit(node, param);
 
 		return null;
 	}
@@ -53,36 +56,42 @@ public class CodeSelection extends DefaultVisitor {
 	public Object visit(Definicion_variable node, Object param) {
 
 		super.visit(node, param);
-		// #global <nombre>:<tipo>
-		out("#global " + node.getNombre() + ":" + node.getTipo().getMemoryAllocationString());
+		if (metadatos) {
+			// #global <nombre>:<tipo>
+			out("#global " + node.getNombre() + ":" + node.getTipo().getMemoryAllocationString());
+		}
 		return null;
 	}
 
 	// class Definicion_struct { String nombre; List<Campo_struct> campo_struct; }
 	public Object visit(Definicion_struct node, Object param) {
-		// #type Punto: {
-		out("#type " + node.getNombre() + ": {");
-		// <nombre>:<tipo>
-		super.visit(node, param);
-		// }
-		out("}");
+		if (metadatos) {
+			// #type {nombre} : {
+			out("#type " + node.getNombre() + ": {");
+			// define_campo[[campo_struct]]
+			super.visit(node, param);
+			// }
+			out("}");
+		}
 		return null;
 	}
 
 	public Object visit(Definicion_funcion node, Object param) {
 
-		// TODO: Metadatos
-		// #func <nombre>
-		out("#func " + node.getNombre());
-		// #param <nombre>:<tipo>
-		for (Definicion_variable e : node.getParametros()) {
-			out("#param " + e.getNombre() + ":" + e.getTipo().getMemoryAllocationString());
-		}
-		// #ret <tipo> / #ret void
-		out("#ret " + node.getRetorno().getMemoryAllocationString());
-		// #local <nombre>:<tipo>
-		for (Definicion_variable e : node.getLocales()) {
-			out("#local " + e.getNombre() + ":" + e.getTipo().getMemoryAllocationString());
+		// Metadatos
+		if (metadatos) {
+			// #func <nombre>
+			out("#func " + node.getNombre());
+			// #param <nombre>:<tipo>
+			for (Definicion_variable e : node.getParametros()) {
+				out("#param " + e.getNombre() + ":" + e.getTipo().getMemoryAllocationString());
+			}
+			// #ret <tipo> / #ret void
+			out("#ret " + node.getRetorno().getMemoryAllocationString());
+			// #local <nombre>:<tipo>
+			for (Definicion_variable e : node.getLocales()) {
+				out("#local " + e.getNombre() + ":" + e.getTipo().getMemoryAllocationString());
+			}
 		}
 
 		// Generacion de codigo
@@ -108,10 +117,13 @@ public class CodeSelection extends DefaultVisitor {
 		// si retorno == VOID
 		if (node.getRetorno() instanceof Tipo_Void) {
 			// RET
-			// {retorno.size},
-			// {sumatorio localesi.tipo.size},
-			// {sumatorio parametrosi.tipo.size}
-			out("ret " + retornoSize + ", " + localesSize + ", " + parametrosSize);
+			out("ret "
+					// {retorno.size},
+					+ retornoSize + ", "
+					// {sumatorio localesi.tipo.size},
+					+ localesSize + ", "
+					// {sumatorio parametrosi.tipo.size}
+					+ parametrosSize);
 		}
 
 		return null;
@@ -121,14 +133,18 @@ public class CodeSelection extends DefaultVisitor {
 	public Object visit(Campo_struct node, Object param) {
 
 		super.visit(node, param);
-		// <nombre>:<tipo>
-		out(node.getNombre() + ":" + node.getTipo().getMemoryAllocationString());
+		if (metadatos) {
+			// <nombre>:<tipo>
+			out(node.getNombre() + ":" + node.getTipo().getMemoryAllocationString());
+		}
 		return null;
 	}
 
 	public Object visit(Sentencia_asignacion node, Object param) {
-		// #LINE {end.line}
-		line(node);
+		if (metadatos) {
+			// #LINE {end.line}
+			line(node);
+		}
 		// address[[izquierda]]
 		node.getIzquierda().accept(this, CodeFunction.ADDRESS);
 		// value[[derecha]]
@@ -139,12 +155,15 @@ public class CodeSelection extends DefaultVisitor {
 	}
 
 	public Object visit(Sentencia_print node, Object param) {
-		// #LINE {end.line}
-		line(node);
+		if (metadatos) {
+			// #LINE {end.line}
+			line(node);
+		}
 		// value[[expresiones]]
 		super.visit(node, CodeFunction.VALUE);
 		// OUT<expresiones.tipo>
 		out("out", node.getExpresiones().getTipo());
+		// si finCadena != “”
 		if (node.getFincadena().equals("sp")) {
 			// PUSHB [[finCadena]]
 			out("pushb 32");
@@ -161,8 +180,10 @@ public class CodeSelection extends DefaultVisitor {
 	}
 
 	public Object visit(Sentencia_read node, Object param) {
-		// #LINE {end.line}
-		line(node);
+		if (metadatos) {
+			// #LINE {end.line}
+			line(node);
+		}
 		// value[[expresiones]]
 		super.visit(node, CodeFunction.VALUE);
 		// IN<expresiones.tipo>
@@ -171,8 +192,12 @@ public class CodeSelection extends DefaultVisitor {
 	}
 
 	public Object visit(Sentencia_if node, Object param) {
-		// #LINE {end.line}
-		line(node);
+		if (metadatos) {
+			// #LINE {end.line}
+			line(node);
+		}
+
+		boolean existeElse = !node.getSino().isEmpty();
 		// {contadorIF = ++contadorGeneralIF}
 		String contadorIf = String.valueOf(++contadorGeneralIF);
 		// valor[[condicion]]
@@ -181,20 +206,29 @@ public class CodeSelection extends DefaultVisitor {
 		out("jz else" + contadorIf);
 		// ejecuta[[sentenciasi]]
 		visitChildren(node.getSentencias(), param);
-		// jmp finIf{contadorIf}
-		out("jmp finElse" + contadorIf);
+
+		if (existeElse) {
+			// jmp finIf{contadorIf}
+			out("jmp finElse" + contadorIf);
+		}
+
 		// else{contadorIf}:
 		out("else" + contadorIf + ":");
 		// ejecuta[[sinoi]]
-		visitChildren(node.getSino(), param);
-		// finIf{contadorIf}:
-		out("finElse" + contadorIf + ":");
+
+		if (existeElse) {
+			visitChildren(node.getSino(), param);
+			// finIf{contadorIf}:
+			out("finElse" + contadorIf + ":");
+		}
 		return null;
 	}
 
 	public Object visit(Sentencia_while node, Object param) {
-		// #LINE {end.line}
-		line(node);
+		if (metadatos) {
+			// #LINE {end.line}
+			line(node);
+		}
 		// {contadorWhile = ++contadorGeneralWhile}
 		String contadorWhile = String.valueOf(++contadorGeneralWhile);
 		// while{contadorWhile}:
@@ -213,8 +247,10 @@ public class CodeSelection extends DefaultVisitor {
 	}
 
 	public Object visit(Sentencia_llamada_funcion node, Object param) {
-		// #LINE {end.line}
-		line(node);
+		if (metadatos) {
+			// #LINE {end.line}
+			line(node);
+		}
 		// valor[[parametrosi]]
 		visitChildren(node.getParametros(), param);
 		// CALL {nombre}
@@ -241,8 +277,10 @@ public class CodeSelection extends DefaultVisitor {
 
 		// si expresion != null
 		if (node.getExpresion() != null) {
-			// #LINE {end.line}
-			line(node);
+			if (metadatos) {
+				// #LINE {end.line}
+				line(node);
+			}
 			// valor[[expr]]
 			node.getExpresion().accept(this, CodeFunction.VALUE);
 		}
@@ -285,21 +323,22 @@ public class CodeSelection extends DefaultVisitor {
 			out("load", node.getTipo());
 		}
 
-		// Funcion.DIRECCION
 		else {
-			// TODO: Comentar
 			assert (param == CodeFunction.ADDRESS);
-
+			// si expr_uso_variable.definicion.ambito == GLOBAL
 			if (node.getDefinicion().getAmbito() == Ambito.GLOBAL) {
+				// PUSHA { expr_uso_variable .definition.address}
 				out("pusha " + node.getDefinicion().getAddress());
 			}
-
-			if (node.getDefinicion().getAmbito() == Ambito.LOCAL) {
+			// sino
+			else {
+				// PUSHA BP
 				out("pusha BP");
+				// PUSH { expr_uso_variable.definicion.address}
 				out("push " + node.getDefinicion().getAddress());
+				// ADD
 				out("add");
 			}
-
 		}
 		return null;
 	}
@@ -310,7 +349,7 @@ public class CodeSelection extends DefaultVisitor {
 		node.getIzquierda().accept(this, CodeFunction.VALUE);
 		// value[[derecha]]
 		node.getDerecha().accept(this, CodeFunction.VALUE);
-		// TODO: Comentar
+		// {operador.instruccion}
 		out(instruccion.get(node.getOperador().getString()), node.getIzquierda().getTipo());
 		return null;
 	}
@@ -345,16 +384,13 @@ public class CodeSelection extends DefaultVisitor {
 
 	// class Expr_acceso_struct { Expr struct; String campo; }
 	public Object visit(Expr_acceso_struct node, Object param) {
-
-		// 1 - Meter en la pila la direccion donde empieza la estructura
-		// 2 - Meter en la pila el desplazamiento del campo dentro de su estructura
-		// 3 - ADD
-		// TODO: Comentar
-
+		// address[[struct]]
 		node.getStruct().accept(this, CodeFunction.ADDRESS);
+		// PUSH {campo.address}
 		out("push " + node.getCampo_struct().getAddress());
+		// ADD
 		out("add");
-
+		// LOAD{tipo.size}
 		if (((CodeFunction) param) == CodeFunction.VALUE) {
 			out("load", node.getTipo());
 		}
@@ -374,19 +410,17 @@ public class CodeSelection extends DefaultVisitor {
 
 	public Object visit(Expr_llamada_funcion node, Object param) {
 		// valor[[parametrosi]]
-		for (Expr child : node.getParametros()) {
-			child.accept(this, param);
-		}
+		visitChildren(node.getParametros(), param);
 		// CALL {nombre}
 		out("call " + node.getNombre());
 		return null;
 	}
-	//////////////////////////////////////////
 
 	private void out(String instruction) {
 		writer.println(instruction);
-		// TODO: Comentar para no mostrar la generacion de codigo
-		// System.out.println(instruction);
+		if (Config.mostrarGeneracionDeCodigo()) {
+			System.out.println(instruction);
+		}
 	}
 
 	private void out(String instruccion, Tipo tipo) {
@@ -409,4 +443,5 @@ public class CodeSelection extends DefaultVisitor {
 	private String sourceFile;
 	private int contadorGeneralIF = 0;
 	private int contadorGeneralWhile = 0;
+	private boolean metadatos = Config.mostrarMetadatos();
 }

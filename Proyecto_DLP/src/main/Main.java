@@ -37,8 +37,7 @@ public class Main {
 			System.out.println("El programa se ha compilado correctamente.");
 
 		ASTPrinter.toHtml(program, ast, "AST"); // Utilidad generada por VGen (opcional)
-		
-		
+
 //		PrintVisitor pv = new PrintVisitor();
 //		ast.accept(pv, null);
 	}
@@ -76,13 +75,11 @@ public class Main {
 		CodeGeneration generator = new CodeGeneration();
 		generator.generate(sourceFile.getName(), ast, out);
 		out.close();
-		
-		
-		
-		@SuppressWarnings("unused")
-		PrintMemoryAllocation pma = new PrintMemoryAllocation();
-		//TODO: Comentar para no mostrar la asignacion de memoria
-		//ast.accept(pma, null);
+
+		if (Config.mostrarMemoryAllocation()) {
+			PrintMemoryAllocation pma = new PrintMemoryAllocation();
+			ast.accept(pma, null);
+		}
 
 		return ast;
 	}
