@@ -184,11 +184,11 @@ public class CodeSelection extends DefaultVisitor {
 			// #LINE {end.line}
 			line(node);
 		}
-		// address[[expresiones]] //TODO cambiado
+		// address[[expresiones]]
 		super.visit(node, CodeFunction.ADDRESS);
 		// IN<expresiones.tipo>
 		out("in", node.getExpresiones().getTipo());
-		// LOAD TODO cambiado
+		// STORE < expresiones.type>
 		out("store", node.getExpresiones().getTipo());
 		return null;
 	}
