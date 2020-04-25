@@ -418,7 +418,7 @@ public class CodeSelection extends DefaultVisitor {
 
 	private void out(String instruction) {
 		writer.println(instruction);
-		if (Config.mostrarGeneracionDeCodigo()) {
+		if (Config.verGeneracion) {
 			System.out.println(instruction);
 		}
 	}
@@ -443,5 +443,5 @@ public class CodeSelection extends DefaultVisitor {
 	private String sourceFile;
 	private int contadorGeneralIF = 0;
 	private int contadorGeneralWhile = 0;
-	private boolean metadatos = Config.mostrarMetadatos();
+	private boolean metadatos = Config.metadatos;
 }

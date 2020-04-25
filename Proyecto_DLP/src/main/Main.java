@@ -76,7 +76,7 @@ public class Main {
 		generator.generate(sourceFile.getName(), ast, out);
 		out.close();
 
-		if (Config.mostrarMemoryAllocation()) {
+		if (Config.verMemoria) {
 			PrintMemoryAllocation pma = new PrintMemoryAllocation();
 			ast.accept(pma, null);
 		}
