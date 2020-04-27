@@ -221,8 +221,8 @@ public class CodeSelection extends DefaultVisitor {
 	// List<Sentencia> sino; }
 	public Object visit(Sentencia_if node, Object param) {
 		if (metadatos) {
-			// #LINE {end.line}
-			line(node);
+			// #LINE {start.line}
+			line(node.getStart());
 		}
 
 		boolean existeElse = !node.getSino().isEmpty();
@@ -260,8 +260,8 @@ public class CodeSelection extends DefaultVisitor {
 	// class Sentencia_while { Expr condicion; List<Sentencia> sentencias; }
 	public Object visit(Sentencia_while node, Object param) {
 		if (metadatos) {
-			// #LINE {end.line}
-			line(node);
+			// #LINE {start.line}
+			line(node.getStart());
 		}
 		// {contadorWhile = ++contadorGeneralWhile}
 		String contadorWhile = String.valueOf(++contadorGeneralWhile);
