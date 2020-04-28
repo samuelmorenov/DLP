@@ -113,8 +113,6 @@ public class ASTPrinter extends DefaultVisitor {
 		print(indent + 1, "nombre", "String", node.getNombre());
 		visit(indent + 1, "tipo", "Tipo",node.getTipo());
 		print(indent + 1, "ambito", "Ambito", node.getAmbito());
-        // ESTA LINEA ES NUEVA <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        print(indent + 1, "address", "int", node.getAddress());
 		return null;
 	}
 
@@ -151,8 +149,6 @@ public class ASTPrinter extends DefaultVisitor {
 
 		print(indent + 1, "nombre", "String", node.getNombre());
 		visit(indent + 1, "tipo", "Tipo",node.getTipo());
-        // ESTA LINEA ES NUEVA <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        print(indent + 1, "address", "int", node.getAddress());
 		return null;
 	}
 
@@ -175,6 +171,14 @@ public class ASTPrinter extends DefaultVisitor {
 
 		visit(indent + 1, "expresiones", "Expr",node.getExpresiones());
 		print(indent + 1, "fincadena", "String", node.getFincadena());
+		return null;
+	}
+
+	//	class Sentencia_print_vacia { String fincadena; }
+	public Object visit(Sentencia_print_vacia node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printCompact(indent, "Sentencia_print_vacia", node, "fincadena", node.getFincadena());
 		return null;
 	}
 
@@ -435,7 +439,6 @@ public class ASTPrinter extends DefaultVisitor {
 		write(indent, formatValue(value) + "  " + typeTag(type));
 	}
 
-	/*
 	private void print(int indent, String attName, String type, List<? extends Object> children) {
 		write(indent, attName + "  " + typeTag(type) + " = ");
 		if (children != null)
@@ -444,7 +447,6 @@ public class ASTPrinter extends DefaultVisitor {
 		else
 			writer.print(" " + valueTag(null));
 	}
-	*/
 
 	// Versión compacta de una linea para nodos que solo tienen un atributo String
 	private void printCompact(int indent, String nodeName, AST node, String attName, Object value) {
@@ -555,7 +557,7 @@ public class ASTPrinter extends DefaultVisitor {
 		if (sourceFile == null)
 			return null;
 		try {
-			//String spaces = new String(new char[tabWidth]).replace("\0", " ");
+			String spaces = new String(new char[tabWidth]).replace("\0", " ");
 
 			List<String> lines = new ArrayList<String>();
 			BufferedReader br = new BufferedReader(new FileReader(sourceFile));

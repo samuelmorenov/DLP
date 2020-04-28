@@ -14,6 +14,7 @@ public interface Visitor {
 	public Object visit(Campo_struct node, Object param);
 	public Object visit(Sentencia_asignacion node, Object param);
 	public Object visit(Sentencia_print node, Object param);
+	public Object visit(Sentencia_print_vacia node, Object param);
 	public Object visit(Sentencia_read node, Object param);
 	public Object visit(Sentencia_if node, Object param);
 	public Object visit(Sentencia_while node, Object param);

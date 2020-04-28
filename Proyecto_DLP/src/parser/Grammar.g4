@@ -76,6 +76,7 @@ sentencias 			returns[List<Sentencia> ast = new ArrayList<Sentencia>()]
 sentencia 							returns[Sentencia ast]
 	: sentencia_asignacion			{ $ast = $sentencia_asignacion.ast; }
 	| sentencia_print				{ $ast = $sentencia_print.ast; }
+	| sentencia_print_vacia			{ $ast = $sentencia_print_vacia.ast; }
 	| sentencia_read				{ $ast = $sentencia_read.ast; }
 	| sentencia_if					{ $ast = $sentencia_if.ast; }
 	| sentencia_while				{ $ast = $sentencia_while.ast; }
@@ -91,7 +92,10 @@ sentencia_print 			returns[Sentencia_print ast]
 	: 'print' expr ';'		{ $ast = new Sentencia_print($expr.ast, ""); }
 	| 'printsp' expr ';'	{ $ast = new Sentencia_print($expr.ast, "sp"); }
 	| 'println' (expr) ';'	{ $ast = new Sentencia_print($expr.ast, "ln"); }
-	| 'println' ';' 		{ $ast = new Sentencia_print(null, "\\n"); }
+	;
+	
+sentencia_print_vacia		returns[Sentencia_print_vacia ast]
+	: 'println' ';' 		{ $ast = new Sentencia_print_vacia("ln"); }
 	;
 	
 sentencia_read 			returns[Sentencia_read ast]

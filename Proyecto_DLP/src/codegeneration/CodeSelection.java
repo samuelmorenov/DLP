@@ -13,9 +13,6 @@ enum CodeFunction {
 
 public class CodeSelection extends DefaultVisitor {
 
-	private Map<String, String> instruccion = new HashMap<String, String>();
-	private Map<String, Integer> caracteresEspeciales = new HashMap<String, Integer>();
-
 	public CodeSelection(Writer writer, String sourceFile) {
 		this.writer = new PrintWriter(writer);
 		this.sourceFile = sourceFile;
@@ -35,7 +32,7 @@ public class CodeSelection extends DefaultVisitor {
 		instruccion.put("<=", "le");
 		instruccion.put("==", "eq");
 		instruccion.put("!=", "ne");
-		
+
 		caracteresEspeciales.put("\'\\n\'", 10);
 
 	}
@@ -177,10 +174,12 @@ public class CodeSelection extends DefaultVisitor {
 
 	// class Sentencia_print { Expr expresiones; String fincadena; }
 	public Object visit(Sentencia_print node, Object param) {
+
 		if (metadatos) {
 			// #LINE {end.line}
 			line(node);
 		}
+
 		// value[[expresiones]]
 		if (node.getExpresiones() != null) {
 			node.getExpresiones().accept(this, CodeFunction.VALUE);
@@ -194,6 +193,25 @@ public class CodeSelection extends DefaultVisitor {
 			// OUTB
 			out("outb");
 		}
+		if (node.getFincadena().equals("ln")) {
+			// PUSHB [[finCadena]]
+			out("pushb 10");
+			// OUTB
+			out("outb");
+		}
+		return null;
+	}
+
+	// class Sentencia_print { Expr expresiones; String fincadena; }
+	public Object visit(Sentencia_print_vacia node, Object param) {
+
+		if (metadatos) {
+			// TODO #LINE {end.line}
+			//out("\n#line " + node.getStart().getLine()); 
+			//line(node);
+			//line(node.getStart());
+		}
+
 		if (node.getFincadena().equals("ln")) {
 			// PUSHB [[finCadena]]
 			out("pushb 10");
@@ -512,5 +530,7 @@ public class CodeSelection extends DefaultVisitor {
 	private String sourceFile;
 	private int contadorGeneralIF = 0;
 	private int contadorGeneralWhile = 0;
+	private Map<String, String> instruccion = new HashMap<String, String>();
+	private Map<String, Integer> caracteresEspeciales = new HashMap<String, Integer>();
 	private boolean metadatos = Config.metadatos;
 }

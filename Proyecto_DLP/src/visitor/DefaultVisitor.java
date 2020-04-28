@@ -66,6 +66,11 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
+	//	class Sentencia_print_vacia { String fincadena; }
+	public Object visit(Sentencia_print_vacia node, Object param) {
+		return null;
+	}
+
 	//	class Sentencia_read { Expr expresiones; }
 	public Object visit(Sentencia_read node, Object param) {
 		if (node.getExpresiones() != null)
