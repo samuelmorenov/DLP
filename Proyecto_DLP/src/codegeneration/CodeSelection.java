@@ -14,6 +14,7 @@ enum CodeFunction {
 public class CodeSelection extends DefaultVisitor {
 
 	private Map<String, String> instruccion = new HashMap<String, String>();
+	private Map<String, Integer> caracteresEspeciales = new HashMap<String, Integer>();
 
 	public CodeSelection(Writer writer, String sourceFile) {
 		this.writer = new PrintWriter(writer);
@@ -34,6 +35,8 @@ public class CodeSelection extends DefaultVisitor {
 		instruccion.put("<=", "le");
 		instruccion.put("==", "eq");
 		instruccion.put("!=", "ne");
+		
+		caracteresEspeciales.put("\'\\n\'", 10);
 
 	}
 
@@ -353,7 +356,12 @@ public class CodeSelection extends DefaultVisitor {
 	public Object visit(Expr_char node, Object param) {
 		assert (param == CodeFunction.VALUE);
 		// PUSHB {value}
-		out("pushb " + (int) node.getString().charAt(1));
+		Integer c = caracteresEspeciales.get(node.getString());
+		if (c != null) {
+			out("pushb " + c);
+		} else {
+			out("pushb " + (int) node.getString().charAt(1));
+		}
 		return null;
 	}
 

@@ -10,8 +10,8 @@ REAL_CONSTANT
 	;
 
 CHAR_CONSTANT
-	:'\''  ~[\r\n\t] '\''
-	|'\'\\n\''
+	: '\'\\n\''
+	|'\''  ~[\r\n\t] '\''
 	;
 
 IDENT
