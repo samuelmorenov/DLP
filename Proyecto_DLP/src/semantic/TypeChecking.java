@@ -284,6 +284,23 @@ public class TypeChecking extends DefaultVisitor {
 		return null;
 	}
 
+	// TODO: Añadido con el operador incremento
+	public Object visit(Expr_incremento node, Object param) {
+		/** Reglas Semanticas */
+		// expr_incremento.tipo = tipoInt
+		// expr_incremento.modificable=false
+		/** Predicados */
+		// izquierda.tipo==tipoInt
+		// izquierda.modificable==true
+		super.visit(node, param);
+		node.setTipo(new Tipo_Int());
+		node.setModificable(false);
+		predicado(node.getIzquierda().getTipo().getClass().equals(new Tipo_Int().getClass()), "Deben ser entero", node);
+		predicado(node.getIzquierda().isModificable() == true, "Debe ser modificable", node);
+		
+		return null;
+	}
+
 	// class Expr_cast { Tipo tipo_convertido; Expr expr; }
 	public Object visit(Expr_cast node, Object param) {
 		/** Reglas Semanticas */

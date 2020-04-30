@@ -397,6 +397,17 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
+	// class Expr_incremento { Expr izquierda; Operador operador; }
+	public Object visit(Expr_incremento node, Object param) {
+		int indent = ((Integer) param).intValue();
+
+		printName(indent, "Expr_incremento", node, false);
+
+		visit(indent + 1, "izquierda", "Expr", node.getIzquierda());
+		visit(indent + 1, "operador", "Operador", node.getOperador());
+		return null;
+	}
+
 	// class Operador_aritmetico { String string; }
 	public Object visit(Operador_aritmetico node, Object param) {
 		int indent = ((Integer) param).intValue();
@@ -421,6 +432,14 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
+	// class Operador_incremento { String string; }
+	public Object visit(Operador_incremento node, Object param) {
+		int indent = ((Integer) param).intValue();
+
+		printCompact(indent, "Operador_incremento", node, "string", node.getString());
+		return null;
+	}
+
 	// -----------------------------------------------------------------
 	// Métodos invocados desde los métodos visit -----------------------
 
@@ -436,16 +455,14 @@ public class ASTPrinter extends DefaultVisitor {
 		write(indent, formatValue(value) + "  " + typeTag(type));
 	}
 
-	/*
-	private void print(int indent, String attName, String type, List<? extends Object> children) {
-		write(indent, attName + "  " + typeTag(type) + " = ");
-		if (children != null)
-			for (Object child : children)
-				write(indent + 1, formatValue(child));
-		else
-			writer.print(" " + valueTag(null));
-	}
-	*/
+//	private void print(int indent, String attName, String type, List<? extends Object> children) {
+//		write(indent, attName + "  " + typeTag(type) + " = ");
+//		if (children != null)
+//			for (Object child : children)
+//				write(indent + 1, formatValue(child));
+//		else
+//			writer.print(" " + valueTag(null));
+//	}
 
 	// Versión compacta de una linea para nodos que solo tienen un atributo String
 	private void printCompact(int indent, String nodeName, AST node, String attName, Object value) {
@@ -554,7 +571,7 @@ public class ASTPrinter extends DefaultVisitor {
 		if (sourceFile == null)
 			return null;
 		try {
-			//String spaces = new String(new char[tabWidth]).replace("\0", " ");
+			// String spaces = new String(new char[tabWidth]).replace("\0", " ");
 
 			List<String> lines = new ArrayList<String>();
 			BufferedReader br = new BufferedReader(new FileReader(sourceFile));

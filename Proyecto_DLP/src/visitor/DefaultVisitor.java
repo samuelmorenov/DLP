@@ -216,6 +216,15 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
+	//	class Expr_incremento { Expr izquierda;  Operador operador; }
+	public Object visit(Expr_incremento node, Object param) {
+		if (node.getIzquierda() != null)
+			node.getIzquierda().accept(this, param);
+		if (node.getOperador() != null)
+			node.getOperador().accept(this, param);
+		return null;
+	}
+
 	//	class Operador_aritmetico { String string; }
 	public Object visit(Operador_aritmetico node, Object param) {
 		return null;
@@ -228,6 +237,11 @@ public class DefaultVisitor implements Visitor {
 
 	//	class Operador_comparacion { String string; }
 	public Object visit(Operador_comparacion node, Object param) {
+		return null;
+	}
+
+	//	class Operador_incremento { String string; }
+	public Object visit(Operador_incremento node, Object param) {
 		return null;
 	}
 

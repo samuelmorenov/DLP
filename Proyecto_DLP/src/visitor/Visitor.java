@@ -37,7 +37,9 @@ public interface Visitor {
 	public Object visit(Expr_acceso_vector node, Object param);
 	public Object visit(Expr_acceso_struct node, Object param);
 	public Object visit(Expr_llamada_funcion node, Object param);
+	public Object visit(Expr_incremento node, Object param);
 	public Object visit(Operador_aritmetico node, Object param);
 	public Object visit(Operador_logico node, Object param);
 	public Object visit(Operador_comparacion node, Object param);
+	public Object visit(Operador_incremento node, Object param);
 }

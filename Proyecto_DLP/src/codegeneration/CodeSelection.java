@@ -8,7 +8,7 @@ import main.Config;
 import visitor.*;
 
 enum CodeFunction {
-	ADDRESS, VALUE
+	ADDRESS, VALUE, EXECUTE
 }
 
 public class CodeSelection extends DefaultVisitor {
@@ -206,10 +206,10 @@ public class CodeSelection extends DefaultVisitor {
 	public Object visit(Sentencia_print_vacia node, Object param) {
 
 		if (metadatos) {
-			// TODO #LINE {end.line}
-			//out("\n#line " + node.getStart().getLine()); 
-			//line(node);
-			//line(node.getStart());
+			// #LINE {end.line}
+			// out("\n#line " + node.getStart().getLine());
+			// line(node);
+			// line(node.getStart());
 		}
 
 		if (node.getFincadena().equals("ln")) {
@@ -437,6 +437,38 @@ public class CodeSelection extends DefaultVisitor {
 		// {operador.instruccion}
 		if (node.getOperador() != null)
 			out(instruccion.get(node.getOperador().getString()), node.getDerecha().getTipo());
+		return null;
+	}
+
+	// TODO: Añadido con el operador incremento
+	public Object visit(Expr_incremento node, Object param) {
+		assert (param == CodeFunction.VALUE);
+
+		// address[[izquierda]]
+		if (node.getIzquierda() != null)
+			node.getIzquierda().accept(this, CodeFunction.ADDRESS);
+
+		// LOAD
+		out("load");
+
+		// address[[izquierda]]
+		if (node.getIzquierda() != null)
+			node.getIzquierda().accept(this, CodeFunction.ADDRESS);
+
+		// value[[izquierda]]
+		if (node.getIzquierda() != null)
+			node.getIzquierda().accept(this, CodeFunction.VALUE);
+
+		// push 1
+		out("push 1");
+
+		// add
+
+		out("add");
+
+		// store
+		out("store");
+
 		return null;
 	}
 
