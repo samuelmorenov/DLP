@@ -1,7 +1,14 @@
-## Diseño de Lenguajes de Programación
-## 3º Curso de Ingeniería Informática del Software
-## Escuela de Ingeniería Informática (Oviedo)
-## Universidad de Oviedo
+# [DLP]  Diseño de Lenguajes de Programación
+
+## Compilador
+
+*Escuela de Ingeniería Informática - Uniovi*
+
+Proyecto realizado por:
+
+**Samuel Moreno Vincent**
+
+Entrega realizada en el año 2020
 
 # Introducción
 
